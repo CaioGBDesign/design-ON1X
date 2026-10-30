@@ -230,6 +230,9 @@
   [data-theme="light"] .select-team .count {
     border: 1px solid rgba(0, 0, 0, 0.15);
   }
+  [data-theme="light"] .select-team .meta {
+    color: #e5e5e5;
+  }
 </style>
 <div class="select-team">
   {{#topLeft}}<span class="top-left">{{topLeftText}}</span>{{/topLeft}}
@@ -354,22 +357,7 @@
         <li class="group-title">Estrutura</li>
         <li>
           <button class="option" type="button">
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <circle cx="12" cy="18" r="3" />
-              <circle cx="6" cy="6" r="3" />
-              <circle cx="18" cy="6" r="3" />
-              <path d="M18 9v2c0 .6-.4 1-1 1H7c-.6 0-1-.4-1-1V9" />
-              <path d="M12 12v3" />
-            </svg>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 12C10 13.1046 9.10457 14 8 14C6.89543 14 6 13.1046 6 12C6 10.8954 6.89543 10 8 10C9.10457 10 10 10.8954 10 12Z" stroke-linecap="round" stroke-linejoin="round" stroke="#717171" /><path d="M6 4C6 5.10457 5.10457 6 4 6C2.89543 6 2 5.10457 2 4C2 2.89543 2.89543 2 4 2C5.10457 2 6 2.89543 6 4Z" stroke-linecap="round" stroke-linejoin="round" stroke="#717171" /><path d="M14 4C14 5.10457 13.1046 6 12 6C10.8954 6 10 5.10457 10 4C10 2.89543 10.8954 2 12 2C13.1046 2 14 2.89543 14 4Z" stroke-linecap="round" stroke-linejoin="round" stroke="#717171" /><path d="M12 6V7.33333C12 7.73333 11.7333 8 11.3333 8H4.66667C4.26667 8 4 7.73333 4 7.33333V6" stroke-linecap="round" stroke-linejoin="round" stroke="#717171" /><path d="M8 8V10" stroke-linecap="round" stroke-linejoin="round" stroke="#717171" /></svg>
             Equipe direta
             <svg class="check" width="16" height="16">
               <use href="#select-team-check" />
@@ -378,20 +366,7 @@
         </li>
         <li>
           <button class="option" type="button">
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <circle cx="19" cy="5" r="2" />
-              <circle cx="5" cy="19" r="2" />
-              <path d="M5 17A12 12 0 0 1 17 5" />
-            </svg>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14 12C14 13.1046 13.1046 14 12 14C10.8954 14 10 13.1046 10 12C10 10.8954 10.8954 10 12 10C13.1046 10 14 10.8954 14 12Z" stroke-linecap="round" stroke-linejoin="round" stroke="#717171" /><path d="M6 4C6 5.10457 5.10457 6 4 6C2.89543 6 2 5.10457 2 4C2 2.89543 2.89543 2 4 2C5.10457 2 6 2.89543 6 4Z" stroke-linecap="round" stroke-linejoin="round" stroke="#717171" /><path d="M4 14V6C4 7.5913 4.63214 9.11742 5.75736 10.2426C6.88258 11.3679 8.4087 12 10 12" stroke-linecap="round" stroke-linejoin="round" stroke="#717171" /></svg>
             Estrutura líquida
             <svg class="check" width="16" height="16">
               <use href="#select-team-check" />
@@ -400,22 +375,7 @@
         </li>
         <li>
           <button class="option" type="button">
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <rect x="16" y="16" width="6" height="6" rx="1" />
-              <rect x="2" y="16" width="6" height="6" rx="1" />
-              <rect x="9" y="2" width="6" height="6" rx="1" />
-              <path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3" />
-              <path d="M12 12V8" />
-            </svg>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11.3333 10.6667H14C14.3682 10.6667 14.6667 10.9651 14.6667 11.3333V14C14.6667 14.3682 14.3682 14.6667 14 14.6667H11.3333C10.9651 14.6667 10.6667 14.3682 10.6667 14V11.3333C10.6667 10.9651 10.9651 10.6667 11.3333 10.6667Z" stroke-linecap="round" stroke-linejoin="round" stroke="#717171" /><path d="M2.00001 10.6667H4.66668C5.03487 10.6667 5.33334 10.9651 5.33334 11.3333V14C5.33334 14.3682 5.03487 14.6667 4.66668 14.6667H2.00001C1.63182 14.6667 1.33334 14.3682 1.33334 14V11.3333C1.33334 10.9651 1.63182 10.6667 2.00001 10.6667Z" stroke-linecap="round" stroke-linejoin="round" stroke="#717171" /><path d="M6.66667 1.33334H9.33333C9.70152 1.33334 10 1.63182 10 2.00001V4.66668C10 5.03487 9.70152 5.33334 9.33333 5.33334H6.66667C6.29848 5.33334 6 5.03487 6 4.66668V2.00001C6 1.63182 6.29848 1.33334 6.66667 1.33334Z" stroke-linecap="round" stroke-linejoin="round" stroke="#717171" /><path d="M3.33334 10.6667V8.66667C3.33334 8.48986 3.40358 8.32029 3.52861 8.19526C3.65363 8.07024 3.8232 8 4.00001 8H12C12.1768 8 12.3464 8.07024 12.4714 8.19526C12.5964 8.32029 12.6667 8.48986 12.6667 8.66667V10.6667" stroke-linecap="round" stroke-linejoin="round" stroke="#717171" /><path d="M8 8.00001V5.33334" stroke-linecap="round" stroke-linejoin="round" stroke="#717171" /></svg>
             Estrutura bruta
             <svg class="check" width="16" height="16">
               <use href="#select-team-check" />
@@ -424,23 +384,7 @@
         </li>
         <li>
           <button class="option" type="button">
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <circle cx="5" cy="6" r="3" />
-              <path d="M12 6h5a2 2 0 0 1 2 2v7" />
-              <path d="m15 9-3-3 3-3" />
-              <circle cx="19" cy="18" r="3" />
-              <path d="M12 18H7a2 2 0 0 1-2-2V9" />
-              <path d="m9 15 3 3-3 3" />
-            </svg>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14 12C14 13.1046 13.1046 14 12 14C10.8954 14 10 13.1046 10 12C10 10.8954 10.8954 10 12 10C13.1046 10 14 10.8954 14 12Z" stroke-linecap="round" stroke-linejoin="round" stroke="#717171" /><path d="M6 4C6 5.10457 5.10457 6 4 6C2.89543 6 2 5.10457 2 4C2 2.89543 2.89543 2 4 2C5.10457 2 6 2.89543 6 4Z" stroke-linecap="round" stroke-linejoin="round" stroke="#717171" /><path d="M8.66666 4H10.6667C11.0203 4 11.3594 4.14048 11.6095 4.39052C11.8595 4.64057 12 4.97971 12 5.33333V10" stroke-linecap="round" stroke-linejoin="round" stroke="#717171" /><path d="M7.33333 12H5.33333C4.97971 12 4.64057 11.8595 4.39052 11.6095C4.14048 11.3594 4 11.0203 4 10.6667V6" stroke-linecap="round" stroke-linejoin="round" stroke="#717171" /></svg>
             Própria
             <svg class="check" width="16" height="16">
               <use href="#select-team-check" />

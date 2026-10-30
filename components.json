@@ -40,21 +40,6 @@
     }
   },
   {
-    "id": "glow-large",
-    "name": "Large",
-    "category": "Botões / Glow",
-    "file": "components/botoes/Glow/large.html",
-    "description": "Botão Glow grande, com brilho na cor primária. Use para a chamada principal da tela.",
-    "knobs": [
-      {
-        "name": "label",
-        "label": "Texto",
-        "type": "text",
-        "default": "Começar agora"
-      }
-    ]
-  },
-  {
     "id": "glass-small",
     "name": "Small",
     "category": "Botões / Glass",
@@ -66,21 +51,6 @@
         "label": "Texto",
         "type": "text",
         "default": "Continuar"
-      }
-    ]
-  },
-  {
-    "id": "glass-large",
-    "name": "Large",
-    "category": "Botões / Glass",
-    "file": "components/botoes/Glass/large.html",
-    "description": "Botão Glass grande, com fundo translúcido e desfoque, estilo vidro.",
-    "knobs": [
-      {
-        "name": "label",
-        "label": "Texto",
-        "type": "text",
-        "default": "Começar agora"
       }
     ]
   },
@@ -100,21 +70,6 @@
     ]
   },
   {
-    "id": "ember-large",
-    "name": "Large",
-    "category": "Botões / Ember",
-    "file": "components/botoes/Ember/large.html",
-    "description": "Botão Ember grande, em tom quente de brasa, para chamar atenção.",
-    "knobs": [
-      {
-        "name": "label",
-        "label": "Texto",
-        "type": "text",
-        "default": "Começar agora"
-      }
-    ]
-  },
-  {
     "id": "outline-small",
     "name": "Small",
     "category": "Botões / Outline",
@@ -126,21 +81,6 @@
         "label": "Texto",
         "type": "text",
         "default": "Continuar"
-      }
-    ]
-  },
-  {
-    "id": "outline-large",
-    "name": "Large",
-    "category": "Botões / Outline",
-    "file": "components/botoes/Outline/large.html",
-    "description": "Botão Outline grande, só com contorno na cor de destaque. Use para ações secundárias.",
-    "knobs": [
-      {
-        "name": "label",
-        "label": "Texto",
-        "type": "text",
-        "default": "Começar agora"
       }
     ]
   },
@@ -1067,6 +1007,177 @@
         "label": "Texto",
         "type": "text",
         "default": "Notificações por e-mail"
+      }
+    ]
+  },
+  {
+    "id": "checkbox-uncheck",
+    "name": "Uncheck",
+    "category": "Checkboxes",
+    "file": "components/checkboxes/uncheck.html",
+    "description": "Checkbox desmarcado. Clique para marcar.",
+    "knobs": [
+      {
+        "name": "showLabel",
+        "label": "Label",
+        "type": "toggle",
+        "default": false
+      },
+      {
+        "name": "label",
+        "label": "Texto do label",
+        "type": "text",
+        "default": "Label",
+        "hideLabel": true
+      }
+    ],
+    "grid": {
+      "title": "Checkboxes",
+      "options": [
+        {
+          "id": "checkbox-uncheck",
+          "label": "Uncheck"
+        },
+        {
+          "id": "checkbox-check",
+          "label": "Check"
+        },
+        {
+          "id": "checkbox-minus",
+          "label": "Minus"
+        },
+        {
+          "id": "checkbox-button",
+          "label": "Button"
+        },
+        {
+          "id": "checkbox-box",
+          "label": "Box"
+        },
+        {
+          "id": "checkbox-icon",
+          "label": "Ícone"
+        }
+      ]
+    }
+  },
+  {
+    "id": "checkbox-check",
+    "name": "Check",
+    "category": "Checkboxes",
+    "file": "components/checkboxes/check.html",
+    "description": "Checkbox marcado. Clique para desmarcar.",
+    "knobs": [
+      {
+        "name": "showLabel",
+        "label": "Label",
+        "type": "toggle",
+        "default": false
+      },
+      {
+        "name": "label",
+        "label": "Texto do label",
+        "type": "text",
+        "default": "Label",
+        "hideLabel": true
+      }
+    ]
+  },
+  {
+    "id": "checkbox-minus",
+    "name": "Minus",
+    "category": "Checkboxes",
+    "file": "components/checkboxes/minus.html",
+    "description": "Checkbox para quando os itens de um grupo têm estados diferentes: alguns marcados e outros não.",
+    "knobs": [
+      {
+        "name": "showLabel",
+        "label": "Label",
+        "type": "toggle",
+        "default": false
+      },
+      {
+        "name": "label",
+        "label": "Texto do label",
+        "type": "text",
+        "default": "Label",
+        "hideLabel": true
+      }
+    ]
+  },
+  {
+    "id": "checkbox-button",
+    "name": "Button",
+    "category": "Checkboxes",
+    "file": "components/checkboxes/button.html",
+    "description": "Checkbox em formato de botão, com texto ao lado. Ao marcar, o fundo e o texto mudam de cor.",
+    "knobs": [
+      {
+        "name": "checked",
+        "label": "Marcado",
+        "type": "toggle",
+        "default": false
+      },
+      {
+        "name": "label",
+        "label": "Texto",
+        "type": "text",
+        "default": "Label"
+      }
+    ]
+  },
+  {
+    "id": "checkbox-box",
+    "name": "Box",
+    "category": "Checkboxes",
+    "file": "components/checkboxes/box.html",
+    "description": "Checkbox em uma caixa clicável, com título e descrição. Ao marcar, a caixa ganha fundo verde.",
+    "knobs": [
+      {
+        "name": "checked",
+        "label": "Marcado",
+        "type": "toggle",
+        "default": false
+      },
+      {
+        "name": "title",
+        "label": "Título",
+        "type": "text",
+        "default": "Plano mensal"
+      },
+      {
+        "name": "showDescription",
+        "label": "Descrição",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "description",
+        "label": "Texto da descrição",
+        "type": "text",
+        "default": "Cobrança todo mês, cancele quando quiser.",
+        "hideLabel": true
+      }
+    ]
+  },
+  {
+    "id": "checkbox-icon",
+    "name": "Ícone",
+    "category": "Checkboxes",
+    "file": "components/checkboxes/icon.html",
+    "description": "Checkbox em formato de botão, com ícone no lugar da caixa. Ao marcar, o fundo, o ícone e o texto mudam de cor.",
+    "knobs": [
+      {
+        "name": "checked",
+        "label": "Marcado",
+        "type": "toggle",
+        "default": false
+      },
+      {
+        "name": "label",
+        "label": "Texto",
+        "type": "text",
+        "default": "Label"
       }
     ]
   }

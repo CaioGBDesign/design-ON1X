@@ -10,7 +10,7 @@
     border-radius: 8px;
     background: transparent;
 
-    color: #5fddd3;
+    color: #fff;
     font-family: "Public Sans";
     font-size: 12px;
     font-style: normal;
@@ -24,7 +24,15 @@
     transition: background 0.15s;
   }
   .ghost-sm:hover {
-    background: rgba(95, 221, 211, 0.1);
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  /* Light mode */
+  [data-theme="light"] .ghost-sm {
+    color: #000;
+  }
+  [data-theme="light"] .ghost-sm:hover {
+    background: rgba(0, 0, 0, 0.06);
   }
 </style>
 <button class="ghost-sm">

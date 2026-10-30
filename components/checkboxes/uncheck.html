@@ -1,0 +1,64 @@
+<style>
+  .checkbox-uncheck {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+  }
+  .checkbox-uncheck .text {
+    display: flex;
+    width: 40px;
+    height: 16px;
+    flex-direction: column;
+    justify-content: center;
+
+    color: #fff;
+    font-family: "Public Sans";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+  }
+
+  /* Checkbox desmarcado */
+  .checkbox-uncheck input {
+    display: flex;
+    width: 16px;
+    height: 16px;
+    flex: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    margin: 0;
+
+    appearance: none;
+    border-radius: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    background: #262626;
+    cursor: pointer;
+  }
+  /* Checkbox marcado */
+  .checkbox-uncheck input:checked {
+    background: #5fddd3 url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2712%27 height=%2712%27 viewBox=%270 0 12 12%27 fill=%27none%27%3E%3Cpath d=%27M10 3L4.5 8.5L2 6%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27 stroke=%27%230A181C%27/%3E%3C/svg%3E") no-repeat center;
+  }
+  .checkbox-uncheck input:focus-visible {
+    outline: 2px solid #5fddd3;
+    outline-offset: 2px;
+  }
+
+  /* Light mode */
+  [data-theme="light"] .checkbox-uncheck .text {
+    color: #000;
+  }
+  [data-theme="light"] .checkbox-uncheck input {
+    border: 1px solid rgba(0, 0, 0, 0.04);
+  }
+  [data-theme="light"] .checkbox-uncheck input:not(:checked) {
+    background: #e5e5e5;
+  }
+</style>
+<label class="checkbox-uncheck">
+  <input type="checkbox"{{^showLabel}} aria-label="{{label}}"{{/showLabel}} />
+  {{#showLabel}}<span class="text">{{label}}</span>{{/showLabel}}
+</label>

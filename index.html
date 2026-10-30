@@ -37,7 +37,7 @@
         margin: 0;
         height: 100vh;
         display: grid;
-        grid-template-columns: 265px 1fr;
+        grid-template-columns: 255px 1fr;
         background: var(--bg);
         color: var(--text);
         font-size: 13px;
@@ -63,6 +63,82 @@
       select {
         font: inherit;
         color: inherit;
+      }
+
+      /* Página no Light */
+      body[data-theme="light"] {
+        background: linear-gradient(0deg, rgba(95, 221, 211, 0.03) 0%, rgba(95, 221, 211, 0.03) 100%), #fff;
+      }
+      body[data-theme="light"]::before {
+        display: none;
+      }
+      body[data-theme="light"] .nav,
+      body[data-theme="light"] .toolbar {
+        --line: rgba(0, 0, 0, 0.15);
+        --muted: #717171;
+        color: #000;
+      }
+      body[data-theme="light"] .nav {
+        border-right: 1px solid rgba(0, 0, 0, 0.15);
+        background: rgba(0, 0, 0, 0.03);
+      }
+      body[data-theme="light"] .frame {
+        border-color: rgba(0, 0, 0, 0.15);
+      }
+      body[data-theme="light"] .nav-search {
+        border-color: rgba(0, 0, 0, 0.15);
+        background: #fff;
+        color: #000;
+      }
+      body[data-theme="light"] .nav-search input {
+        color: #000;
+      }
+      body[data-theme="light"] .filter input {
+        border-color: rgba(0, 0, 0, 0.04);
+      }
+      body[data-theme="light"] .filter input:not(:checked, :indeterminate) {
+        background: #e5e5e5;
+      }
+      body[data-theme="light"] .stage::-webkit-scrollbar-thumb,
+      body[data-theme="light"] pre::-webkit-scrollbar-thumb {
+        background-color: rgba(0, 0, 0, 0.3);
+      }
+
+      /* Drawer no Light */
+      body[data-theme="light"] .drawer {
+        --line: rgba(0, 0, 0, 0.15);
+        border-left: 1px solid rgba(0, 0, 0, 0.15);
+        background: #fff;
+        color: #000;
+      }
+      /* A sombra só existe aberto: fechado, ela vazaria para dentro da tela */
+      body[data-theme="light"] .drawer.open {
+        box-shadow: -8px 0 24px 0 rgba(0, 0, 0, 0.06);
+      }
+      body[data-theme="light"] .drawer .icon-btn {
+        border-color: rgba(0, 0, 0, 0.15);
+        background: rgba(0, 0, 0, 0.02);
+        color: #000;
+      }
+      body[data-theme="light"] .drawer .icon-btn:hover {
+        border-color: rgba(0, 0, 0, 0.3);
+        background: rgba(0, 0, 0, 0.06);
+      }
+      body[data-theme="light"] .drawer pre {
+        border-color: rgba(0, 0, 0, 0.15);
+        background: rgba(0, 0, 0, 0.02);
+      }
+      body[data-theme="light"] .knob input:not(.switch),
+      body[data-theme="light"] .knob select {
+        border-color: rgba(0, 0, 0, 0.15);
+        background: #fff;
+        color: #000;
+      }
+      body[data-theme="light"] .knob .switch:not(:checked) {
+        background: #e5e5e5;
+      }
+      body[data-theme="light"] .knob .switch::before {
+        background: #000;
       }
 
       /* Lateral */
@@ -135,6 +211,9 @@
         overflow: auto;
         padding: 12px 20px;
       }
+      .filter[hidden] {
+        display: none;
+      }
       .filter {
         display: flex;
         min-height: 32px;
@@ -142,30 +221,33 @@
         gap: 12px;
         cursor: pointer;
       }
+      /* Mesmo estilo do componente Checkboxes (components/checkboxes/uncheck.html) */
       .filter input {
+        display: flex;
         width: 16px;
         height: 16px;
         flex: none;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
         margin: 0;
 
         appearance: none;
         border-radius: 4px;
-        border: 1px solid rgba(255, 255, 255, 0.15);
+        border: 1px solid rgba(255, 255, 255, 0.04);
         background: #262626;
         cursor: pointer;
       }
       .filter input:checked {
-        background: var(--accent);
+        background: #5fddd3 url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2712%27 height=%2712%27 viewBox=%270 0 12 12%27 fill=%27none%27%3E%3Cpath d=%27M10 3L4.5 8.5L2 6%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27 stroke=%27%230A181C%27/%3E%3C/svg%3E") no-repeat center;
       }
       .filter input:focus-visible {
         outline: 2px solid var(--accent);
         outline-offset: 2px;
       }
-      .filter.all {
-        color: #717171;
-      }
-      .filter.all input {
-        opacity: 0.5;
+      /* Quando só parte dos itens está marcada, mostra o traço do Minus */
+      .filter input:indeterminate {
+        background: #5fddd3 url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2712%27 height=%2712%27 viewBox=%270 0 12 12%27 fill=%27none%27%3E%3Cpath d=%27M2.5 6H9.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27 stroke=%27%230A181C%27/%3E%3C/svg%3E") no-repeat center;
       }
 
       /* Centro */
@@ -188,53 +270,78 @@
         margin: 0 auto 0 0;
       }
       .seg {
-        display: inline-flex;
-        gap: 2px;
-        padding: 3px;
-        border: 1px solid var(--line);
-        border-radius: 999px;
+        display: flex;
+        padding: 4px;
+        align-items: center;
+
+        border-radius: 16px;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        background: rgba(255, 255, 255, 0.03);
       }
       .seg button {
+        display: flex;
+        padding: 2px 8px;
+        align-items: center;
+        gap: 4px;
+
         border: 0;
+        border-radius: 12px;
         background: none;
-        padding: 3px 9px;
-        border-radius: 999px;
-        font-size: 11px;
+        color: #ffffff;
         cursor: pointer;
       }
       .seg button:not(.on):hover {
         background: var(--hover);
       }
       .seg button.on {
-        background: var(--accent);
-        color: var(--on-accent);
+        align-self: stretch;
+        background: #5fddd3;
+        color: #0a181c;
+      }
+      .seg button:focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 2px;
+      }
+      .seg[data-theme="light"] {
+        border: 1px solid rgba(0, 0, 0, 0.15);
+        background: rgba(0, 0, 0, 0.03);
+      }
+      .seg[data-theme="light"] button {
+        color: #000000;
       }
       .stage {
         display: flex;
         flex: 1;
         min-height: 0;
         padding: 0 26px 26px;
+        align-items: flex-start;
+        overflow: auto;
       }
       /* Simulador: uma única div com todos os componentes */
       .frame {
-        flex: 1;
-        min-width: 0;
-        overflow: auto;
+        display: flex;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+
         border-radius: 16px;
-        border: 1px solid var(--line);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        background: rgba(255, 255, 255, 0.03);
       }
       .frame[data-theme="dark"] {
         --cell-line: rgba(255, 255, 255, 0.08);
-        background: radial-gradient(66.4% 141.42% at 0% 0%, #0d1312 0%, #090909 100%);
+        --cell-hover: rgba(255, 255, 255, 0.04);
         color: #fff;
       }
       .frame[data-theme="light"] {
         --cell-line: rgba(0, 0, 0, 0.08);
-        background: linear-gradient(0deg, rgba(95, 221, 211, 0.03) 0%, rgba(95, 221, 211, 0.03) 100%), #fff;
+        --cell-hover: rgba(0, 0, 0, 0.03);
+        background: rgba(0, 0, 0, 0.03);
         color: #000;
       }
       .grid {
         display: grid;
+        width: 100%;
         grid-template-columns: repeat(auto-fill, minmax(256px, 1fr));
       }
       .cell {
@@ -245,6 +352,36 @@
         gap: 16px;
         border-right: 1px solid var(--cell-line);
         border-bottom: 1px solid var(--cell-line);
+        cursor: pointer;
+        transition: background 0.15s;
+      }
+      .grid[hidden],
+      .cell[hidden] {
+        display: none;
+      }
+      .cell:hover {
+        background: var(--cell-hover);
+      }
+      .tooltip {
+        position: fixed;
+        z-index: 30;
+        padding: 4px 8px;
+        transform: translate(-50%, calc(-100% - 8px));
+
+        border-radius: 6px;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        background: #000;
+
+        color: #fff;
+        font-size: 12px;
+        line-height: 16px;
+        white-space: nowrap;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.15s;
+      }
+      .tooltip.show {
+        opacity: 1;
       }
       .cell-head {
         display: flex;
@@ -403,7 +540,7 @@
         position: fixed;
         inset: 0;
         z-index: 19;
-        background: rgba(0, 0, 0, 0.5);
+        background: rgba(0, 0, 0, 0.25);
         opacity: 0;
         pointer-events: none;
         transition: opacity 0.2s;
@@ -603,6 +740,9 @@
         color: var(--muted);
         margin: 0;
       }
+      .grid-empty {
+        padding: 20px;
+      }
       /* Botão copiar dentro do código */
       .code-box {
         position: relative;
@@ -637,30 +777,30 @@
       }
       /* Scrollbar fina e arredondada, sem trilho, afastada das bordas */
       pre::-webkit-scrollbar,
-      .frame::-webkit-scrollbar {
+      .stage::-webkit-scrollbar {
         width: 14px;
         height: 14px;
       }
       pre::-webkit-scrollbar-track,
-      .frame::-webkit-scrollbar-track {
+      .stage::-webkit-scrollbar-track {
         background: transparent;
         margin: 8px 0;
       }
       pre::-webkit-scrollbar-thumb,
-      .frame::-webkit-scrollbar-thumb {
+      .stage::-webkit-scrollbar-thumb {
         background: rgba(255, 255, 255, 0.6);
         background-clip: padding-box;
         border: 4px solid transparent;
         border-radius: 999px;
       }
       pre::-webkit-scrollbar-thumb:hover,
-      .frame::-webkit-scrollbar-thumb:hover {
+      .stage::-webkit-scrollbar-thumb:hover {
         background-color: rgba(255, 255, 255, 0.8);
       }
       /* Firefox não aceita os estilos acima; usa a versão fina na mesma cor */
       @supports (-moz-appearance: none) {
         pre,
-        .frame {
+        .stage {
           scrollbar-width: thin;
           scrollbar-color: rgba(255, 255, 255, 0.6) transparent;
         }
@@ -698,7 +838,7 @@
       }
     </style>
   </head>
-  <body>
+  <body data-theme="dark">
     <aside class="nav">
       <div class="brand">
         Design System ON1X<small>Biblioteca de componentes em HTML</small>
@@ -712,29 +852,37 @@
           <input id="search" type="search" placeholder="Buscar componente" />
         </label>
       </div>
-      <div class="filters">
-        <label class="filter all"><input type="checkbox" />Todos</label>
-        <label class="filter"><input type="checkbox" />Alert</label>
-        <label class="filter"><input type="checkbox" />Botões</label>
-        <label class="filter"><input type="checkbox" />Input text</label>
-        <label class="filter"><input type="checkbox" />Radio</label>
-        <label class="filter"><input type="checkbox" />Search</label>
-        <label class="filter"><input type="checkbox" />Select</label>
-        <label class="filter"><input type="checkbox" />Toggle</label>
-      </div>
+      <div class="filters" id="filters"></div>
     </aside>
 
     <main>
       <div class="toolbar">
         <h1>Componentes</h1>
-        <div class="seg" id="theme">
-          <button data-t="dark" class="on">Dark</button
-          ><button data-t="light">Light</button>
+        <div class="seg" id="theme" data-theme="dark">
+          <button data-t="dark" class="on" type="button" aria-label="Modo escuro" aria-pressed="true" title="Dark">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M13.9901 8.324C13.9276 9.48143 13.5312 10.596 12.8488 11.5329C12.1664 12.4699 11.2272 13.1891 10.1447 13.6037C9.0623 14.0183 7.88294 14.1104 6.74924 13.869C5.61554 13.6276 4.57603 13.063 3.75636 12.2434C2.9367 11.4239 2.37198 10.3844 2.13047 9.25074C1.88895 8.11706 1.98099 6.9377 2.39544 5.85521C2.8099 4.77273 3.52903 3.83346 4.46591 3.15096C5.40279 2.46846 6.5173 2.07194 7.67472 2.00933C7.94472 1.99467 8.08606 2.316 7.94272 2.54467C7.46332 3.3117 7.25804 4.21858 7.36039 5.1173C7.46274 6.01602 7.86667 6.85352 8.50627 7.49312C9.14587 8.13272 9.98337 8.53665 10.8821 8.639C11.7808 8.74135 12.6877 8.53607 13.4547 8.05667C13.6841 7.91333 14.0047 8.054 13.9901 8.324Z" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" />
+            </svg>
+          </button>
+          <button data-t="light" type="button" aria-label="Modo claro" aria-pressed="false" title="Light">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+              <path d="M10.6667 7.99998C10.6667 9.47274 9.4728 10.6666 8.00004 10.6666C6.52728 10.6666 5.33337 9.47274 5.33337 7.99998C5.33337 6.52722 6.52728 5.33331 8.00004 5.33331C9.4728 5.33331 10.6667 6.52722 10.6667 7.99998Z" />
+              <path d="M8 2.66669H8.00667" />
+              <path d="M13.3334 8H13.34" />
+              <path d="M8 13.3333H8.00667" />
+              <path d="M2.66663 8H2.67329" />
+              <path d="M11.7714 4.22864H11.778" />
+              <path d="M11.7714 11.7714H11.778" />
+              <path d="M4.22864 11.7714H4.2353" />
+              <path d="M4.22864 4.22864H4.2353" />
+            </svg>
+          </button>
         </div>
       </div>
       <div class="stage">
         <div class="frame" id="frame" data-theme="dark">
           <div class="grid" id="grid"></div>
+          <p class="empty grid-empty" id="grid-empty" hidden>Nenhum componente selecionado.</p>
         </div>
       </div>
     </main>
@@ -788,6 +936,7 @@
     </aside>
 
     <div class="toast" id="toast">HTML copiado!</div>
+    <div class="tooltip" id="tooltip" role="status">HTML copiado</div>
 
     <script>
       const $ = (id) => document.getElementById(id);
@@ -799,6 +948,7 @@
         values: {}, // edição em andamento no drawer
         applied: {}, // valores mostrados na grade, por componente
         variant: {}, // modelo escolhido no select de cada célula
+        filters: new Set(), // células marcadas na lateral
         theme: "dark",
       };
       const cache = {};
@@ -839,8 +989,8 @@
       }
 
       const PREVIEW_BG = {
-        dark: "radial-gradient(66.4% 141.42% at 0% 0%, #0D1312 0%, #090909 100%)",
-        light: "linear-gradient(0deg, rgba(95, 221, 211, 0.03) 0%, rgba(95, 221, 211, 0.03) 100%), #FFF",
+        dark: "rgba(255, 255, 255, 0.03)",
+        light: "rgba(0, 0, 0, 0.03)",
       };
 
       // A prévia fica em um iframe: assim os scripts e os estilos do componente
@@ -877,6 +1027,21 @@ body{display:flex;height:100%;margin:0;padding:16px;overflow:auto;box-sizing:bor
         previewTimer = setTimeout(() => {
           $("preview").srcdoc = previewDoc();
         }, 120);
+      }
+
+      // Ignora acentos e maiúsculas: "botoes" encontra "Botões".
+      const plain = (s) => s.normalize("NFD").replace(/\p{M}/gu, "").toLowerCase();
+
+      // Filtra só a lista da lateral: a seleção e a grade não mudam.
+      function searchFilters() {
+        const q = plain($("search").value.trim());
+        let found = 0;
+        document.querySelectorAll(".filter:not(#filter-all-row)").forEach((row) => {
+          row.hidden = !plain(row.textContent).includes(q);
+          if (!row.hidden) found++;
+        });
+        $("filter-all-row").hidden = !!q;
+        $("filters-empty").hidden = found > 0;
       }
 
       // Componentes em ordem alfabética (ignora acentos e maiúsculas).
@@ -922,6 +1087,8 @@ body{display:flex;height:100%;margin:0;padding:16px;overflow:auto;box-sizing:bor
         });
       }
 
+      const CELL_CONTROLS = "button, input, select, textarea, label, a, .cell-select, .menu";
+
       function renderGrid() {
         const grid = $("grid");
         grid.innerHTML = "";
@@ -929,8 +1096,14 @@ body{display:flex;height:100%;margin:0;padding:16px;overflow:auto;box-sizing:bor
           const shown = byId(state.variant[c.id] ?? c.id);
           const cell = document.createElement("article");
           cell.className = "cell";
+          cell.dataset.cell = c.id;
           cell.innerHTML = `<header class="cell-head"><span class="cell-title">${esc(c.grid.title)}</span>${cellSelect(c, shown)}<button class="icon-btn" type="button" data-edit="${esc(shown.id)}" aria-label="Editar ${esc(c.grid.title)}" title="Editar">${EDIT_ICON}</button></header><div class="cell-body">${render(cache[shown.file], state.applied[shown.id])}</div>`;
           cell.querySelector("[data-edit]").onclick = (e) => openDrawer(shown, e.currentTarget);
+          cell.onclick = (e) => {
+            // Controles do componente e do cabeçalho seguem funcionando sem copiar.
+            if (e.target.closest(CELL_CONTROLS) || document.querySelector(".cell .open")) return;
+            copyCell(shown, e);
+          };
           const box = cell.querySelector(".cell-select");
           if (box) {
             box.querySelector(".cell-select-btn").onclick = () => setCellSelect(box, !box.classList.contains("open"));
@@ -951,6 +1124,40 @@ body{display:flex;height:100%;margin:0;padding:16px;overflow:auto;box-sizing:bor
             old.replaceWith(s);
           });
         });
+        applyFilters();
+      }
+
+      function renderFilters() {
+        const rows = cells()
+          .map((c) => `<label class="filter"><input type="checkbox" data-filter="${esc(c.id)}" checked />${esc(c.grid.title)}</label>`)
+          .join("");
+        $("filters").innerHTML = `<label class="filter" id="filter-all-row"><input type="checkbox" id="filter-all" /><span id="filter-all-label"></span></label>${rows}<p class="empty" id="filters-empty" hidden>Nada encontrado.</p>`;
+        const boxes = document.querySelectorAll("[data-filter]");
+        boxes.forEach((box) => {
+          box.onchange = () => {
+            state.filters[box.checked ? "add" : "delete"](box.dataset.filter);
+            applyFilters();
+          };
+        });
+        $("filter-all").onchange = () => {
+          const selectAll = state.filters.size < boxes.length;
+          state.filters = new Set(selectAll ? cells().map((c) => c.id) : []);
+          boxes.forEach((box) => (box.checked = selectAll));
+          applyFilters();
+        };
+      }
+
+      function applyFilters() {
+        const { filters } = state;
+        const allOn = filters.size === cells().length;
+        $("filter-all").checked = allOn;
+        $("filter-all").indeterminate = filters.size > 0 && !allOn;
+        $("filter-all-label").textContent = allOn ? "Desmarcar todos" : "Selecionar todos";
+        document.querySelectorAll(".cell").forEach((cell) => {
+          cell.hidden = !filters.has(cell.dataset.cell);
+        });
+        $("grid").hidden = !filters.size;
+        $("grid-empty").hidden = filters.size > 0;
       }
 
       function makeSwitch(k) {
@@ -1052,8 +1259,7 @@ body{display:flex;height:100%;margin:0;padding:16px;overflow:auto;box-sizing:bor
         closeDrawer();
       }
 
-      async function copy() {
-        const text = copyText();
+      async function writeClipboard(text) {
         try {
           await navigator.clipboard.writeText(text);
         } catch {
@@ -1064,6 +1270,21 @@ body{display:flex;height:100%;margin:0;padding:16px;overflow:auto;box-sizing:bor
           document.execCommand("copy");
           t.remove();
         }
+      }
+
+      let tooltipTimer;
+      async function copyCell(c, e) {
+        await writeClipboard(render(cache[c.file], state.applied[c.id]));
+        const tip = $("tooltip");
+        tip.style.left = `${e.clientX}px`;
+        tip.style.top = `${e.clientY}px`;
+        tip.classList.add("show");
+        clearTimeout(tooltipTimer);
+        tooltipTimer = setTimeout(() => tip.classList.remove("show"), 1200);
+      }
+
+      async function copy() {
+        await writeClipboard(copyText());
         $("toast").classList.add("show");
         setTimeout(() => $("toast").classList.remove("show"), 1600);
       }
@@ -1072,9 +1293,10 @@ body{display:flex;height:100%;margin:0;padding:16px;overflow:auto;box-sizing:bor
         $(groupId).addEventListener("click", (e) => {
           const b = e.target.closest("button");
           if (!b) return;
-          [...$(groupId).children].forEach((x) =>
-            x.classList.toggle("on", x === b),
-          );
+          [...$(groupId).children].forEach((x) => {
+            x.classList.toggle("on", x === b);
+            x.setAttribute("aria-pressed", x === b);
+          });
           state[key] = b.dataset[attr];
           after();
         });
@@ -1103,8 +1325,11 @@ body{display:flex;height:100%;margin:0;padding:16px;overflow:auto;box-sizing:bor
         }
         segment("theme", "t", "theme", () => {
           $("frame").dataset.theme = state.theme;
+          $("theme").dataset.theme = state.theme;
+          document.body.dataset.theme = state.theme;
         });
         $("copy").onclick = copy;
+        $("search").oninput = searchFilters;
         $("preview").onload = fitPreview;
         $("close").onclick = closeDrawer;
         $("backdrop").onclick = closeDrawer;
@@ -1115,6 +1340,8 @@ body{display:flex;height:100%;margin:0;padding:16px;overflow:auto;box-sizing:bor
           if ($("drawer").classList.contains("open")) closeDrawer();
         });
         document.addEventListener("click", (e) => closeCellSelects(e.target.closest(".cell-select")));
+        state.filters = new Set(cells().map((c) => c.id));
+        renderFilters();
         renderGrid();
       }
       init();
