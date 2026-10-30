@@ -90,33 +90,41 @@
         padding: 12px;
         border-bottom: 1px solid var(--line);
       }
+      /* Mesmo estilo do componente Search (components/search/search.html) */
       .search {
         display: flex;
+        padding: 8px;
         align-items: center;
         gap: 8px;
-        padding: 0 10px;
-        border: 1px solid var(--line);
         border-radius: 8px;
-        background: var(--field);
-      }
-      .search:focus-within {
-        border-color: var(--accent);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        background: #000;
+        color: #fff;
+        cursor: text;
       }
       .search svg {
-        width: 16px;
-        height: 16px;
         flex: none;
       }
       .search input {
         flex: 1;
         min-width: 0;
+        padding: 0;
         border: 0;
         background: none;
-        padding: 8px 0;
         outline: none;
+        overflow: hidden;
+        color: #fff;
+        text-overflow: ellipsis;
+        font-family: "Public Sans";
+        font-size: 12px;
+        font-weight: 400;
+        line-height: 16px;
       }
       .search input::placeholder {
-        color: var(--text);
+        color: #717171;
+      }
+      .search input::-webkit-search-cancel-button {
+        display: none;
       }
       .tree {
         overflow: auto;
@@ -267,17 +275,28 @@
       .knob + .knob.no-label {
         margin-top: 8px;
       }
+      /* Mesmo estilo do componente Input text (components/inputs/input-text) */
       .knob input,
       .knob select {
+        width: 100%;
+        box-sizing: border-box;
         padding: 8px;
-        border: 1px solid var(--line);
         border-radius: 8px;
-        background: var(--field);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        background: #000;
         outline: none;
+
+        overflow: hidden;
+        color: #fff;
+        text-overflow: ellipsis;
+        font-family: "Public Sans";
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 16px;
       }
-      .knob input:focus,
-      .knob select:focus {
-        border-color: var(--accent);
+      .knob input::placeholder {
+        color: #717171;
       }
       .knob-toggle {
         display: flex;
@@ -433,16 +452,9 @@
       </div>
       <div class="search-box">
         <label class="search">
-          <svg
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <circle cx="11" cy="11" r="7" />
-            <path d="m20 20-3.5-3.5" />
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M14 14L11.1067 11.1067" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" />
+            <path d="M12.6667 7.33333C12.6667 10.2789 10.2789 12.6667 7.33333 12.6667C4.38781 12.6667 2 10.2789 2 7.33333C2 4.38781 4.38781 2 7.33333 2C10.2789 2 12.6667 4.38781 12.6667 7.33333Z" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" />
           </svg>
           <input id="search" type="search" placeholder="Buscar componente" />
         </label>
@@ -601,6 +613,9 @@ body>*{margin:auto;}
         return root;
       }
 
+      // Pastas e componentes sempre em ordem alfabética (ignora acentos e maiúsculas).
+      const byName = (a, b) => a.localeCompare(b, "pt-BR", { sensitivity: "base", numeric: true });
+
       function renderNav(filter = "") {
         const tree = $("tree");
         tree.innerHTML = "";
@@ -622,7 +637,9 @@ body>*{margin:auto;}
         };
 
         (function draw(node, depth, path) {
-          Object.entries(node.folders).forEach(([name, child]) => {
+          Object.entries(node.folders)
+            .sort(([a], [b]) => byName(a, b))
+            .forEach(([name, child]) => {
             const key = [...path, name].join("/");
             const open = f || state.open.has(key);
             const b = row(
@@ -638,7 +655,7 @@ body>*{margin:auto;}
             };
             if (open) draw(child, depth + 1, [...path, name]);
           });
-          node.items.forEach((c) => {
+          [...node.items].sort((a, b) => byName(a.name, b.name)).forEach((c) => {
             const b = row(
               "item" + (state.current?.id === c.id ? " active" : ""),
               depth,
@@ -754,7 +771,8 @@ body>*{margin:auto;}
             fetch("components.json").then((r) => r.json()),
             fetch("tokens.css").then((r) => r.text()),
           ]);
-          state.list = list;
+          // Ordena como na lateral, para o site abrir no primeiro componente da lista.
+          state.list = list.sort((a, b) => byName(a.category, b.category) || byName(a.name, b.name));
           state.tokens = tokens;
         } catch (err) {
           $("title").textContent = "Não foi possível carregar os componentes";

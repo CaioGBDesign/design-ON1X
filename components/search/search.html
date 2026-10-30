@@ -1,0 +1,62 @@
+<style>
+  .search {
+    display: flex;
+    width: 100%;
+    max-width: 360px;
+    box-sizing: border-box;
+    padding: 8px;
+    align-items: center;
+    gap: 8px;
+    align-self: stretch;
+
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: #000;
+
+    color: #fff;
+    cursor: text;
+  }
+  .search .icon {
+    flex: none;
+  }
+  .search input {
+    flex: 1;
+    min-width: 0;
+    padding: 0;
+    border: 0;
+    background: none;
+    outline: none;
+
+    overflow: hidden;
+    color: #fff;
+    text-overflow: ellipsis;
+    font-family: "Public Sans";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 16px;
+  }
+  .search input::placeholder {
+    color: #717171;
+  }
+
+  /* Light mode */
+  [data-theme="light"] .search {
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    background: #fff;
+
+    color: #000;
+  }
+  [data-theme="light"] .search input {
+    color: #000;
+  }
+</style>
+<label class="search">
+  {{#icon}}
+  <svg class="icon" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M14 14L11.1067 11.1067" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" />
+    <path d="M12.6667 7.33333C12.6667 10.2789 10.2789 12.6667 7.33333 12.6667C4.38781 12.6667 2 10.2789 2 7.33333C2 4.38781 4.38781 2 7.33333 2C10.2789 2 12.6667 4.38781 12.6667 7.33333Z" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" />
+  </svg>
+  {{/icon}}
+  <input type="text" placeholder="{{placeholder}}" />
+</label>

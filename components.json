@@ -500,5 +500,318 @@
         "default": true
       }
     ]
+  },
+  {
+    "id": "search",
+    "name": "Search",
+    "category": "Search",
+    "file": "components/search/search.html",
+    "description": "Campo de busca com ícone de lupa. O texto longo é cortado com reticências.",
+    "knobs": [
+      {
+        "name": "icon",
+        "label": "Ícone",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "placeholder",
+        "label": "Texto",
+        "type": "text",
+        "default": "Buscar"
+      }
+    ]
+  },
+  {
+    "id": "input-text-default",
+    "name": "Default",
+    "category": "Inputs / Input text",
+    "file": "components/inputs/input-text/default.html",
+    "description": "Campo de texto com ícone. Ligue ou desligue o ícone e cada label.",
+    "knobs": [
+      {
+        "name": "icon",
+        "label": "Ícone",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "placeholder",
+        "label": "Texto",
+        "type": "text",
+        "default": "Digite"
+      },
+      {
+        "name": "topLeft",
+        "label": "Label topo esquerda",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "topLeftText",
+        "label": "Texto topo esquerda",
+        "type": "text",
+        "default": "Label",
+        "hideLabel": true
+      },
+      {
+        "name": "topRight",
+        "label": "Label topo direita",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "topRightText",
+        "label": "Texto topo direita",
+        "type": "text",
+        "default": "Top Right label",
+        "hideLabel": true
+      },
+      {
+        "name": "bottomLeft",
+        "label": "Label base esquerda",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "bottomLeftText",
+        "label": "Texto base esquerda",
+        "type": "text",
+        "default": "Bottom Left label",
+        "hideLabel": true
+      },
+      {
+        "name": "bottomRight",
+        "label": "Label base direita",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "bottomRightText",
+        "label": "Texto base direita",
+        "type": "text",
+        "default": "Bottom Right label",
+        "hideLabel": true
+      }
+    ]
+  },
+  {
+    "id": "input-text-disabled",
+    "name": "Disabled",
+    "category": "Inputs / Input text",
+    "file": "components/inputs/input-text/disabled.html",
+    "description": "Campo de texto bloqueado: label do topo, ícone e texto apagados.",
+    "knobs": [
+      {
+        "name": "icon",
+        "label": "Ícone",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "placeholder",
+        "label": "Texto",
+        "type": "text",
+        "default": "Digite"
+      },
+      {
+        "name": "topLeft",
+        "label": "Label topo esquerda",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "topLeftText",
+        "label": "Texto topo esquerda",
+        "type": "text",
+        "default": "Label",
+        "hideLabel": true
+      },
+      {
+        "name": "topRight",
+        "label": "Label topo direita",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "topRightText",
+        "label": "Texto topo direita",
+        "type": "text",
+        "default": "Top Right label",
+        "hideLabel": true
+      },
+      {
+        "name": "bottomLeft",
+        "label": "Label base esquerda",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "bottomLeftText",
+        "label": "Texto base esquerda",
+        "type": "text",
+        "default": "Bottom Left label",
+        "hideLabel": true
+      },
+      {
+        "name": "bottomRight",
+        "label": "Label base direita",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "bottomRightText",
+        "label": "Texto base direita",
+        "type": "text",
+        "default": "Bottom Right label",
+        "hideLabel": true
+      }
+    ]
+  },
+  {
+    "id": "input-text-large",
+    "name": "Large",
+    "category": "Inputs / Input text",
+    "file": "components/inputs/input-text/large.html",
+    "description": "Campo de texto grande, com várias linhas, para textos mais longos.",
+    "knobs": [
+      {
+        "name": "icon",
+        "label": "Ícone",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "placeholder",
+        "label": "Texto",
+        "type": "text",
+        "default": "Digite"
+      },
+      {
+        "name": "topLeft",
+        "label": "Label topo esquerda",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "topLeftText",
+        "label": "Texto topo esquerda",
+        "type": "text",
+        "default": "Label",
+        "hideLabel": true
+      },
+      {
+        "name": "topRight",
+        "label": "Label topo direita",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "topRightText",
+        "label": "Texto topo direita",
+        "type": "text",
+        "default": "Top Right label",
+        "hideLabel": true
+      },
+      {
+        "name": "bottomLeft",
+        "label": "Label base esquerda",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "bottomLeftText",
+        "label": "Texto base esquerda",
+        "type": "text",
+        "default": "Bottom Left label",
+        "hideLabel": true
+      },
+      {
+        "name": "bottomRight",
+        "label": "Label base direita",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "bottomRightText",
+        "label": "Texto base direita",
+        "type": "text",
+        "default": "Bottom Right label",
+        "hideLabel": true
+      }
+    ]
+  },
+  {
+    "id": "input-text-large-disabled",
+    "name": "Large disabled",
+    "category": "Inputs / Input text",
+    "file": "components/inputs/input-text/large-disabled.html",
+    "description": "Campo de texto grande bloqueado: label do topo, ícone e texto apagados.",
+    "knobs": [
+      {
+        "name": "icon",
+        "label": "Ícone",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "placeholder",
+        "label": "Texto",
+        "type": "text",
+        "default": "Digite"
+      },
+      {
+        "name": "topLeft",
+        "label": "Label topo esquerda",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "topLeftText",
+        "label": "Texto topo esquerda",
+        "type": "text",
+        "default": "Label",
+        "hideLabel": true
+      },
+      {
+        "name": "topRight",
+        "label": "Label topo direita",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "topRightText",
+        "label": "Texto topo direita",
+        "type": "text",
+        "default": "Top Right label",
+        "hideLabel": true
+      },
+      {
+        "name": "bottomLeft",
+        "label": "Label base esquerda",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "bottomLeftText",
+        "label": "Texto base esquerda",
+        "type": "text",
+        "default": "Bottom Left label",
+        "hideLabel": true
+      },
+      {
+        "name": "bottomRight",
+        "label": "Label base direita",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "bottomRightText",
+        "label": "Texto base direita",
+        "type": "text",
+        "default": "Bottom Right label",
+        "hideLabel": true
+      }
+    ]
   }
 ]

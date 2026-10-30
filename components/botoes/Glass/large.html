@@ -33,6 +33,19 @@
 
     color: #000;
   }
+
+  /* Hover */
+  .glass-sm {
+    transition: background 0.15s, border-color 0.15s;
+  }
+  .glass-sm:hover {
+    border-color: rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.08);
+  }
+  [data-theme="light"] .glass-sm:hover {
+    border-color: rgba(0, 0, 0, 0.3);
+    background: rgba(0, 0, 0, 0.06);
+  }
 </style>
 <button class="glass-sm">
   <svg
