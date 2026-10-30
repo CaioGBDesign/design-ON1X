@@ -4,12 +4,13 @@ Biblioteca de componentes HTML do design system.
 
 **Acesse:** https://caiogbdesign.github.io/design-ON1X/
 
-Escolha um componente na lateral, ajuste os knobs e clique em **Copiar HTML** para colar no Claude Design.
+Os componentes aparecem em uma grade. Clique em **editar** em um deles, ajuste os knobs e use **Copiar HTML** para colar no Claude Design, ou **Aplicar** para ver o resultado na grade.
 
 ## Como adicionar um componente
 
 1. Crie um arquivo em `components/`, por exemplo `components/alert.html`, com o `<style>` e o HTML do componente.
-   Use as variáveis de `tokens.css` (`var(--ds-primary)` etc.) e marque os trechos editáveis com `{{nome}}`.
+   Use valores fixos no CSS, com o estilo do Light em regras `[data-theme="light"]`, e marque os trechos editáveis com `{{nome}}`.
+   Todos ficam na mesma página, então prefixe as classes com o nome do componente, como `.alert-warning .title`, para um não afetar o outro.
 2. Adicione uma entrada em `components.json`:
 
 ```json
@@ -26,12 +27,13 @@ Escolha um componente na lateral, ajuste os knobs e clique em **Copiar HTML** pa
 }
 ```
 
-   O `category` define a pasta na lateral. Use `/` para criar subpastas, por exemplo `"Botões / Glow"`.
+   Para o componente aparecer na grade, acrescente `"grid": { "title": "Alert" }`. O `"values"` opcional muda como ele aparece ali, por exemplo `"values": { "bottomLeft": false }`. O `"options"` opcional cria o select da célula, por exemplo `"options": [{ "id": "glow-small", "label": "Glow" }]`.
    Para partes opcionais, use um knob `"type": "toggle"` (com `"default": true` ou `false`) e envolva o trecho com `{{#nome}}...{{/nome}}`.
    Ele só aparece, inclusive no "Copiar HTML", com o toggle ligado. `{{^nome}}...{{/nome}}` faz o contrário.
    Um knob com `"when": "nome"` só aparece no painel enquanto esse toggle estiver ligado.
+   Um campo com `"hideLabel": true` logo depois de um toggle aparece na mesma linha dele.
 3. Faça o commit. O site se atualiza sozinho em cerca de 1 minuto.
 
 ## Tokens
 
-Cores, fontes, raios e espaçamentos ficam em `tokens.css`, com tema claro em `:root` e escuro em `[data-theme="dark"]`.
+O arquivo `tokens.css` guarda cores, fontes, raios e espaçamentos, mas o site não o carrega mais, e nenhum componente usa essas variáveis.

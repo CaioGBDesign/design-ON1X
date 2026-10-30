@@ -37,7 +37,7 @@
         margin: 0;
         height: 100vh;
         display: grid;
-        grid-template-columns: 265px 1fr 340px;
+        grid-template-columns: 265px 1fr;
         background: var(--bg);
         color: var(--text);
         font-size: 13px;
@@ -85,13 +85,14 @@
         font-weight: 400;
         font-size: 12px;
         margin-top: 2px;
+        color: #717171;
       }
       .search-box {
         padding: 12px;
         border-bottom: 1px solid var(--line);
       }
       /* Mesmo estilo do componente Search (components/search/search.html) */
-      .search {
+      .nav-search {
         display: flex;
         padding: 8px;
         align-items: center;
@@ -102,10 +103,10 @@
         color: #fff;
         cursor: text;
       }
-      .search svg {
+      .nav-search svg {
         flex: none;
       }
-      .search input {
+      .nav-search input {
         flex: 1;
         min-width: 0;
         padding: 0;
@@ -120,54 +121,51 @@
         font-weight: 400;
         line-height: 16px;
       }
-      .search input::placeholder {
+      .nav-search input::placeholder {
         color: #717171;
       }
-      .search input::-webkit-search-cancel-button {
+      .nav-search input::-webkit-search-cancel-button {
         display: none;
       }
-      .tree {
-        overflow: auto;
-        padding: 16px 12px;
-        flex: 1;
-      }
-      .node {
+      .filters {
         display: flex;
+        flex-direction: column;
+        flex: 1;
+        min-height: 0;
+        overflow: auto;
+        padding: 12px 20px;
+      }
+      .filter {
+        display: flex;
+        min-height: 32px;
         align-items: center;
-        gap: 10px;
-        width: 100%;
-        text-align: left;
-        border: 0;
-        background: none;
-        padding: 10px 8px 10px calc(8px + var(--depth) * 16px);
-        border-radius: 8px;
+        gap: 12px;
         cursor: pointer;
-        white-space: nowrap;
       }
-      .node span {
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
-      .node:hover {
-        background: var(--hover);
-      }
-      .node .caret {
+      .filter input {
         width: 16px;
         height: 16px;
         flex: none;
-        transition: transform 0.15s;
+        margin: 0;
+
+        appearance: none;
+        border-radius: 4px;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        background: #262626;
+        cursor: pointer;
       }
-      .node.closed .caret {
-        transform: rotate(-90deg);
+      .filter input:checked {
+        background: var(--accent);
       }
-      .node .spacer {
-        width: 16px;
-        flex: none;
+      .filter input:focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 2px;
       }
-      .item.active {
-        border-radius: 8px;
-        background: rgba(43, 100, 96, 0.15);
-        color: #ffffff;
+      .filter.all {
+        color: #717171;
+      }
+      .filter.all input {
+        opacity: 0.5;
       }
 
       /* Centro */
@@ -212,52 +210,294 @@
         color: var(--on-accent);
       }
       .stage {
-        flex: 1;
-        overflow: auto;
         display: flex;
-        justify-content: center;
-        align-items: flex-start;
+        flex: 1;
+        min-height: 0;
         padding: 0 26px 26px;
       }
+      /* Simulador: uma única div com todos os componentes */
       .frame {
-        width: 100%;
-        height: 100%;
-        min-height: 420px;
+        flex: 1;
+        min-width: 0;
+        overflow: auto;
         border-radius: 16px;
         border: 1px solid var(--line);
-        background: var(--surface);
-        overflow: hidden;
-        transition: width 0.25s ease;
       }
-      .frame.mobile {
-        width: 390px;
-        height: 760px;
-        flex: none;
+      .frame[data-theme="dark"] {
+        --cell-line: rgba(255, 255, 255, 0.08);
+        background: radial-gradient(66.4% 141.42% at 0% 0%, #0d1312 0%, #090909 100%);
+        color: #fff;
       }
-      .frame.tablet {
-        width: 768px;
-        height: 900px;
-        flex: none;
+      .frame[data-theme="light"] {
+        --cell-line: rgba(0, 0, 0, 0.08);
+        background: linear-gradient(0deg, rgba(95, 221, 211, 0.03) 0%, rgba(95, 221, 211, 0.03) 100%), #fff;
+        color: #000;
       }
-      .frame iframe {
-        width: 100%;
-        height: 100%;
-        border: 0;
-        display: block;
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(256px, 1fr));
+      }
+      .cell {
+        display: flex;
+        min-height: 150px;
+        padding: 20px 16px;
+        flex-direction: column;
+        gap: 16px;
+        border-right: 1px solid var(--cell-line);
+        border-bottom: 1px solid var(--cell-line);
+      }
+      .cell-head {
+        display: flex;
+        min-height: 32px;
+        align-items: center;
+        gap: 8px;
+      }
+      .cell-title {
+        flex: 1 0 auto;
       }
 
-      /* Painel direito */
-      .panel {
-        background: var(--surface);
+      /* Select de modelos da célula */
+      .cell-select {
+        position: relative;
+        flex: 0 1 auto;
+        min-width: 96px;
+        font-size: 12px;
+        line-height: 16px;
+      }
+      .cell-select-btn {
+        display: flex;
+        width: 100%;
+        padding: 8px 4px 8px 8px;
+        align-items: center;
+        gap: 4px;
+
+        border-radius: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        background: rgba(255, 255, 255, 0.02);
+        cursor: pointer;
+      }
+      .cell-select-btn span {
+        flex: 1;
+        min-width: 0;
+        overflow: hidden;
+        text-align: left;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .cell-select-btn svg {
+        flex: none;
+        transition: transform 0.15s;
+      }
+      .cell-select.open .cell-select-btn {
+        background: #000;
+      }
+      .cell-select.open .cell-select-btn svg {
+        transform: rotate(180deg);
+      }
+      .cell-select-menu {
+        display: none;
+        position: absolute;
+        top: calc(100% + 8px);
+        right: 0;
+        z-index: 15;
+        min-width: 100%;
+        width: max-content;
+        margin: 0;
+        padding: 4px;
+        list-style: none;
+
+        border-radius: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        background: #000;
+        box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.15);
+      }
+      .cell-select.open .cell-select-menu {
+        display: block;
+      }
+      .cell-select-menu button {
+        display: block;
+        width: 100%;
+        padding: 8px;
+        border: 0;
+        border-radius: 6px;
+        background: none;
+        font-size: inherit;
+        line-height: inherit;
+        text-align: left;
+        cursor: pointer;
+      }
+      .cell-select-menu button:hover,
+      .cell-select-menu button:focus-visible,
+      .cell-select-menu button[aria-current="true"] {
+        background: rgba(255, 255, 255, 0.08);
+        outline: none;
+      }
+      .frame[data-theme="light"] .cell-select-btn {
+        border-color: rgba(0, 0, 0, 0.15);
+        background: rgba(0, 0, 0, 0.02);
+      }
+      .frame[data-theme="light"] .cell-select.open .cell-select-btn {
+        background: #fff;
+      }
+      .frame[data-theme="light"] .cell-select-menu {
+        border-color: rgba(0, 0, 0, 0.15);
+        background: #fff;
+      }
+      .frame[data-theme="light"] .cell-select-menu button:hover,
+      .frame[data-theme="light"] .cell-select-menu button:focus-visible,
+      .frame[data-theme="light"] .cell-select-menu button[aria-current="true"] {
+        background: rgba(0, 0, 0, 0.08);
+      }
+      .cell-body {
+        display: flex;
+        flex: 1;
+        min-width: 0;
+        justify-content: center;
+        align-items: center;
+      }
+      /* Mantém o tamanho do componente mesmo que ele peça para esticar */
+      .cell .cell-body > * {
+        align-self: center;
+      }
+      /* Na grade, o Radio mostra um único botão */
+      .cell-body .radio-group .radio + .radio {
+        display: none;
+      }
+
+      /* Botão só com ícone: mesmo estilo do botão Glass */
+      .icon-btn {
+        display: inline-flex;
+        flex: none;
+        padding: 8px;
+        justify-content: center;
+        align-items: center;
+
+        border-radius: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        background: rgba(255, 255, 255, 0.02);
+
+        color: #ffffff;
+        cursor: pointer;
+        transition: background 0.15s, border-color 0.15s;
+      }
+      .icon-btn:hover {
+        border-color: rgba(255, 255, 255, 0.3);
+        background: rgba(255, 255, 255, 0.08);
+      }
+      .icon-btn:focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 2px;
+      }
+      .frame[data-theme="light"] .icon-btn {
+        border-color: rgba(0, 0, 0, 0.15);
+        background: rgba(0, 0, 0, 0.02);
+        color: #000;
+      }
+      .frame[data-theme="light"] .icon-btn:hover {
+        border-color: rgba(0, 0, 0, 0.3);
+        background: rgba(0, 0, 0, 0.06);
+      }
+
+      /* Drawer de detalhes */
+      .backdrop {
+        position: fixed;
+        inset: 0;
+        z-index: 19;
+        background: rgba(0, 0, 0, 0.5);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.2s;
+      }
+      .backdrop.open {
+        opacity: 1;
+        pointer-events: auto;
+      }
+      .drawer {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 20;
+        display: flex;
+        width: 452px;
+        max-width: 100vw;
+        flex-direction: column;
         border-left: 1px solid var(--line);
+        background: #000;
+        transform: translateX(100%);
+        transition: transform 0.2s ease;
+      }
+      .drawer.open {
+        transform: translateX(0);
+      }
+      .drawer-head {
+        display: flex;
+        padding: 16px 20px;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid var(--line);
+      }
+      .drawer-head h2 {
+        margin: 0;
+        font-size: 14px;
+        font-weight: 600;
+      }
+      .drawer-body {
+        flex: 1;
+        min-height: 0;
         overflow: auto;
       }
-      .panel section {
-        padding: 16px;
+      .drawer-body section {
+        padding: 16px 20px;
       }
       /* Só a descrição tem a linha embaixo */
-      .panel section:first-child {
+      .drawer-body section:first-child {
         border-bottom: 1px solid var(--line);
+      }
+      .drawer-foot {
+        display: flex;
+        padding: 16px 20px;
+        justify-content: flex-end;
+      }
+      /* Mesmo estilo do botão Glow Small (components/botoes/Glow/small.html) */
+      .apply {
+        display: inline-flex;
+        padding: 8px;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+
+        border: none;
+        border-radius: 8px;
+        background: #5fddd3;
+
+        color: #0a181c;
+        font-family: "Public Sans";
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 16px;
+        cursor: pointer;
+        transition: background 0.15s, box-shadow 0.15s;
+      }
+      .apply:hover {
+        background: #7fe6de;
+        box-shadow: 0 0 16px 0 rgba(95, 221, 211, 0.5);
+      }
+      .apply:focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 2px;
+      }
+      .preview-box {
+        overflow: hidden;
+        border-radius: 8px;
+        border: 1px solid var(--line);
+      }
+      .preview-box iframe {
+        display: block;
+        width: 100%;
+        height: 140px;
+        border: 0;
       }
       .section-title {
         font-size: 13px;
@@ -265,18 +505,33 @@
       }
       .desc {
         margin: 0;
-        font-size: 15px;
-        line-height: 1.15;
+        color: #717171;
+        font-size: 13px;
+        line-height: 1.25;
+      }
+      /* Colunas: nome, campo, toggle. Todas as linhas ficam alinhadas entre si. */
+      #knobs {
+        display: grid;
+        grid-template-columns: max-content minmax(0, 1fr) auto;
+        gap: 16px 12px;
+        align-items: center;
       }
       .knob {
-        display: grid;
-        gap: 8px;
+        display: contents;
       }
-      .knob + .knob {
-        margin-top: 16px;
+      .knob > span {
+        grid-column: 1;
       }
-      .knob + .knob.no-label {
-        margin-top: 8px;
+      .knob > input,
+      .knob > select {
+        grid-column: 2 / 4;
+      }
+      .knob.no-label > input,
+      .knob.no-label > select {
+        grid-column: 1 / 4;
+      }
+      .knob-row > input[type="text"] {
+        grid-column: 2;
       }
       /* Mesmo estilo do componente Input text (components/inputs/input-text) */
       .knob input,
@@ -301,15 +556,11 @@
       .knob input::placeholder {
         color: #717171;
       }
-      .knob-toggle {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        cursor: pointer;
-      }
       /* Mesmo estilo do componente Toggle (components/toggle/default.html) */
       .knob .switch {
         display: flex;
+        grid-column: 3;
+        justify-self: end;
         width: 40px;
         height: 20px;
         flex: none;
@@ -348,10 +599,11 @@
         outline-offset: 2px;
       }
       .empty {
+        grid-column: 1 / -1;
         color: var(--muted);
         margin: 0;
       }
-      /* Botão copiar dentro do código: mesmo estilo do botão Glass, sem texto */
+      /* Botão copiar dentro do código */
       .code-box {
         position: relative;
       }
@@ -359,28 +611,7 @@
         position: absolute;
         right: 12px;
         bottom: 12px;
-        display: inline-flex;
-        padding: 8px;
-        justify-content: center;
-        align-items: center;
-        gap: 8px;
-
-        border-radius: 8px;
-        border: 1px solid rgba(255, 255, 255, 0.15);
-        background: rgba(255, 255, 255, 0.02);
         backdrop-filter: blur(12px);
-
-        color: #ffffff;
-        cursor: pointer;
-        transition: background 0.15s, border-color 0.15s;
-      }
-      .copy:hover {
-        border-color: rgba(255, 255, 255, 0.3);
-        background: rgba(255, 255, 255, 0.08);
-      }
-      .copy:focus-visible {
-        outline: 2px solid var(--accent);
-        outline-offset: 2px;
       }
       pre {
         display: flex;
@@ -406,30 +637,30 @@
       }
       /* Scrollbar fina e arredondada, sem trilho, afastada das bordas */
       pre::-webkit-scrollbar,
-      .stage::-webkit-scrollbar {
+      .frame::-webkit-scrollbar {
         width: 14px;
         height: 14px;
       }
       pre::-webkit-scrollbar-track,
-      .stage::-webkit-scrollbar-track {
+      .frame::-webkit-scrollbar-track {
         background: transparent;
         margin: 8px 0;
       }
       pre::-webkit-scrollbar-thumb,
-      .stage::-webkit-scrollbar-thumb {
+      .frame::-webkit-scrollbar-thumb {
         background: rgba(255, 255, 255, 0.6);
         background-clip: padding-box;
         border: 4px solid transparent;
         border-radius: 999px;
       }
       pre::-webkit-scrollbar-thumb:hover,
-      .stage::-webkit-scrollbar-thumb:hover {
+      .frame::-webkit-scrollbar-thumb:hover {
         background-color: rgba(255, 255, 255, 0.8);
       }
       /* Firefox não aceita os estilos acima; usa a versão fina na mesma cor */
       @supports (-moz-appearance: none) {
         pre,
-        .stage {
+        .frame {
           scrollbar-width: thin;
           scrollbar-color: rgba(255, 255, 255, 0.6) transparent;
         }
@@ -439,6 +670,7 @@
         position: fixed;
         bottom: 24px;
         left: 50%;
+        z-index: 30;
         transform: translate(-50%, 20px);
         background: var(--accent);
         color: var(--on-accent);
@@ -453,19 +685,15 @@
         transform: translate(-50%, 0);
       }
 
+      /* Em telas grandes a grade fica sempre em 5 colunas */
+      @media (min-width: 1600px) {
+        .grid {
+          grid-template-columns: repeat(5, minmax(0, 1fr));
+        }
+      }
       @media (max-width: 1100px) {
         body {
           grid-template-columns: 220px 1fr;
-          height: auto;
-          min-height: 100vh;
-        }
-        .panel {
-          grid-column: 1 / -1;
-          border-left: 0;
-          border-top: 1px solid var(--line);
-        }
-        .frame {
-          min-height: 360px;
         }
       }
     </style>
@@ -476,7 +704,7 @@
         Design System ON1X<small>Biblioteca de componentes em HTML</small>
       </div>
       <div class="search-box">
-        <label class="search">
+        <label class="nav-search">
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M14 14L11.1067 11.1067" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" />
             <path d="M12.6667 7.33333C12.6667 10.2789 10.2789 12.6667 7.33333 12.6667C4.38781 12.6667 2 10.2789 2 7.33333C2 4.38781 4.38781 2 7.33333 2C10.2789 2 12.6667 4.38781 12.6667 7.33333Z" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" />
@@ -484,49 +712,79 @@
           <input id="search" type="search" placeholder="Buscar componente" />
         </label>
       </div>
-      <nav class="tree" id="tree"></nav>
+      <div class="filters">
+        <label class="filter all"><input type="checkbox" />Todos</label>
+        <label class="filter"><input type="checkbox" />Alert</label>
+        <label class="filter"><input type="checkbox" />Botões</label>
+        <label class="filter"><input type="checkbox" />Input text</label>
+        <label class="filter"><input type="checkbox" />Radio</label>
+        <label class="filter"><input type="checkbox" />Search</label>
+        <label class="filter"><input type="checkbox" />Select</label>
+        <label class="filter"><input type="checkbox" />Toggle</label>
+      </div>
     </aside>
 
     <main>
       <div class="toolbar">
-        <h1 id="title">Carregando…</h1>
-        <div class="seg" id="viewport">
-          <button data-v="mobile">Mobile</button
-          ><button data-v="tablet">Tablet</button
-          ><button data-v="desktop" class="on">Desktop</button>
-        </div>
+        <h1>Componentes</h1>
         <div class="seg" id="theme">
           <button data-t="dark" class="on">Dark</button
           ><button data-t="light">Light</button>
         </div>
       </div>
       <div class="stage">
-        <div class="frame" id="frame">
-          <iframe id="preview" title="Preview do componente"></iframe>
+        <div class="frame" id="frame" data-theme="dark">
+          <div class="grid" id="grid"></div>
         </div>
       </div>
     </main>
 
-    <aside class="panel">
-      <section>
-        <p class="section-title">Descrição</p>
-        <p class="desc" id="desc"></p>
-      </section>
-      <section>
-        <div id="knobs"></div>
-      </section>
-      <section>
-        <p class="section-title">Código</p>
-        <div class="code-box">
-          <pre id="code"></pre>
-          <button class="copy" id="copy" type="button" aria-label="Copiar HTML" title="Copiar HTML">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="9" y="9" width="12" height="12" rx="2" />
-              <path d="M5 15V5a2 2 0 0 1 2-2h10" />
-            </svg>
-          </button>
-        </div>
-      </section>
+    <div class="backdrop" id="backdrop"></div>
+    <aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="drawer-title" inert>
+      <header class="drawer-head">
+        <h2 id="drawer-title">Detalhes do componente</h2>
+        <button class="icon-btn" id="close" type="button" aria-label="Fechar" title="Fechar">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 4L4 12" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" />
+            <path d="M4 4L12 12" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" />
+          </svg>
+        </button>
+      </header>
+      <div class="drawer-body">
+        <section>
+          <p class="section-title">Descrição</p>
+          <p class="desc" id="desc"></p>
+        </section>
+        <section>
+          <p class="section-title">Preview</p>
+          <div class="preview-box">
+            <iframe id="preview" title="Preview do componente"></iframe>
+          </div>
+        </section>
+        <section>
+          <div id="knobs"></div>
+        </section>
+        <section>
+          <p class="section-title">Código</p>
+          <div class="code-box">
+            <pre id="code"></pre>
+            <button class="icon-btn copy" id="copy" type="button" aria-label="Copiar HTML" title="Copiar HTML">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="12" height="12" rx="2" />
+                <path d="M5 15V5a2 2 0 0 1 2-2h10" />
+              </svg>
+            </button>
+          </div>
+        </section>
+      </div>
+      <footer class="drawer-foot">
+        <button class="apply" id="apply" type="button">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 6 9 17l-5-5" />
+          </svg>
+          Aplicar
+        </button>
+      </footer>
     </aside>
 
     <div class="toast" id="toast">HTML copiado!</div>
@@ -535,13 +793,13 @@
       const $ = (id) => document.getElementById(id);
       const state = {
         list: [],
-        tokens: "",
-        current: null,
+        current: null, // componente aberto no drawer
+        opener: null, // botão que abriu o drawer
         raw: "",
-        values: {},
+        values: {}, // edição em andamento no drawer
+        applied: {}, // valores mostrados na grade, por componente
+        variant: {}, // modelo escolhido no select de cada célula
         theme: "dark",
-        viewport: "desktop",
-        open: new Set(), // pastas abertas; todas começam fechadas
       };
       const cache = {};
 
@@ -559,199 +817,239 @@
         );
 
       // {{#nome}}...{{/nome}} só aparece com o toggle ligado; {{^nome}}...{{/nome}}, só desligado.
-      function rendered() {
+      function render(raw, values) {
         const CUT = "\u0000";
         const section = /\{\{([#^])\s*(\w+)\s*\}\}([\s\S]*?)\{\{\/\s*\2\s*\}\}/g;
-        let out = state.raw;
+        let out = raw;
         for (let prev; prev !== out; ) {
           prev = out;
           out = out.replace(section, (_, type, k, inner) =>
-            !!state.values[k] === (type === "#") ? inner : CUT,
+            !!values[k] === (type === "#") ? inner : CUT,
           );
         }
         return out
           .replace(new RegExp(`^[ \\t${CUT}]*${CUT}[ \\t${CUT}]*\\r?\\n`, "gm"), "")
           .replaceAll(CUT, "")
-          .replace(/\{\{\s*(\w+)\s*\}\}/g, (_, k) => esc(state.values[k] ?? ""))
+          .replace(/\{\{\s*(\w+)\s*\}\}/g, (_, k) => esc(values[k] ?? ""))
           .trim();
       }
 
       function copyText() {
-        return rendered();
+        return render(state.raw, state.values);
       }
 
-      function buildDoc(body) {
-        return `<!doctype html><html data-theme="${state.theme}"><head><meta charset="utf-8">
-<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600&display=swap" rel="stylesheet">
-<style>${state.tokens}
-/* O fundo fica fixo no html (do tamanho da prévia) e só o body rola por cima dele */
-html{height:100%;overflow:hidden;}
-[data-theme="dark"]{background:radial-gradient(66.4% 141.42% at 0% 0%, #0D1312 0%, #090909 100%);}
-[data-theme="light"]{background:linear-gradient(0deg, rgba(95, 221, 211, 0.03) 0%, rgba(95, 221, 211, 0.03) 100%), #FFF;}
-body{margin:0;height:100%;overflow:auto;display:flex;padding:24px;box-sizing:border-box;font-family:var(--ds-font);}
-/* Contêiner só da prévia (não vai para o Copiar HTML): centraliza qualquer componente */
-#ds-preview{display:flex;justify-content:center;align-items:center;width:100%;margin:auto;}
-::-webkit-scrollbar{width:14px;height:14px;}
-::-webkit-scrollbar-track,::-webkit-scrollbar-corner{background:transparent;}
-::-webkit-scrollbar-track{margin:8px;}
-::-webkit-scrollbar-thumb{background:rgba(255,255,255,.6);background-clip:padding-box;border:4px solid transparent;border-radius:999px;}
-::-webkit-scrollbar-thumb:hover{background-color:rgba(255,255,255,.8);}
-[data-theme="light"] ::-webkit-scrollbar-thumb{background-color:rgba(0,0,0,.3);}
-[data-theme="light"] ::-webkit-scrollbar-thumb:hover{background-color:rgba(0,0,0,.45);}
-@supports (-moz-appearance:none){body{scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.6) transparent;}[data-theme="light"] body{scrollbar-color:rgba(0,0,0,.3) transparent;}}
-</style></head><body><div id="ds-preview">${body}</div></body></html>`;
-      }
-
-      function update() {
-        const body = rendered();
-        $("preview").srcdoc = buildDoc(body);
-        $("code").textContent = copyText();
-      }
-
-      const ICONS = {
-        caret:
-          '<svg class="caret" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 6L8 10L12 6" stroke-linecap="round" stroke-linejoin="round" stroke="white"/></svg>',
+      const PREVIEW_BG = {
+        dark: "radial-gradient(66.4% 141.42% at 0% 0%, #0D1312 0%, #090909 100%)",
+        light: "linear-gradient(0deg, rgba(95, 221, 211, 0.03) 0%, rgba(95, 221, 211, 0.03) 100%), #FFF",
       };
 
-      // Monta as pastas a partir da categoria: "Botões / Glow" vira Botões > Glow.
-      function buildTree(list) {
-        const root = { folders: {}, items: [] };
-        list.forEach((c) => {
-          let node = root;
-          (c.category || "")
-            .split("/")
-            .map((s) => s.trim())
-            .filter(Boolean)
-            .forEach((name) => {
-              node = node.folders[name] ||= { folders: {}, items: [] };
-            });
-          node.items.push(c);
-        });
-        return root;
+      // A prévia fica em um iframe: assim os scripts e os estilos do componente
+      // não se misturam com os da grade, que mostra o mesmo componente.
+      function previewDoc() {
+        return `<!doctype html><html data-theme="${state.theme}"><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600&display=swap" rel="stylesheet">
+<style>
+html{height:100%;overflow:hidden;background:${PREVIEW_BG[state.theme]};}
+body{display:flex;height:100%;margin:0;padding:16px;overflow:auto;box-sizing:border-box;}
+#component{display:flex;width:100%;margin:auto;justify-content:center;align-items:center;}
+::-webkit-scrollbar{width:14px;height:14px;}
+::-webkit-scrollbar-track{background:transparent;margin:8px;}
+::-webkit-scrollbar-thumb{background:rgba(255,255,255,.6);background-clip:padding-box;border:4px solid transparent;border-radius:999px;}
+[data-theme="light"] ::-webkit-scrollbar-thumb{background-color:rgba(0,0,0,.3);}
+</style></head><body><div id="component">${copyText()}</div></body></html>`;
       }
 
-      // Pastas e componentes sempre em ordem alfabética (ignora acentos e maiúsculas).
+      // A prévia acompanha a altura do componente, até o limite de 320px.
+      function fitPreview() {
+        const frame = $("preview");
+        const content = frame.contentDocument?.getElementById("component");
+        if (content) frame.style.height = `${Math.min(Math.max(content.scrollHeight + 32, 140), 320)}px`;
+        // Com o foco dentro da prévia, o Esc não chega à página.
+        frame.contentDocument?.addEventListener("keydown", (e) => {
+          if (e.key === "Escape") closeDrawer();
+        });
+      }
+
+      let previewTimer;
+      function update() {
+        $("code").textContent = copyText();
+        clearTimeout(previewTimer);
+        previewTimer = setTimeout(() => {
+          $("preview").srcdoc = previewDoc();
+        }, 120);
+      }
+
+      // Componentes em ordem alfabética (ignora acentos e maiúsculas).
       const byName = (a, b) => a.localeCompare(b, "pt-BR", { sensitivity: "base", numeric: true });
 
-      function renderNav(filter = "") {
-        const tree = $("tree");
-        tree.innerHTML = "";
-        const f = filter.trim().toLowerCase();
-        const list = state.list.filter(
-          (c) =>
-            !f ||
-            c.name.toLowerCase().includes(f) ||
-            c.category.toLowerCase().includes(f),
-        );
+      const EDIT_ICON =
+        '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"/></svg>';
 
-        const row = (cls, depth, html) => {
-          const b = document.createElement("button");
-          b.className = "node " + cls;
-          b.style.setProperty("--depth", depth);
-          b.innerHTML = html;
-          tree.appendChild(b);
-          return b;
+      const ARROW_ICON =
+        '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 6L8 10L12 6" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor"/></svg>';
+
+      // Cada entrada com "grid" no components.json vira uma célula da grade.
+      const cells = () =>
+        state.list.filter((c) => c.grid).sort((a, b) => byName(a.grid.title, b.grid.title));
+
+      const byId = (id) => state.list.find((x) => x.id === id);
+
+      // Modelos do select da célula, vindos de "grid.options" no components.json.
+      const optionsOf = (c) =>
+        [...(c.grid.options || [])].sort((a, b) => byName(a.label, b.label));
+
+      function cellSelect(c, shown) {
+        const options = optionsOf(c);
+        if (!options.length) return "";
+        const items = options
+          .map(
+            (o) =>
+              `<li><button type="button" data-variant="${esc(o.id)}" aria-current="${o.id === shown.id}">${esc(o.label)}</button></li>`,
+          )
+          .join("");
+        const current = options.find((o) => o.id === shown.id);
+        return `<div class="cell-select"><button class="cell-select-btn" type="button" aria-expanded="false" aria-label="Modelo de ${esc(c.grid.title)}"><span>${esc(current.label)}</span>${ARROW_ICON}</button><ul class="cell-select-menu">${items}</ul></div>`;
+      }
+
+      function setCellSelect(box, open) {
+        box.classList.toggle("open", open);
+        box.querySelector(".cell-select-btn").setAttribute("aria-expanded", open);
+      }
+
+      function closeCellSelects(except) {
+        document.querySelectorAll(".cell-select.open").forEach((box) => {
+          if (box !== except) setCellSelect(box, false);
+        });
+      }
+
+      function renderGrid() {
+        const grid = $("grid");
+        grid.innerHTML = "";
+        cells().forEach((c) => {
+          const shown = byId(state.variant[c.id] ?? c.id);
+          const cell = document.createElement("article");
+          cell.className = "cell";
+          cell.innerHTML = `<header class="cell-head"><span class="cell-title">${esc(c.grid.title)}</span>${cellSelect(c, shown)}<button class="icon-btn" type="button" data-edit="${esc(shown.id)}" aria-label="Editar ${esc(c.grid.title)}" title="Editar">${EDIT_ICON}</button></header><div class="cell-body">${render(cache[shown.file], state.applied[shown.id])}</div>`;
+          cell.querySelector("[data-edit]").onclick = (e) => openDrawer(shown, e.currentTarget);
+          const box = cell.querySelector(".cell-select");
+          if (box) {
+            box.querySelector(".cell-select-btn").onclick = () => setCellSelect(box, !box.classList.contains("open"));
+            box.querySelectorAll("[data-variant]").forEach((b) => {
+              b.onclick = () => {
+                state.variant[c.id] = b.dataset.variant;
+                renderGrid();
+                document.querySelector(`[data-edit="${b.dataset.variant}"]`)
+                  .closest(".cell").querySelector(".cell-select-btn").focus();
+              };
+            });
+          }
+          grid.appendChild(cell);
+          // Script inserido por innerHTML não roda: recria para o componente funcionar.
+          cell.querySelectorAll("script").forEach((old) => {
+            const s = document.createElement("script");
+            s.textContent = old.textContent;
+            old.replaceWith(s);
+          });
+        });
+      }
+
+      function makeSwitch(k) {
+        const sw = document.createElement("input");
+        sw.type = "checkbox";
+        sw.className = "switch";
+        sw.checked = !!state.values[k.name];
+        sw.setAttribute("aria-label", k.label || k.name);
+        sw.onchange = () => {
+          state.values[k.name] = sw.checked;
+          if (state.current.knobs.some((x) => x.when === k.name)) renderKnobs();
+          update();
         };
+        return sw;
+      }
 
-        (function draw(node, depth, path) {
-          Object.entries(node.folders)
-            .sort(([a], [b]) => byName(a, b))
-            .forEach(([name, child]) => {
-            const key = [...path, name].join("/");
-            const open = f || state.open.has(key);
-            const b = row(
-              "folder" + (open ? "" : " closed"),
-              depth,
-              `${ICONS.caret}<span>${esc(name)}</span>`,
-            );
-            b.onclick = () => {
-              state.open.has(key)
-                ? state.open.delete(key)
-                : state.open.add(key);
-              renderNav($("search").value);
-            };
-            if (open) draw(child, depth + 1, [...path, name]);
-          });
-          [...node.items].sort((a, b) => byName(a.name, b.name)).forEach((c) => {
-            const b = row(
-              "item" + (state.current?.id === c.id ? " active" : ""),
-              depth,
-              `<i class="spacer"></i><span>${esc(c.name)}</span>`,
-            );
-            b.onclick = () => select(c.id);
-          });
-        })(buildTree(list), 0, []);
-
-        if (!tree.children.length)
-          tree.innerHTML =
-            '<p class="empty" style="padding:12px 10px">Nada encontrado.</p>';
+      function makeField(k) {
+        let field;
+        if (k.type === "select") {
+          field = document.createElement("select");
+          k.options.forEach((o) => field.add(new Option(o, o)));
+        } else {
+          field = document.createElement("input");
+          field.type = "text";
+        }
+        field.setAttribute("aria-label", k.label || k.name);
+        field.value = state.values[k.name];
+        field.oninput = () => {
+          state.values[k.name] = field.value;
+          update();
+        };
+        return field;
       }
 
       function renderKnobs() {
         const box = $("knobs");
         box.innerHTML = "";
-        const knobs = state.current.knobs || [];
+        // "when" esconde o knob enquanto o toggle indicado estiver desligado.
+        const knobs = (state.current.knobs || []).filter((k) => !k.when || state.values[k.when]);
         if (!knobs.length) {
           box.innerHTML = '<p class="empty">Este componente não tem knobs.</p>';
           return;
         }
-        // "when" esconde o knob enquanto o toggle indicado estiver desligado.
-        knobs.filter((k) => !k.when || state.values[k.when]).forEach((k) => {
+        knobs.forEach((k, i) => {
+          const title = `<span>${esc(k.label || k.name)}</span>`;
+          // "hideLabel" logo depois de um toggle vai para a mesma linha dele.
+          if (k.hideLabel && knobs[i - 1]?.type === "toggle") return;
           const wrap = document.createElement("label");
-          wrap.className = "knob";
-          wrap.innerHTML = `<span>${esc(k.label || k.name)}</span>`;
-          if (k.type === "toggle") {
-            wrap.className = "knob knob-toggle";
-            const sw = document.createElement("input");
-            sw.type = "checkbox";
-            sw.className = "switch";
-            sw.checked = !!state.values[k.name];
-            sw.onchange = () => {
-              state.values[k.name] = sw.checked;
-              renderKnobs();
-              update();
-            };
-            wrap.appendChild(sw);
-            box.appendChild(wrap);
-            return;
-          }
-          let field;
-          if (k.type === "select") {
-            field = document.createElement("select");
-            k.options.forEach((o) => field.add(new Option(o, o)));
+          if (k.type === "toggle" && knobs[i + 1]?.hideLabel) {
+            wrap.className = "knob knob-row";
+            wrap.innerHTML = title;
+            wrap.append(makeField(knobs[i + 1]), makeSwitch(k));
+          } else if (k.type === "toggle") {
+            wrap.className = "knob";
+            wrap.innerHTML = title;
+            wrap.append(makeSwitch(k));
+          } else if (k.hideLabel) {
+            wrap.className = "knob no-label";
+            wrap.append(makeField(k));
           } else {
-            field = document.createElement("input");
-            field.type = "text";
+            wrap.className = "knob";
+            wrap.innerHTML = title;
+            wrap.append(makeField(k));
           }
-          // "hideLabel" esconde o título do campo (o nome segue disponível para leitores de tela).
-          if (k.hideLabel) {
-            wrap.classList.add("no-label");
-            wrap.firstElementChild.remove();
-            field.setAttribute("aria-label", k.label || k.name);
-          }
-          field.value = state.values[k.name];
-          field.oninput = () => {
-            state.values[k.name] = field.value;
-            update();
-          };
-          wrap.appendChild(field);
           box.appendChild(wrap);
         });
       }
 
-      async function select(id) {
-        const c = state.list.find((x) => x.id === id) || state.list[0];
+      function openDrawer(c, opener) {
         state.current = c;
-        history.replaceState(null, "", "#" + c.id);
-        $("title").textContent = c.name;
+        state.opener = opener;
+        state.raw = cache[c.file];
+        state.values = { ...state.applied[c.id] };
         $("desc").textContent = c.description || "";
-        state.values = Object.fromEntries(
-          (c.knobs || []).map((k) => [k.name, k.default ?? ""]),
-        );
-        state.raw = cache[c.file] ??= await fetch(c.file).then((r) => r.text());
-        renderNav($("search").value);
         renderKnobs();
         update();
+        clearTimeout(previewTimer);
+        $("preview").srcdoc = previewDoc();
+        $("code").scrollTop = 0;
+        $("drawer").inert = false;
+        $("drawer").classList.add("open");
+        $("backdrop").classList.add("open");
+        $("close").focus();
+      }
+
+      function closeDrawer() {
+        $("drawer").inert = true;
+        $("drawer").classList.remove("open");
+        $("backdrop").classList.remove("open");
+        state.opener?.focus();
+      }
+
+      // As edições só chegam à grade ao aplicar; fechar descarta.
+      function applyDrawer() {
+        const { id } = state.current;
+        state.applied[id] = { ...state.values };
+        renderGrid();
+        state.opener = document.querySelector(`[data-edit="${id}"]`);
+        closeDrawer();
       }
 
       async function copy() {
@@ -784,26 +1082,40 @@ body{margin:0;height:100%;overflow:auto;display:flex;padding:24px;box-sizing:bor
 
       async function init() {
         try {
-          const [list, tokens] = await Promise.all([
-            fetch("components.json").then((r) => r.json()),
-            fetch("tokens.css").then((r) => r.text()),
-          ]);
-          // Ordena como na lateral, para o site abrir no primeiro componente da lista.
-          state.list = list.sort((a, b) => byName(a.category, b.category) || byName(a.name, b.name));
-          state.tokens = tokens;
+          state.list = await fetch("components.json").then((r) => r.json());
+          const load = async (c, values) => {
+            cache[c.file] = await fetch(c.file).then((r) => r.text());
+            const defaults = (c.knobs || []).map((k) => [k.name, k.default ?? ""]);
+            state.applied[c.id] = { ...Object.fromEntries(defaults), ...values };
+          };
+          await Promise.all(
+            cells().flatMap((c) => [
+              load(c, c.grid.values),
+              ...optionsOf(c)
+                .filter((o) => o.id !== c.id)
+                .map((o) => load(byId(o.id), { ...c.grid.values, ...o.values })),
+            ]),
+          );
         } catch (err) {
-          $("title").textContent = "Não foi possível carregar os componentes";
-          $("desc").textContent =
-            "Abra pelo GitHub Pages ou por um servidor local (o navegador bloqueia o carregamento abrindo o arquivo direto).";
+          $("grid").innerHTML =
+            '<p class="empty" style="padding:20px">Não foi possível carregar os componentes. Abra pelo GitHub Pages ou por um servidor local (o navegador bloqueia o carregamento abrindo o arquivo direto).</p>';
           return;
         }
-        segment("viewport", "v", "viewport", () => {
-          $("frame").className = "frame " + state.viewport;
+        segment("theme", "t", "theme", () => {
+          $("frame").dataset.theme = state.theme;
         });
-        segment("theme", "t", "theme", update);
-        $("search").oninput = (e) => renderNav(e.target.value);
         $("copy").onclick = copy;
-        select(location.hash.slice(1));
+        $("preview").onload = fitPreview;
+        $("close").onclick = closeDrawer;
+        $("backdrop").onclick = closeDrawer;
+        $("apply").onclick = applyDrawer;
+        document.addEventListener("keydown", (e) => {
+          if (e.key !== "Escape") return;
+          closeCellSelects();
+          if ($("drawer").classList.contains("open")) closeDrawer();
+        });
+        document.addEventListener("click", (e) => closeCellSelects(e.target.closest(".cell-select")));
+        renderGrid();
       }
       init();
     </script>

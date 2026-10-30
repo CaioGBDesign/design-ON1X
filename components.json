@@ -12,7 +12,32 @@
         "type": "text",
         "default": "Continuar"
       }
-    ]
+    ],
+    "grid": {
+      "title": "Botões",
+      "options": [
+        {
+          "id": "glow-small",
+          "label": "Glow"
+        },
+        {
+          "id": "glass-small",
+          "label": "Glass"
+        },
+        {
+          "id": "ember-small",
+          "label": "Ember"
+        },
+        {
+          "id": "outline-small",
+          "label": "Outline"
+        },
+        {
+          "id": "ghost-small",
+          "label": "Ghost"
+        }
+      ]
+    }
   },
   {
     "id": "glow-large",
@@ -212,7 +237,37 @@
         "default": "Bottom Right label",
         "hideLabel": true
       }
-    ]
+    ],
+    "grid": {
+      "title": "Select",
+      "values": {
+        "topLeft": false,
+        "topRight": false,
+        "bottomLeft": false,
+        "bottomRight": false
+      },
+      "options": [
+        {
+          "id": "select-default",
+          "label": "Default"
+        },
+        {
+          "id": "select-disabled",
+          "label": "Disabled"
+        },
+        {
+          "id": "select-error",
+          "label": "Error",
+          "values": {
+            "bottomLeft": true
+          }
+        },
+        {
+          "id": "select-team",
+          "label": "Team"
+        }
+      ]
+    }
   },
   {
     "id": "select-disabled",
@@ -499,7 +554,14 @@
         "type": "toggle",
         "default": true
       }
-    ]
+    ],
+    "grid": {
+      "title": "Alert",
+      "values": {
+        "showDescription": false,
+        "title": "Título do alerta"
+      }
+    }
   },
   {
     "id": "search",
@@ -520,7 +582,10 @@
         "type": "text",
         "default": "Buscar"
       }
-    ]
+    ],
+    "grid": {
+      "title": "Search"
+    }
   },
   {
     "id": "input-text-default",
@@ -593,7 +658,34 @@
         "default": "Bottom Right label",
         "hideLabel": true
       }
-    ]
+    ],
+    "grid": {
+      "title": "Input Text",
+      "values": {
+        "topLeft": false,
+        "topRight": false,
+        "bottomLeft": false,
+        "bottomRight": false
+      },
+      "options": [
+        {
+          "id": "input-text-default",
+          "label": "Default"
+        },
+        {
+          "id": "input-text-disabled",
+          "label": "Disabled"
+        },
+        {
+          "id": "input-text-large",
+          "label": "Large"
+        },
+        {
+          "id": "input-text-large-disabled",
+          "label": "Large disabled"
+        }
+      ]
+    }
   },
   {
     "id": "input-text-disabled",
@@ -833,7 +925,24 @@
         "type": "text",
         "default": "Opção 2"
       }
-    ]
+    ],
+    "grid": {
+      "title": "Radio",
+      "options": [
+        {
+          "id": "radio-box",
+          "label": "Box"
+        },
+        {
+          "id": "radio-default",
+          "label": "Default"
+        },
+        {
+          "id": "radio-label",
+          "label": "Label"
+        }
+      ]
+    }
   },
   {
     "id": "radio-label",
@@ -922,7 +1031,23 @@
         "type": "text",
         "default": "Opção"
       }
-    ]
+    ],
+    "grid": {
+      "title": "Toggle",
+      "values": {
+        "checked": false
+      },
+      "options": [
+        {
+          "id": "toggle-default",
+          "label": "Default"
+        },
+        {
+          "id": "toggle-label",
+          "label": "Label"
+        }
+      ]
+    }
   },
   {
     "id": "toggle-label",
