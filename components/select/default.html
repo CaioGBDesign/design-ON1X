@@ -137,6 +137,43 @@
     right: auto;
     min-width: 240px;
   }
+
+  /* Light mode */
+  [data-theme="light"] .select-default .top-left,
+  [data-theme="light"] .select-default .top-right,
+  [data-theme="light"] .select-default .value {
+    color: #000000;
+  }
+  [data-theme="light"] .select-default .arrow {
+    color: #000000;
+  }
+  [data-theme="light"] .select-default .bottom-left,
+  [data-theme="light"] .select-default .bottom-right {
+    color: #717171;
+  }
+  [data-theme="light"] .select-default .field {
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    background: rgba(0, 0, 0, 0.02);
+  }
+  [data-theme="light"] .select-default.open .field {
+    background: #fff;
+  }
+  /* Lista de opções no Light */
+  [data-theme="light"] .select-default .menu {
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    background: #fff;
+    color: #000;
+  }
+  [data-theme="light"] .select-default .search {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+  }
+  [data-theme="light"] .select-default .search input::placeholder {
+    color: #717171;
+  }
+  [data-theme="light"] .select-default .options button:hover,
+  [data-theme="light"] .select-default .options button:focus-visible {
+    background: rgba(0, 0, 0, 0.08);
+  }
 </style>
 <div class="select-default{{^showText}} compact{{/showText}}">
   {{#topLeft}}<span class="top-left">{{topLeftText}}</span>{{/topLeft}}
@@ -183,7 +220,7 @@
           d="M4 6L8 10L12 6"
           stroke-linecap="round"
           stroke-linejoin="round"
-          stroke="white"
+          stroke="currentColor"
         />
       </svg>
     </button>

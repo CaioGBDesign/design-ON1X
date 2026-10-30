@@ -75,13 +75,11 @@
     display: flex;
     flex: none;
   }
-  .select-team .stack .avatar {
-    border: 1.5px solid #000;
-  }
   .select-team .stack .avatar + .avatar {
     margin-left: -6px;
   }
   .select-team .stack .more {
+    border: 1.5px solid #000;
     background: #333;
     color: #fff;
   }
@@ -185,6 +183,53 @@
   .select-team .option.selected .check {
     visibility: visible;
   }
+
+  /* Light mode */
+  [data-theme="light"] .select-team .top-left,
+  [data-theme="light"] .select-team .top-right {
+    color: #000000;
+  }
+  [data-theme="light"] .select-team .arrow {
+    color: #000000;
+  }
+  [data-theme="light"] .select-team .bottom-left,
+  [data-theme="light"] .select-team .bottom-right {
+    color: #717171;
+  }
+  [data-theme="light"] .select-team .field {
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    background: rgba(0, 0, 0, 0.02);
+  }
+  [data-theme="light"] .select-team.open .field {
+    background: #fff;
+  }
+  /* Lista de opções no Light */
+  [data-theme="light"] .select-team .menu {
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    background: #fff;
+    color: #000;
+  }
+  [data-theme="light"] .select-team .search {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+  }
+  [data-theme="light"] .select-team .search input::placeholder {
+    color: #717171;
+  }
+  [data-theme="light"] .select-team .option:hover,
+  [data-theme="light"] .select-team .option:focus-visible,
+  [data-theme="light"] .select-team .option.selected {
+    background: rgba(0, 0, 0, 0.08);
+  }
+  [data-theme="light"] .select-team .group + .group {
+    border-top: 1px solid rgba(0, 0, 0, 0.15);
+  }
+  [data-theme="light"] .select-team .group-title,
+  [data-theme="light"] .select-team .person small {
+    color: #717171;
+  }
+  [data-theme="light"] .select-team .count {
+    border: 1px solid rgba(0, 0, 0, 0.15);
+  }
 </style>
 <div class="select-team">
   {{#topLeft}}<span class="top-left">{{topLeftText}}</span>{{/topLeft}}
@@ -243,7 +288,7 @@
           d="M4 6L8 10L12 6"
           stroke-linecap="round"
           stroke-linejoin="round"
-          stroke="white"
+          stroke="currentColor"
         />
       </svg>
     </button>

@@ -146,6 +146,38 @@
     right: auto;
     min-width: 240px;
   }
+
+  /* Light mode */
+  [data-theme="light"] .select-error .top-left,
+  [data-theme="light"] .select-error .top-right,
+  [data-theme="light"] .select-error .value {
+    color: #000000;
+  }
+  [data-theme="light"] .select-error .arrow {
+    color: #000000;
+  }
+  [data-theme="light"] .select-error .field {
+    background: rgba(0, 0, 0, 0.02);
+  }
+  [data-theme="light"] .select-error.open .field {
+    background: #fff;
+  }
+  /* Lista de opções no Light */
+  [data-theme="light"] .select-error .menu {
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    background: #fff;
+    color: #000;
+  }
+  [data-theme="light"] .select-error .search {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+  }
+  [data-theme="light"] .select-error .search input::placeholder {
+    color: #717171;
+  }
+  [data-theme="light"] .select-error .options button:hover,
+  [data-theme="light"] .select-error .options button:focus-visible {
+    background: rgba(0, 0, 0, 0.08);
+  }
 </style>
 <div class="select-error{{^showText}} compact{{/showText}}">
   {{#topLeft}}<span class="top-left">{{topLeftText}}</span>{{/topLeft}}
@@ -192,7 +224,7 @@
           d="M4 6L8 10L12 6"
           stroke-linecap="round"
           stroke-linejoin="round"
-          stroke="white"
+          stroke="currentColor"
         />
       </svg>
     </button>

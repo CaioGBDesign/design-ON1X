@@ -56,6 +56,24 @@
   .select-disabled.compact {
     width: auto;
   }
+
+  /* Light mode */
+  [data-theme="light"] .select-disabled .top-left,
+  [data-theme="light"] .select-disabled .top-right {
+    color: #000000;
+  }
+  [data-theme="light"] .select-disabled .value,
+  [data-theme="light"] .select-disabled .arrow {
+    color: #e5e5e5;
+  }
+  [data-theme="light"] .select-disabled .bottom-left,
+  [data-theme="light"] .select-disabled .bottom-right {
+    color: #717171;
+  }
+  [data-theme="light"] .select-disabled .field {
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    background: rgba(0, 0, 0, 0.02);
+  }
 </style>
 <div class="select-disabled{{^showText}} compact{{/showText}}">
   {{#topLeft}}<span class="top-left">{{topLeftText}}</span>{{/topLeft}}
