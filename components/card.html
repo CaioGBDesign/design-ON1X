@@ -1,0 +1,17 @@
+<style>
+.ds-card {
+  width: 320px; max-width: 100%;
+  background: var(--ds-card); color: var(--ds-text);
+  border: 1px solid var(--ds-border); border-radius: var(--ds-radius-md);
+  box-shadow: var(--ds-shadow); padding: var(--ds-space-5);
+  font-family: var(--ds-font);
+}
+.ds-card__eyebrow { font-size: var(--ds-text-sm); color: var(--ds-primary); font-weight: 600; margin: 0 0 var(--ds-space-2); }
+.ds-card__title { font-size: var(--ds-text-lg); font-weight: 700; margin: 0 0 var(--ds-space-2); }
+.ds-card__text { font-size: var(--ds-text-md); color: var(--ds-text-muted); line-height: 1.5; margin: 0; }
+</style>
+<article class="ds-card">
+  <p class="ds-card__eyebrow">{{eyebrow}}</p>
+  <h3 class="ds-card__title">{{title}}</h3>
+  <p class="ds-card__text">{{text}}</p>
+</article>

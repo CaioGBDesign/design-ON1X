@@ -1,0 +1,48 @@
+[
+  {
+    "id": "button",
+    "name": "Button",
+    "category": "Core",
+    "file": "components/button.html",
+    "description": "Botão principal com ícone de seta. Use primary para a ação principal da tela.",
+    "knobs": [
+      { "name": "label", "label": "Texto", "type": "text", "default": "Continuar" },
+      { "name": "variant", "label": "Variante", "type": "select", "options": ["primary", "secondary", "ghost"], "default": "primary" }
+    ]
+  },
+  {
+    "id": "badge",
+    "name": "Badge",
+    "category": "Core",
+    "file": "components/badge.html",
+    "description": "Indicador curto de status.",
+    "knobs": [
+      { "name": "label", "label": "Texto", "type": "text", "default": "Ativo" },
+      { "name": "status", "label": "Status", "type": "select", "options": ["success", "warning", "danger"], "default": "success" }
+    ]
+  },
+  {
+    "id": "card",
+    "name": "Card",
+    "category": "Core",
+    "file": "components/card.html",
+    "description": "Container de conteúdo com título e texto de apoio.",
+    "knobs": [
+      { "name": "eyebrow", "label": "Sobretítulo", "type": "text", "default": "Novidade" },
+      { "name": "title", "label": "Título", "type": "text", "default": "Título do card" },
+      { "name": "text", "label": "Texto", "type": "text", "default": "Texto de apoio com uma ou duas linhas descrevendo o conteúdo." }
+    ]
+  },
+  {
+    "id": "input",
+    "name": "Text field",
+    "category": "Forms",
+    "file": "components/input.html",
+    "description": "Campo de texto com label e mensagem de ajuda.",
+    "knobs": [
+      { "name": "label", "label": "Label", "type": "text", "default": "E-mail" },
+      { "name": "placeholder", "label": "Placeholder", "type": "text", "default": "voce@exemplo.com" },
+      { "name": "hint", "label": "Ajuda", "type": "text", "default": "Vamos usar só para login." }
+    ]
+  }
+]

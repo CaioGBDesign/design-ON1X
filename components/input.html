@@ -1,0 +1,16 @@
+<style>
+.ds-field { display: grid; gap: 6px; width: 320px; max-width: 100%; font-family: var(--ds-font); }
+.ds-field__label { font-size: var(--ds-text-sm); font-weight: 600; color: var(--ds-text); }
+.ds-field__input {
+  font: 400 var(--ds-text-md)/1.2 var(--ds-font); color: var(--ds-text);
+  background: var(--ds-card); border: 1.5px solid var(--ds-border);
+  border-radius: var(--ds-radius-sm); padding: 12px 14px; outline: none;
+}
+.ds-field__input:focus { border-color: var(--ds-primary); box-shadow: 0 0 0 3px color-mix(in srgb, var(--ds-primary) 20%, transparent); }
+.ds-field__hint { font-size: var(--ds-text-sm); color: var(--ds-text-muted); }
+</style>
+<label class="ds-field">
+  <span class="ds-field__label">{{label}}</span>
+  <input class="ds-field__input" type="text" placeholder="{{placeholder}}">
+  <span class="ds-field__hint">{{hint}}</span>
+</label>
