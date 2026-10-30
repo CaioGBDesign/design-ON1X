@@ -813,5 +813,136 @@
         "hideLabel": true
       }
     ]
+  },
+  {
+    "id": "radio-default",
+    "name": "Default",
+    "category": "Radio",
+    "file": "components/radio/default.html",
+    "description": "Dois radio buttons sem texto, um desmarcado e um marcado. Clique em um para trocar a seleção.",
+    "knobs": [
+      {
+        "name": "ariaLabel1",
+        "label": "Nome do 1º radio (leitores de tela)",
+        "type": "text",
+        "default": "Opção 1"
+      },
+      {
+        "name": "ariaLabel2",
+        "label": "Nome do 2º radio (leitores de tela)",
+        "type": "text",
+        "default": "Opção 2"
+      }
+    ]
+  },
+  {
+    "id": "radio-label",
+    "name": "Label",
+    "category": "Radio",
+    "file": "components/radio/label.html",
+    "description": "Dois radio buttons com texto ao lado, um desmarcado e um marcado. Clicar no texto também seleciona.",
+    "knobs": [
+      {
+        "name": "label1",
+        "label": "Texto da opção desmarcada",
+        "type": "text",
+        "default": "Opção 1"
+      },
+      {
+        "name": "label2",
+        "label": "Texto da opção marcada",
+        "type": "text",
+        "default": "Opção 2"
+      }
+    ]
+  },
+  {
+    "id": "radio-box",
+    "name": "Box",
+    "category": "Radio",
+    "file": "components/radio/box.html",
+    "description": "Dois radio buttons em caixas clicáveis, com título e descrição. A caixa selecionada ganha fundo verde.",
+    "knobs": [
+      {
+        "name": "title1",
+        "label": "Título da opção desmarcada",
+        "type": "text",
+        "default": "Plano mensal"
+      },
+      {
+        "name": "showDescription1",
+        "label": "Descrição da opção desmarcada",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "description1",
+        "label": "Texto da descrição da opção desmarcada",
+        "type": "text",
+        "default": "Cobrança todo mês, cancele quando quiser.",
+        "hideLabel": true
+      },
+      {
+        "name": "title2",
+        "label": "Título da opção marcada",
+        "type": "text",
+        "default": "Plano anual"
+      },
+      {
+        "name": "showDescription2",
+        "label": "Descrição da opção marcada",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "description2",
+        "label": "Texto da descrição da opção marcada",
+        "type": "text",
+        "default": "Pague uma vez por ano e economize 20%.",
+        "hideLabel": true
+      }
+    ]
+  },
+  {
+    "id": "toggle-default",
+    "name": "Default",
+    "category": "Toggle",
+    "file": "components/toggle/default.html",
+    "description": "Toggle sem texto. Clique para ligar ou desligar.",
+    "knobs": [
+      {
+        "name": "checked",
+        "label": "Ligado",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "ariaLabel",
+        "label": "Nome para leitores de tela",
+        "type": "text",
+        "default": "Opção"
+      }
+    ]
+  },
+  {
+    "id": "toggle-label",
+    "name": "Label",
+    "category": "Toggle",
+    "file": "components/toggle/label.html",
+    "description": "Toggle com texto ao lado. Clicar no texto também liga ou desliga.",
+    "knobs": [
+      {
+        "name": "checked",
+        "label": "Ligado",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "label",
+        "label": "Texto",
+        "type": "text",
+        "default": "Notificações por e-mail"
+      }
+    ]
   }
 ]

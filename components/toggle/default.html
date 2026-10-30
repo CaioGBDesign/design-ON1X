@@ -1,0 +1,55 @@
+<style>
+  /* Corpo desmarcado */
+  .toggle {
+    display: flex;
+    width: 40px;
+    height: 20px;
+    flex: none;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 4px;
+    align-items: center;
+    gap: 8px;
+
+    appearance: none;
+    border-radius: 40px;
+    background: #262626;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  /* Círculo indicador */
+  .toggle::before {
+    content: "";
+    width: 10px;
+    height: 6px;
+    transform: rotate(-180deg);
+    flex-shrink: 0;
+
+    border-radius: 4px;
+    background: #fff;
+    transition: transform 0.15s;
+  }
+  /* Corpo marcado: o indicador vai para a direita */
+  .toggle:checked {
+    background: #5fddd3;
+  }
+  .toggle:checked::before {
+    transform: translateX(22px) rotate(-180deg);
+  }
+  .toggle:focus-visible {
+    outline: 2px solid #5fddd3;
+    outline-offset: 2px;
+  }
+
+  /* Light mode */
+  [data-theme="light"] .toggle {
+    background: #e5e5e5;
+  }
+  [data-theme="light"] .toggle::before {
+    background: #000;
+  }
+  [data-theme="light"] .toggle:checked {
+    background: #5fddd3;
+  }
+</style>
+<input class="toggle" type="checkbox" role="switch"{{#checked}} checked{{/checked}} aria-label="{{ariaLabel}}" />

@@ -1,0 +1,59 @@
+<style>
+  .radio-group {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .radio {
+    display: flex;
+    width: 16px;
+    height: 16px;
+    flex: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    margin: 0;
+
+    appearance: none;
+    border-radius: 50px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: #262626;
+    cursor: pointer;
+  }
+  .radio:checked {
+    background: none;
+  }
+  /* Marcador no centro do radio selecionado */
+  .radio::before {
+    content: "";
+    width: 10px;
+    height: 10px;
+    flex-shrink: 0;
+
+    border-radius: 50px;
+    background: #5fddd3;
+    transform: scale(0);
+    transition: transform 0.15s;
+  }
+  .radio:checked::before {
+    transform: scale(1);
+  }
+  .radio:focus-visible {
+    outline: 2px solid #5fddd3;
+    outline-offset: 2px;
+  }
+
+  /* Light mode */
+  [data-theme="light"] .radio {
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    background: #e5e5e5;
+  }
+  [data-theme="light"] .radio:checked {
+    background: none;
+  }
+</style>
+<div class="radio-group">
+  <input class="radio" type="radio" name="radio-default" aria-label="{{ariaLabel1}}" />
+  <input class="radio" type="radio" name="radio-default" checked aria-label="{{ariaLabel2}}" />
+</div>

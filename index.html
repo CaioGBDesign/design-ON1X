@@ -254,6 +254,9 @@
       }
       .panel section {
         padding: 16px;
+      }
+      /* Só a descrição tem a linha embaixo */
+      .panel section:first-child {
         border-bottom: 1px solid var(--line);
       }
       .section-title {
@@ -304,37 +307,41 @@
         align-items: center;
         cursor: pointer;
       }
+      /* Mesmo estilo do componente Toggle (components/toggle/default.html) */
       .knob .switch {
-        appearance: none;
-        position: relative;
+        display: flex;
+        width: 40px;
+        height: 20px;
         flex: none;
-        width: 28px;
-        height: 16px;
-        padding: 0;
+        box-sizing: border-box;
         margin: 0;
+        padding: 4px;
+        align-items: center;
+        gap: 8px;
+
+        appearance: none;
         border: 0;
-        border-radius: 999px;
-        background: var(--line);
+        border-radius: 40px;
+        background: #262626;
         cursor: pointer;
         transition: background 0.15s;
       }
       .knob .switch::before {
         content: "";
-        position: absolute;
-        top: 2px;
-        left: 2px;
-        width: 12px;
-        height: 12px;
-        border-radius: 50%;
-        background: var(--text);
+        width: 10px;
+        height: 6px;
+        transform: rotate(-180deg);
+        flex-shrink: 0;
+
+        border-radius: 4px;
+        background: #fff;
         transition: transform 0.15s;
       }
       .knob .switch:checked {
-        background: var(--accent);
+        background: #5fddd3;
       }
       .knob .switch:checked::before {
-        transform: translateX(12px);
-        background: var(--on-accent);
+        transform: translateX(22px) rotate(-180deg);
       }
       .knob .switch:focus-visible {
         outline: 2px solid var(--accent);
@@ -344,39 +351,57 @@
         color: var(--muted);
         margin: 0;
       }
+      /* Botão copiar dentro do código: mesmo estilo do botão Glass, sem texto */
+      .code-box {
+        position: relative;
+      }
       .copy {
-        width: 100%;
-        border: 0;
-        border-radius: 8px;
+        position: absolute;
+        right: 12px;
+        bottom: 12px;
+        display: inline-flex;
         padding: 8px;
-        background: var(--accent);
-        color: var(--on-accent);
-        cursor: pointer;
-        display: flex;
-        gap: 8px;
         justify-content: center;
         align-items: center;
+        gap: 8px;
+
+        border-radius: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        background: rgba(255, 255, 255, 0.02);
+        backdrop-filter: blur(12px);
+
+        color: #ffffff;
+        cursor: pointer;
+        transition: background 0.15s, border-color 0.15s;
       }
       .copy:hover {
-        filter: brightness(1.08);
+        border-color: rgba(255, 255, 255, 0.3);
+        background: rgba(255, 255, 255, 0.08);
       }
-      .copy svg {
-        width: 16px;
-        height: 16px;
+      .copy:focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 2px;
       }
       pre {
+        display: flex;
+        height: 313px;
+        box-sizing: border-box;
         margin: 0;
-        background: var(--field);
-        color: var(--text);
-        border: 1px solid var(--line);
         padding: 8px;
+        align-items: flex-start;
+        gap: 8px;
+        align-self: stretch;
+
         border-radius: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        background: rgba(255, 255, 255, 0.02);
+
+        color: #717171;
         font-family: inherit;
         font-size: 12px;
         line-height: 1.25;
         white-space: pre-wrap;
         word-break: break-word;
-        max-height: 320px;
         overflow: auto;
       }
       /* Scrollbar fina e arredondada, sem trilho, afastada das bordas */
@@ -491,25 +516,16 @@
         <div id="knobs"></div>
       </section>
       <section>
-        <p class="section-title">HTML</p>
-        <button class="copy" id="copy">
-          <svg
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <rect x="9" y="9" width="12" height="12" rx="2" />
-            <path d="M5 15V5a2 2 0 0 1 2-2h10" />
-          </svg>
-          Copiar HTML
-        </button>
-      </section>
-      <section>
         <p class="section-title">Código</p>
-        <pre id="code"></pre>
+        <div class="code-box">
+          <pre id="code"></pre>
+          <button class="copy" id="copy" type="button" aria-label="Copiar HTML" title="Copiar HTML">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="9" y="9" width="12" height="12" rx="2" />
+              <path d="M5 15V5a2 2 0 0 1 2-2h10" />
+            </svg>
+          </button>
+        </div>
       </section>
     </aside>
 
@@ -573,7 +589,8 @@ html{height:100%;overflow:hidden;}
 [data-theme="dark"]{background:radial-gradient(66.4% 141.42% at 0% 0%, #0D1312 0%, #090909 100%);}
 [data-theme="light"]{background:linear-gradient(0deg, rgba(95, 221, 211, 0.03) 0%, rgba(95, 221, 211, 0.03) 100%), #FFF;}
 body{margin:0;height:100%;overflow:auto;display:flex;padding:24px;box-sizing:border-box;font-family:var(--ds-font);}
-body>*{margin:auto;}
+/* Contêiner só da prévia (não vai para o Copiar HTML): centraliza qualquer componente */
+#ds-preview{display:flex;justify-content:center;align-items:center;width:100%;margin:auto;}
 ::-webkit-scrollbar{width:14px;height:14px;}
 ::-webkit-scrollbar-track,::-webkit-scrollbar-corner{background:transparent;}
 ::-webkit-scrollbar-track{margin:8px;}
@@ -582,7 +599,7 @@ body>*{margin:auto;}
 [data-theme="light"] ::-webkit-scrollbar-thumb{background-color:rgba(0,0,0,.3);}
 [data-theme="light"] ::-webkit-scrollbar-thumb:hover{background-color:rgba(0,0,0,.45);}
 @supports (-moz-appearance:none){body{scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.6) transparent;}[data-theme="light"] body{scrollbar-color:rgba(0,0,0,.3) transparent;}}
-</style></head><body>${body}</body></html>`;
+</style></head><body><div id="ds-preview">${body}</div></body></html>`;
       }
 
       function update() {
