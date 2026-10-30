@@ -1,94 +1,503 @@
 [
   {
-    "id": "button",
-    "name": "Button",
-    "category": "Core",
-    "file": "components/button.html",
-    "description": "Botão principal com ícone de seta. Use primary para a ação principal da tela.",
+    "id": "glow-small",
+    "name": "Small",
+    "category": "Botões / Glow",
+    "file": "components/botoes/Glow/small.html",
+    "description": "Botão Glow pequeno, com brilho na cor primária. Ideal para ações em espaços compactos.",
     "knobs": [
       {
         "name": "label",
         "label": "Texto",
         "type": "text",
-        "default": "Continuar 2"
+        "default": "Continuar"
+      }
+    ]
+  },
+  {
+    "id": "glow-large",
+    "name": "Large",
+    "category": "Botões / Glow",
+    "file": "components/botoes/Glow/large.html",
+    "description": "Botão Glow grande, com brilho na cor primária. Use para a chamada principal da tela.",
+    "knobs": [
+      {
+        "name": "label",
+        "label": "Texto",
+        "type": "text",
+        "default": "Começar agora"
+      }
+    ]
+  },
+  {
+    "id": "glass-small",
+    "name": "Small",
+    "category": "Botões / Glass",
+    "file": "components/botoes/Glass/small.html",
+    "description": "Botão Glass pequeno, com fundo translúcido e desfoque, estilo vidro.",
+    "knobs": [
+      {
+        "name": "label",
+        "label": "Texto",
+        "type": "text",
+        "default": "Continuar"
+      }
+    ]
+  },
+  {
+    "id": "glass-large",
+    "name": "Large",
+    "category": "Botões / Glass",
+    "file": "components/botoes/Glass/large.html",
+    "description": "Botão Glass grande, com fundo translúcido e desfoque, estilo vidro.",
+    "knobs": [
+      {
+        "name": "label",
+        "label": "Texto",
+        "type": "text",
+        "default": "Começar agora"
+      }
+    ]
+  },
+  {
+    "id": "ember-small",
+    "name": "Small",
+    "category": "Botões / Ember",
+    "file": "components/botoes/Ember/small.html",
+    "description": "Botão Ember pequeno, em tom quente de brasa, para chamar atenção.",
+    "knobs": [
+      {
+        "name": "label",
+        "label": "Texto",
+        "type": "text",
+        "default": "Continuar"
+      }
+    ]
+  },
+  {
+    "id": "ember-large",
+    "name": "Large",
+    "category": "Botões / Ember",
+    "file": "components/botoes/Ember/large.html",
+    "description": "Botão Ember grande, em tom quente de brasa, para chamar atenção.",
+    "knobs": [
+      {
+        "name": "label",
+        "label": "Texto",
+        "type": "text",
+        "default": "Começar agora"
+      }
+    ]
+  },
+  {
+    "id": "outline-small",
+    "name": "Small",
+    "category": "Botões / Outline",
+    "file": "components/botoes/Outline/small.html",
+    "description": "Botão Outline pequeno, só com contorno na cor de destaque. Use para ações secundárias.",
+    "knobs": [
+      {
+        "name": "label",
+        "label": "Texto",
+        "type": "text",
+        "default": "Continuar"
+      }
+    ]
+  },
+  {
+    "id": "outline-large",
+    "name": "Large",
+    "category": "Botões / Outline",
+    "file": "components/botoes/Outline/large.html",
+    "description": "Botão Outline grande, só com contorno na cor de destaque. Use para ações secundárias.",
+    "knobs": [
+      {
+        "name": "label",
+        "label": "Texto",
+        "type": "text",
+        "default": "Começar agora"
+      }
+    ]
+  },
+  {
+    "id": "ghost-small",
+    "name": "Small",
+    "category": "Botões / Ghost",
+    "file": "components/botoes/Ghost/small.html",
+    "description": "Botão Ghost pequeno, sem fundo e sem borda. Use para ações discretas.",
+    "knobs": [
+      {
+        "name": "label",
+        "label": "Texto",
+        "type": "text",
+        "default": "Continuar"
+      }
+    ]
+  },
+  {
+    "id": "select-default",
+    "name": "Default",
+    "category": "Select",
+    "file": "components/select/default.html",
+    "description": "Select no estado padrão. Clique no campo para abrir a lista de opções com busca. Ligue ou desligue cada label e o ícone.",
+    "knobs": [
+      {
+        "name": "icon",
+        "label": "Ícone",
+        "type": "toggle",
+        "default": true
       },
       {
-        "name": "variant",
-        "label": "Variante",
-        "type": "select",
-        "options": ["primary", "secondary", "ghost"],
-        "default": "primary"
-      }
-    ]
-  },
-  {
-    "id": "badge",
-    "name": "Badge",
-    "category": "Core",
-    "file": "components/badge.html",
-    "description": "Indicador curto de status.",
-    "knobs": [
-      { "name": "label", "label": "Texto", "type": "text", "default": "Ativo" },
+        "name": "showText",
+        "label": "Texto no campo",
+        "type": "toggle",
+        "default": true
+      },
       {
-        "name": "status",
-        "label": "Status",
-        "type": "select",
-        "options": ["success", "warning", "danger"],
-        "default": "success"
-      }
-    ]
-  },
-  {
-    "id": "card",
-    "name": "Card",
-    "category": "Core",
-    "file": "components/card.html",
-    "description": "Container de conteúdo com título e texto de apoio.",
-    "knobs": [
-      {
-        "name": "eyebrow",
-        "label": "Sobretítulo",
+        "name": "label",
+        "label": "Texto",
         "type": "text",
-        "default": "Novidade"
+        "default": "Supermercado",
+        "hideLabel": true
+      },
+      {
+        "name": "topLeft",
+        "label": "Label topo esquerda",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "topLeftText",
+        "label": "Texto topo esquerda",
+        "type": "text",
+        "default": "Label",
+        "hideLabel": true
+      },
+      {
+        "name": "topRight",
+        "label": "Label topo direita",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "topRightText",
+        "label": "Texto topo direita",
+        "type": "text",
+        "default": "Top Right label",
+        "hideLabel": true
+      },
+      {
+        "name": "bottomLeft",
+        "label": "Label base esquerda",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "bottomLeftText",
+        "label": "Texto base esquerda",
+        "type": "text",
+        "default": "Bottom Left label",
+        "hideLabel": true
+      },
+      {
+        "name": "bottomRight",
+        "label": "Label base direita",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "bottomRightText",
+        "label": "Texto base direita",
+        "type": "text",
+        "default": "Bottom Right label",
+        "hideLabel": true
+      }
+    ]
+  },
+  {
+    "id": "select-disabled",
+    "name": "Disabled",
+    "category": "Select",
+    "file": "components/select/disabled.html",
+    "description": "Select bloqueado: texto e seta apagados e sem abrir a lista. Use quando a escolha não estiver disponível.",
+    "knobs": [
+      {
+        "name": "icon",
+        "label": "Ícone",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "showText",
+        "label": "Texto no campo",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "label",
+        "label": "Texto",
+        "type": "text",
+        "default": "Supermercado",
+        "hideLabel": true
+      },
+      {
+        "name": "topLeft",
+        "label": "Label topo esquerda",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "topLeftText",
+        "label": "Texto topo esquerda",
+        "type": "text",
+        "default": "Label",
+        "hideLabel": true
+      },
+      {
+        "name": "topRight",
+        "label": "Label topo direita",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "topRightText",
+        "label": "Texto topo direita",
+        "type": "text",
+        "default": "Top Right label",
+        "hideLabel": true
+      },
+      {
+        "name": "bottomLeft",
+        "label": "Label base esquerda",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "bottomLeftText",
+        "label": "Texto base esquerda",
+        "type": "text",
+        "default": "Bottom Left label",
+        "hideLabel": true
+      },
+      {
+        "name": "bottomRight",
+        "label": "Label base direita",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "bottomRightText",
+        "label": "Texto base direita",
+        "type": "text",
+        "default": "Bottom Right label",
+        "hideLabel": true
+      }
+    ]
+  },
+  {
+    "id": "select-error",
+    "name": "Error",
+    "category": "Select",
+    "file": "components/select/error.html",
+    "description": "Select com erro: borda e labels de baixo em vermelho. Use o label de baixo para explicar o erro. Clique no campo para abrir a lista de opções.",
+    "knobs": [
+      {
+        "name": "icon",
+        "label": "Ícone",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "showText",
+        "label": "Texto no campo",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "label",
+        "label": "Texto",
+        "type": "text",
+        "default": "Supermercado",
+        "hideLabel": true
+      },
+      {
+        "name": "topLeft",
+        "label": "Label topo esquerda",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "topLeftText",
+        "label": "Texto topo esquerda",
+        "type": "text",
+        "default": "Label",
+        "hideLabel": true
+      },
+      {
+        "name": "topRight",
+        "label": "Label topo direita",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "topRightText",
+        "label": "Texto topo direita",
+        "type": "text",
+        "default": "Top Right label",
+        "hideLabel": true
+      },
+      {
+        "name": "bottomLeft",
+        "label": "Label base esquerda",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "bottomLeftText",
+        "label": "Texto base esquerda",
+        "type": "text",
+        "default": "Selecione uma categoria válida",
+        "hideLabel": true
+      },
+      {
+        "name": "bottomRight",
+        "label": "Label base direita",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "bottomRightText",
+        "label": "Texto base direita",
+        "type": "text",
+        "default": "Bottom Right label",
+        "hideLabel": true
+      }
+    ]
+  },
+  {
+    "id": "select-team",
+    "name": "Team",
+    "category": "Select",
+    "file": "components/select/team.html",
+    "description": "Select para escolher pessoas e estruturas da equipe. O campo mostra os avatares e um contador; na lista, as opções ficam agrupadas e marcadas com check ao clicar.",
+    "knobs": [
+      {
+        "name": "avatars",
+        "label": "Avatares",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "meta",
+        "label": "Contador",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "metaText",
+        "label": "Texto do contador",
+        "type": "text",
+        "default": "6 BPs",
+        "hideLabel": true
+      },
+      {
+        "name": "topLeft",
+        "label": "Label topo esquerda",
+        "type": "toggle",
+        "default": false
+      },
+      {
+        "name": "topLeftText",
+        "label": "Texto topo esquerda",
+        "type": "text",
+        "default": "Label",
+        "hideLabel": true
+      },
+      {
+        "name": "topRight",
+        "label": "Label topo direita",
+        "type": "toggle",
+        "default": false
+      },
+      {
+        "name": "topRightText",
+        "label": "Texto topo direita",
+        "type": "text",
+        "default": "Top Right label",
+        "hideLabel": true
+      },
+      {
+        "name": "bottomLeft",
+        "label": "Label base esquerda",
+        "type": "toggle",
+        "default": false
+      },
+      {
+        "name": "bottomLeftText",
+        "label": "Texto base esquerda",
+        "type": "text",
+        "default": "Bottom Left label",
+        "hideLabel": true
+      },
+      {
+        "name": "bottomRight",
+        "label": "Label base direita",
+        "type": "toggle",
+        "default": false
+      },
+      {
+        "name": "bottomRightText",
+        "label": "Texto base direita",
+        "type": "text",
+        "default": "Bottom Right label",
+        "hideLabel": true
+      }
+    ]
+  },
+  {
+    "id": "alert-warning",
+    "name": "Warning",
+    "category": "Alert",
+    "file": "components/alert/warning.html",
+    "description": "Alerta de aviso, em laranja. Use para avisos importantes que não bloqueiam o usuário. O botão de fechar remove o alerta.",
+    "knobs": [
+      {
+        "name": "icon",
+        "label": "Ícone",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "showTitle",
+        "label": "Título",
+        "type": "toggle",
+        "default": true
       },
       {
         "name": "title",
-        "label": "Título",
+        "label": "Texto do título",
         "type": "text",
-        "default": "Título do card"
+        "default": "Atenção",
+        "hideLabel": true
       },
       {
-        "name": "text",
-        "label": "Texto",
-        "type": "text",
-        "default": "Texto de apoio com uma ou duas linhas descrevendo o conteúdo."
-      }
-    ]
-  },
-  {
-    "id": "input",
-    "name": "Text field",
-    "category": "Forms",
-    "file": "components/input.html",
-    "description": "Campo de texto com label e mensagem de ajuda.",
-    "knobs": [
-      {
-        "name": "label",
-        "label": "Label",
-        "type": "text",
-        "default": "E-mail"
+        "name": "showDescription",
+        "label": "Descrição",
+        "type": "toggle",
+        "default": true
       },
       {
-        "name": "placeholder",
-        "label": "Placeholder",
+        "name": "description",
+        "label": "Texto da descrição",
         "type": "text",
-        "default": "voce@exemplo.com"
+        "default": "Sua assinatura vence em 3 dias. Renove para não perder o acesso.",
+        "hideLabel": true
       },
       {
-        "name": "hint",
-        "label": "Ajuda",
-        "type": "text",
-        "default": "Vamos usar só para login."
+        "name": "close",
+        "label": "Botão fechar",
+        "type": "toggle",
+        "default": true
       }
     ]
   }

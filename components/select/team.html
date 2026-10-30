@@ -1,0 +1,439 @@
+<style>
+  .select-team {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    width: 100%;
+    max-width: 360px;
+
+    color: #fff;
+    font-family: "Public Sans";
+    font-size: 12px;
+    line-height: 16px;
+  }
+  .select-team .top-right,
+  .select-team .bottom-right {
+    margin-left: auto;
+  }
+  .select-team .bottom-left,
+  .select-team .bottom-right {
+    order: 1;
+    color: rgba(255, 255, 255, 0.4);
+  }
+  .select-team .control {
+    position: relative;
+    width: 100%;
+  }
+  .select-team .field {
+    display: flex;
+    padding: 8px;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.02);
+
+    color: inherit;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+  }
+  .select-team.open .field {
+    background: #000;
+  }
+  .select-team .spacer {
+    flex: 1;
+  }
+  .select-team .meta {
+    color: rgba(255, 255, 255, 0.2);
+  }
+  .select-team .arrow {
+    flex: none;
+    transition: transform 0.15s;
+  }
+  .select-team.open .arrow {
+    transform: rotate(180deg);
+  }
+
+  /* Avatares */
+  .select-team .avatar {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--c, #333);
+    color: #0a181c;
+    font-size: 8px;
+    font-weight: 600;
+  }
+  .select-team .stack {
+    display: flex;
+    flex: none;
+  }
+  .select-team .stack .avatar {
+    border: 1.5px solid #000;
+  }
+  .select-team .stack .avatar + .avatar {
+    margin-left: -6px;
+  }
+  .select-team .stack .more {
+    background: #333;
+    color: #fff;
+  }
+
+  /* Lista de opções */
+  .select-team .menu {
+    display: none;
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    right: 0;
+    z-index: 10;
+    flex-direction: column;
+    align-items: flex-start;
+
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: #000;
+    box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.15);
+  }
+  .select-team.open .menu {
+    display: flex;
+  }
+  .select-team .search,
+  .select-team .group {
+    align-self: stretch;
+  }
+  .select-team .search {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  }
+  .select-team .search input {
+    flex: 1;
+    min-width: 0;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: inherit;
+    font: inherit;
+    outline: none;
+  }
+  .select-team .search input::placeholder {
+    color: #fff;
+  }
+  .select-team .group {
+    margin: 0;
+    padding: 4px;
+    list-style: none;
+  }
+  .select-team .group + .group {
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+  }
+  .select-team .group-title {
+    padding: 8px 8px 4px;
+    color: rgba(255, 255, 255, 0.4);
+  }
+  .select-team li.bp {
+    margin-bottom: 4px;
+  }
+  .select-team .option {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    padding: 8px;
+    border: 0;
+    border-radius: 6px;
+    background: none;
+    color: inherit;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+  }
+  .select-team .option:hover,
+  .select-team .option:focus-visible,
+  .select-team .option.selected {
+    background: rgba(255, 255, 255, 0.08);
+    outline: none;
+  }
+  .select-team .person {
+    display: flex;
+    flex-direction: column;
+    width: 140px;
+  }
+  .select-team .person small {
+    color: rgba(255, 255, 255, 0.4);
+    font-size: inherit;
+  }
+  .select-team .count {
+    padding: 2px 6px;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+  }
+  .select-team .check {
+    margin-left: auto;
+    visibility: hidden;
+  }
+  .select-team .option.selected .check {
+    visibility: visible;
+  }
+</style>
+<div class="select-team">
+  {{#topLeft}}<span class="top-left">{{topLeftText}}</span>{{/topLeft}}
+  {{#topRight}}<span class="top-right">{{topRightText}}</span>{{/topRight}}
+  {{#bottomLeft}}<span class="bottom-left">{{bottomLeftText}}</span
+  >{{/bottomLeft}} {{#bottomRight}}<span class="bottom-right"
+    >{{bottomRightText}}</span
+  >{{/bottomRight}}
+  <svg width="0" height="0" style="position: absolute" aria-hidden="true">
+    <symbol
+      id="select-team-check"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <path d="M20 6 9 17l-5-5" />
+    </symbol>
+  </svg>
+  <div class="control">
+    <button class="field" type="button">
+      {{#avatars}}
+      <span class="stack">
+        <span class="avatar" style="--c: #b9a6f2">CG</span>
+        <span class="avatar" style="--c: #6aa0b8">FK</span>
+        <span class="avatar" style="--c: #c9b18a">JP</span>
+        <span class="avatar more">
+          <svg
+            width="12"
+            height="12"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+          >
+            <path d="M5 12h14" />
+            <path d="M12 5v14" />
+          </svg>
+        </span>
+      </span>
+      {{/avatars}}
+      <span class="spacer"></span>
+      {{#meta}}<span class="meta">{{metaText}}</span>{{/meta}}
+      <svg
+        class="arrow"
+        width="16"
+        height="16"
+        viewBox="0 0 16 16"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M4 6L8 10L12 6"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke="white"
+        />
+      </svg>
+    </button>
+    <div class="menu">
+      <label class="search">
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <circle cx="11" cy="11" r="8" />
+          <path d="m21 21-4.3-4.3" />
+        </svg>
+        <input type="text" placeholder="Buscar" />
+      </label>
+
+      <ul class="group">
+        <li class="group-title">Consultores</li>
+        <li class="bp">
+          <button class="option selected" type="button">
+            <span class="avatar" style="--c: #b9a6f2">CG</span>
+            <span class="person"
+              >Caio Goulart<small>modelo@w1.com.br</small></span
+            >
+            <span class="count">3/9</span>
+            <svg class="check" width="16" height="16">
+              <use href="#select-team-check" />
+            </svg>
+          </button>
+        </li>
+        <li class="bp">
+          <button class="option" type="button">
+            <span class="avatar" style="--c: #6aa0b8">FK</span>
+            <span class="person"
+              >Flavia Kawazoe<small>modelo@w1.com.br</small></span
+            >
+            <span class="count">3/9</span>
+            <svg class="check" width="16" height="16">
+              <use href="#select-team-check" />
+            </svg>
+          </button>
+        </li>
+        <li class="bp">
+          <button class="option" type="button">
+            <span class="avatar" style="--c: #c9b18a">JP</span>
+            <span class="person"
+              >Jennifer Paiva<small>modelo@w1.com.br</small></span
+            >
+            <span class="count">3/9</span>
+            <svg class="check" width="16" height="16">
+              <use href="#select-team-check" />
+            </svg>
+          </button>
+        </li>
+      </ul>
+
+      <ul class="group">
+        <li class="group-title">Estrutura</li>
+        <li>
+          <button class="option" type="button">
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="12" cy="18" r="3" />
+              <circle cx="6" cy="6" r="3" />
+              <circle cx="18" cy="6" r="3" />
+              <path d="M18 9v2c0 .6-.4 1-1 1H7c-.6 0-1-.4-1-1V9" />
+              <path d="M12 12v3" />
+            </svg>
+            Equipe direta
+            <svg class="check" width="16" height="16">
+              <use href="#select-team-check" />
+            </svg>
+          </button>
+        </li>
+        <li>
+          <button class="option" type="button">
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="19" cy="5" r="2" />
+              <circle cx="5" cy="19" r="2" />
+              <path d="M5 17A12 12 0 0 1 17 5" />
+            </svg>
+            Estrutura líquida
+            <svg class="check" width="16" height="16">
+              <use href="#select-team-check" />
+            </svg>
+          </button>
+        </li>
+        <li>
+          <button class="option" type="button">
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <rect x="16" y="16" width="6" height="6" rx="1" />
+              <rect x="2" y="16" width="6" height="6" rx="1" />
+              <rect x="9" y="2" width="6" height="6" rx="1" />
+              <path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3" />
+              <path d="M12 12V8" />
+            </svg>
+            Estrutura bruta
+            <svg class="check" width="16" height="16">
+              <use href="#select-team-check" />
+            </svg>
+          </button>
+        </li>
+        <li>
+          <button class="option" type="button">
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="5" cy="6" r="3" />
+              <path d="M12 6h5a2 2 0 0 1 2 2v7" />
+              <path d="m15 9-3-3 3-3" />
+              <circle cx="19" cy="18" r="3" />
+              <path d="M12 18H7a2 2 0 0 1-2-2V9" />
+              <path d="m9 15 3 3-3 3" />
+            </svg>
+            Própria
+            <svg class="check" width="16" height="16">
+              <use href="#select-team-check" />
+            </svg>
+          </button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<script>
+  // Abre e fecha a lista, filtra pela busca e marca ou desmarca as opções clicadas.
+  document.querySelectorAll(".select-team").forEach((root) => {
+    const search = root.querySelector(".search input");
+    const groups = root.querySelectorAll(".group");
+
+    root.querySelector(".field").addEventListener("click", () => {
+      root.classList.toggle("open");
+      if (root.classList.contains("open")) search.focus();
+    });
+    root.querySelectorAll(".option").forEach((option) => {
+      option.addEventListener("click", () =>
+        option.classList.toggle("selected"),
+      );
+    });
+    search.addEventListener("input", () => {
+      const q = search.value.toLowerCase();
+      groups.forEach((group) => {
+        let visible = 0;
+        group.querySelectorAll("li:not(.group-title)").forEach((li) => {
+          li.hidden = !li.textContent.toLowerCase().includes(q);
+          if (!li.hidden) visible++;
+        });
+        group.hidden = !visible;
+      });
+    });
+    document.addEventListener("click", (e) => {
+      if (!root.contains(e.target)) root.classList.remove("open");
+    });
+  });
+</script>

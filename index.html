@@ -1,249 +1,776 @@
 <!doctype html>
 <html lang="pt-BR">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>design-ON1X · Componentes</title>
-<style>
-  :root {
-    --bg: #f5f6f8; --panel: #ffffff; --line: #e4e7ec; --text: #1d2433; --muted: #667085;
-    --accent: #155e63; --accent-soft: #e3f1f1; --code-bg: #0f1720; --code-text: #d6e2f0;
-    font-family: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  }
-  * { box-sizing: border-box; }
-  body { margin: 0; height: 100vh; display: grid; grid-template-columns: 250px 1fr 330px; background: var(--bg); color: var(--text); font-size: 14px; }
-  button, input, select { font: inherit; color: inherit; }
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Design System ON1X · Componentes</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #111414;
+        --surface: rgba(255, 255, 255, 0.03);
+        --line: rgba(255, 255, 255, 0.15);
+        --hover: rgba(255, 255, 255, 0.06);
+        --text: #ffffff;
+        --muted: rgba(255, 255, 255, 0.6);
+        --accent: #5fddd3;
+        --on-accent: #0a181c;
+        --field: #000000;
+        font-family:
+          "Public Sans",
+          ui-sans-serif,
+          system-ui,
+          -apple-system,
+          "Segoe UI",
+          Roboto,
+          sans-serif;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        height: 100vh;
+        display: grid;
+        grid-template-columns: 265px 1fr 340px;
+        background: var(--bg);
+        color: var(--text);
+        font-size: 13px;
+      }
+      /* Esfera de brilho: centro no canto superior direito */
+      body::before {
+        content: "";
+        position: fixed;
+        top: -472px;
+        right: -472px;
+        width: 944px;
+        height: 944px;
+        aspect-ratio: 1/1;
+        border-radius: 944px;
+        opacity: 0.2;
+        background: #5fddd3;
+        filter: blur(400px);
+        pointer-events: none;
+        z-index: -1;
+      }
+      button,
+      input,
+      select {
+        font: inherit;
+        color: inherit;
+      }
 
-  /* Lateral */
-  .nav { background: var(--panel); border-right: 1px solid var(--line); display: flex; flex-direction: column; min-height: 0; }
-  .brand { padding: 20px 18px 12px; font-weight: 700; font-size: 16px; }
-  .brand small { display: block; font-weight: 400; font-size: 12px; color: var(--muted); margin-top: 3px; }
-  .search { margin: 0 14px 6px; padding: 9px 12px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); outline: none; }
-  .search:focus { border-color: var(--accent); }
-  .tree { overflow: auto; padding: 0 8px 16px; flex: 1; }
-  .group { font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); padding: 16px 10px 6px; font-weight: 600; }
-  .item { display: block; width: 100%; text-align: left; border: 0; background: none; padding: 8px 10px; border-radius: 8px; cursor: pointer; }
-  .item:hover { background: var(--bg); }
-  .item.active { background: var(--accent-soft); color: var(--accent); font-weight: 600; }
+      /* Lateral */
+      .nav {
+        background: var(--surface);
+        border-right: 1px solid var(--line);
+        display: flex;
+        flex-direction: column;
+        min-height: 0;
+        height: 100vh;
+      }
+      .brand {
+        padding: 18px 16px;
+        font-weight: 600;
+        font-size: 15px;
+        border-bottom: 1px solid var(--line);
+      }
+      .brand small {
+        display: block;
+        font-weight: 400;
+        font-size: 12px;
+        margin-top: 2px;
+      }
+      .search-box {
+        padding: 12px;
+        border-bottom: 1px solid var(--line);
+      }
+      .search {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 0 10px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--field);
+      }
+      .search:focus-within {
+        border-color: var(--accent);
+      }
+      .search svg {
+        width: 16px;
+        height: 16px;
+        flex: none;
+      }
+      .search input {
+        flex: 1;
+        min-width: 0;
+        border: 0;
+        background: none;
+        padding: 8px 0;
+        outline: none;
+      }
+      .search input::placeholder {
+        color: var(--text);
+      }
+      .tree {
+        overflow: auto;
+        padding: 16px 12px;
+        flex: 1;
+      }
+      .node {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        width: 100%;
+        text-align: left;
+        border: 0;
+        background: none;
+        padding: 10px 8px 10px calc(8px + var(--depth) * 16px);
+        border-radius: 8px;
+        cursor: pointer;
+        white-space: nowrap;
+      }
+      .node span {
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .node:hover {
+        background: var(--hover);
+      }
+      .node .caret {
+        width: 16px;
+        height: 16px;
+        flex: none;
+        transition: transform 0.15s;
+      }
+      .node.closed .caret {
+        transform: rotate(-90deg);
+      }
+      .node .spacer {
+        width: 16px;
+        flex: none;
+      }
+      .item.active {
+        border-radius: 8px;
+        background: rgba(43, 100, 96, 0.15);
+        color: #ffffff;
+      }
 
-  /* Centro */
-  main { display: flex; flex-direction: column; min-width: 0; min-height: 0; }
-  .toolbar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; padding: 12px 18px; border-bottom: 1px solid var(--line); background: var(--panel); }
-  .toolbar h1 { font-size: 16px; margin: 0 auto 0 0; }
-  .seg { display: inline-flex; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
-  .seg button { border: 0; background: none; padding: 6px 11px; cursor: pointer; color: var(--muted); }
-  .seg button + button { border-left: 1px solid var(--line); }
-  .seg button.on { background: var(--text); color: #fff; }
-  .stage { flex: 1; overflow: auto; display: flex; justify-content: center; align-items: flex-start; padding: 28px;
-           background-color: var(--bg); background-image: radial-gradient(#d5d9e0 1px, transparent 1px); background-size: 16px 16px; }
-  .frame { width: 100%; height: 100%; min-height: 420px; background: #fff; border: 1px solid var(--line); border-radius: 14px;
-           box-shadow: 0 4px 24px rgba(16,24,40,.08); overflow: hidden; transition: width .25s ease; }
-  .frame.mobile { width: 390px; height: 760px; flex: none; border-radius: 28px; border: 8px solid #1d2433; }
-  .frame.tablet { width: 768px; height: 900px; flex: none; }
-  .frame iframe { width: 100%; height: 100%; border: 0; display: block; }
+      /* Centro */
+      main {
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+        min-height: 0;
+      }
+      .toolbar {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+        align-items: center;
+        padding: 24px 26px;
+      }
+      .toolbar h1 {
+        font-size: 13px;
+        font-weight: 400;
+        margin: 0 auto 0 0;
+      }
+      .seg {
+        display: inline-flex;
+        gap: 2px;
+        padding: 3px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+      }
+      .seg button {
+        border: 0;
+        background: none;
+        padding: 3px 9px;
+        border-radius: 999px;
+        font-size: 11px;
+        cursor: pointer;
+      }
+      .seg button:not(.on):hover {
+        background: var(--hover);
+      }
+      .seg button.on {
+        background: var(--accent);
+        color: var(--on-accent);
+      }
+      .stage {
+        flex: 1;
+        overflow: auto;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        padding: 0 26px 26px;
+      }
+      .frame {
+        width: 100%;
+        height: 100%;
+        min-height: 420px;
+        border-radius: 16px;
+        border: 1px solid var(--line);
+        background: var(--surface);
+        overflow: hidden;
+        transition: width 0.25s ease;
+      }
+      .frame.mobile {
+        width: 390px;
+        height: 760px;
+        flex: none;
+      }
+      .frame.tablet {
+        width: 768px;
+        height: 900px;
+        flex: none;
+      }
+      .frame iframe {
+        width: 100%;
+        height: 100%;
+        border: 0;
+        display: block;
+      }
 
-  /* Painel direito */
-  .panel { background: var(--panel); border-left: 1px solid var(--line); overflow: auto; padding: 20px 18px; display: flex; flex-direction: column; gap: 22px; }
-  .section-title { font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); font-weight: 600; margin: 0 0 10px; }
-  .desc { margin: 0; color: var(--muted); line-height: 1.5; }
-  .knob { display: grid; gap: 5px; margin-bottom: 12px; }
-  .knob span { font-size: 12px; color: var(--accent); font-weight: 600; }
-  .knob input, .knob select { padding: 9px 11px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); outline: none; }
-  .knob input:focus, .knob select:focus { border-color: var(--accent); }
-  .empty { color: var(--muted); margin: 0; }
-  .check { display: flex; gap: 8px; align-items: flex-start; color: var(--muted); line-height: 1.4; cursor: pointer; }
-  .check input { margin-top: 2px; accent-color: var(--accent); }
-  .copy { width: 100%; border: 0; border-radius: 10px; padding: 12px; background: var(--accent); color: #fff; font-weight: 600; cursor: pointer; display: flex; gap: 8px; justify-content: center; align-items: center; margin-top: 12px; }
-  .copy:hover { filter: brightness(1.1); }
-  .copy svg { width: 16px; height: 16px; }
-  pre { margin: 0; background: var(--code-bg); color: var(--code-text); padding: 14px; border-radius: 10px; font: 12px/1.55 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; white-space: pre-wrap; word-break: break-word; max-height: 340px; overflow: auto; }
+      /* Painel direito */
+      .panel {
+        background: var(--surface);
+        border-left: 1px solid var(--line);
+        overflow: auto;
+      }
+      .panel section {
+        padding: 16px;
+        border-bottom: 1px solid var(--line);
+      }
+      .section-title {
+        font-size: 13px;
+        margin: 0 0 8px;
+      }
+      .desc {
+        margin: 0;
+        font-size: 15px;
+        line-height: 1.15;
+      }
+      .knob {
+        display: grid;
+        gap: 8px;
+      }
+      .knob + .knob {
+        margin-top: 16px;
+      }
+      .knob + .knob.no-label {
+        margin-top: 8px;
+      }
+      .knob input,
+      .knob select {
+        padding: 8px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--field);
+        outline: none;
+      }
+      .knob input:focus,
+      .knob select:focus {
+        border-color: var(--accent);
+      }
+      .knob-toggle {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+      }
+      .knob .switch {
+        appearance: none;
+        position: relative;
+        flex: none;
+        width: 28px;
+        height: 16px;
+        padding: 0;
+        margin: 0;
+        border: 0;
+        border-radius: 999px;
+        background: var(--line);
+        cursor: pointer;
+        transition: background 0.15s;
+      }
+      .knob .switch::before {
+        content: "";
+        position: absolute;
+        top: 2px;
+        left: 2px;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: var(--text);
+        transition: transform 0.15s;
+      }
+      .knob .switch:checked {
+        background: var(--accent);
+      }
+      .knob .switch:checked::before {
+        transform: translateX(12px);
+        background: var(--on-accent);
+      }
+      .knob .switch:focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 2px;
+      }
+      .empty {
+        color: var(--muted);
+        margin: 0;
+      }
+      .copy {
+        width: 100%;
+        border: 0;
+        border-radius: 8px;
+        padding: 8px;
+        background: var(--accent);
+        color: var(--on-accent);
+        cursor: pointer;
+        display: flex;
+        gap: 8px;
+        justify-content: center;
+        align-items: center;
+      }
+      .copy:hover {
+        filter: brightness(1.08);
+      }
+      .copy svg {
+        width: 16px;
+        height: 16px;
+      }
+      pre {
+        margin: 0;
+        background: var(--field);
+        color: var(--text);
+        border: 1px solid var(--line);
+        padding: 8px;
+        border-radius: 8px;
+        font-family: inherit;
+        font-size: 12px;
+        line-height: 1.25;
+        white-space: pre-wrap;
+        word-break: break-word;
+        max-height: 320px;
+        overflow: auto;
+      }
+      /* Scrollbar fina e arredondada, sem trilho, afastada das bordas */
+      pre::-webkit-scrollbar,
+      .stage::-webkit-scrollbar {
+        width: 14px;
+        height: 14px;
+      }
+      pre::-webkit-scrollbar-track,
+      .stage::-webkit-scrollbar-track {
+        background: transparent;
+        margin: 8px 0;
+      }
+      pre::-webkit-scrollbar-thumb,
+      .stage::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.6);
+        background-clip: padding-box;
+        border: 4px solid transparent;
+        border-radius: 999px;
+      }
+      pre::-webkit-scrollbar-thumb:hover,
+      .stage::-webkit-scrollbar-thumb:hover {
+        background-color: rgba(255, 255, 255, 0.8);
+      }
+      /* Firefox não aceita os estilos acima; usa a versão fina na mesma cor */
+      @supports (-moz-appearance: none) {
+        pre,
+        .stage {
+          scrollbar-width: thin;
+          scrollbar-color: rgba(255, 255, 255, 0.6) transparent;
+        }
+      }
 
-  .toast { position: fixed; bottom: 24px; left: 50%; transform: translate(-50%, 20px); background: var(--text); color: #fff; padding: 10px 16px; border-radius: 10px; opacity: 0; pointer-events: none; transition: .2s; }
-  .toast.show { opacity: 1; transform: translate(-50%, 0); }
+      .toast {
+        position: fixed;
+        bottom: 24px;
+        left: 50%;
+        transform: translate(-50%, 20px);
+        background: var(--accent);
+        color: var(--on-accent);
+        padding: 10px 16px;
+        border-radius: 8px;
+        opacity: 0;
+        pointer-events: none;
+        transition: 0.2s;
+      }
+      .toast.show {
+        opacity: 1;
+        transform: translate(-50%, 0);
+      }
 
-  @media (max-width: 1100px) {
-    body { grid-template-columns: 220px 1fr; height: auto; min-height: 100vh; }
-    .panel { grid-column: 1 / -1; border-left: 0; border-top: 1px solid var(--line); }
-    .frame { min-height: 360px; }
-  }
-</style>
-</head>
-<body>
-  <aside class="nav">
-    <div class="brand">design-ON1X<small>Biblioteca de componentes</small></div>
-    <input class="search" id="search" type="search" placeholder="Buscar componente">
-    <nav class="tree" id="tree"></nav>
-  </aside>
-
-  <main>
-    <div class="toolbar">
-      <h1 id="title">Carregando…</h1>
-      <div class="seg" id="viewport">
-        <button data-v="mobile">Mobile</button><button data-v="tablet">Tablet</button><button data-v="desktop" class="on">Desktop</button>
+      @media (max-width: 1100px) {
+        body {
+          grid-template-columns: 220px 1fr;
+          height: auto;
+          min-height: 100vh;
+        }
+        .panel {
+          grid-column: 1 / -1;
+          border-left: 0;
+          border-top: 1px solid var(--line);
+        }
+        .frame {
+          min-height: 360px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <aside class="nav">
+      <div class="brand">
+        Design System ON1X<small>Biblioteca de componentes em HTML</small>
       </div>
-      <div class="seg" id="theme">
-        <button data-t="light" class="on">Claro</button><button data-t="dark">Escuro</button>
+      <div class="search-box">
+        <label class="search">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <circle cx="11" cy="11" r="7" />
+            <path d="m20 20-3.5-3.5" />
+          </svg>
+          <input id="search" type="search" placeholder="Buscar componente" />
+        </label>
       </div>
-    </div>
-    <div class="stage"><div class="frame" id="frame"><iframe id="preview" title="Preview do componente"></iframe></div></div>
-  </main>
+      <nav class="tree" id="tree"></nav>
+    </aside>
 
-  <aside class="panel">
-    <section>
-      <p class="section-title">Descrição</p>
-      <p class="desc" id="desc"></p>
-    </section>
-    <section>
-      <p class="section-title">Knobs</p>
-      <div id="knobs"></div>
-    </section>
-    <section>
-      <p class="section-title">HTML</p>
-      <label class="check"><input type="checkbox" id="withTokens" checked> Incluir tokens (cores, fontes, espaçamentos) para o componente funcionar sozinho</label>
-      <button class="copy" id="copy">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
-        Copiar HTML
-      </button>
-    </section>
-    <section>
-      <p class="section-title">Código</p>
-      <pre id="code"></pre>
-    </section>
-  </aside>
+    <main>
+      <div class="toolbar">
+        <h1 id="title">Carregando…</h1>
+        <div class="seg" id="viewport">
+          <button data-v="mobile">Mobile</button
+          ><button data-v="tablet">Tablet</button
+          ><button data-v="desktop" class="on">Desktop</button>
+        </div>
+        <div class="seg" id="theme">
+          <button data-t="dark" class="on">Dark</button
+          ><button data-t="light">Light</button>
+        </div>
+      </div>
+      <div class="stage">
+        <div class="frame" id="frame">
+          <iframe id="preview" title="Preview do componente"></iframe>
+        </div>
+      </div>
+    </main>
 
-  <div class="toast" id="toast">HTML copiado!</div>
+    <aside class="panel">
+      <section>
+        <p class="section-title">Descrição</p>
+        <p class="desc" id="desc"></p>
+      </section>
+      <section>
+        <div id="knobs"></div>
+      </section>
+      <section>
+        <p class="section-title">HTML</p>
+        <button class="copy" id="copy">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <rect x="9" y="9" width="12" height="12" rx="2" />
+            <path d="M5 15V5a2 2 0 0 1 2-2h10" />
+          </svg>
+          Copiar HTML
+        </button>
+      </section>
+      <section>
+        <p class="section-title">Código</p>
+        <pre id="code"></pre>
+      </section>
+    </aside>
 
-<script>
-const $ = (id) => document.getElementById(id);
-const state = { list: [], tokens: "", current: null, raw: "", values: {}, theme: "light", viewport: "desktop" };
-const cache = {};
+    <div class="toast" id="toast">HTML copiado!</div>
 
-const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+    <script>
+      const $ = (id) => document.getElementById(id);
+      const state = {
+        list: [],
+        tokens: "",
+        current: null,
+        raw: "",
+        values: {},
+        theme: "dark",
+        viewport: "desktop",
+        open: new Set(), // pastas abertas; todas começam fechadas
+      };
+      const cache = {};
 
-function rendered() {
-  return state.raw.replace(/\{\{\s*(\w+)\s*\}\}/g, (_, k) => esc(state.values[k] ?? "")).trim();
-}
+      const esc = (s) =>
+        String(s).replace(
+          /[&<>"']/g,
+          (c) =>
+            ({
+              "&": "&amp;",
+              "<": "&lt;",
+              ">": "&gt;",
+              '"': "&quot;",
+              "'": "&#39;",
+            })[c],
+        );
 
-function copyText() {
-  const body = rendered();
-  if (!$("withTokens").checked) return body;
-  const tokens = state.tokens.replace(/\/\*[\s\S]*?\*\//g, "").replace(/\n\s*\n+/g, "\n").trim();
-  return `<style>\n${tokens}\n</style>\n${body}`;
-}
+      // {{#nome}}...{{/nome}} só aparece com o toggle ligado; {{^nome}}...{{/nome}}, só desligado.
+      function rendered() {
+        const CUT = "\u0000";
+        const section = /\{\{([#^])\s*(\w+)\s*\}\}([\s\S]*?)\{\{\/\s*\2\s*\}\}/g;
+        let out = state.raw;
+        for (let prev; prev !== out; ) {
+          prev = out;
+          out = out.replace(section, (_, type, k, inner) =>
+            !!state.values[k] === (type === "#") ? inner : CUT,
+          );
+        }
+        return out
+          .replace(new RegExp(`^[ \\t${CUT}]*${CUT}[ \\t${CUT}]*\\r?\\n`, "gm"), "")
+          .replaceAll(CUT, "")
+          .replace(/\{\{\s*(\w+)\s*\}\}/g, (_, k) => esc(state.values[k] ?? ""))
+          .trim();
+      }
 
-function buildDoc(body) {
-  return `<!doctype html><html data-theme="${state.theme}"><head><meta charset="utf-8">
+      function copyText() {
+        return rendered();
+      }
+
+      function buildDoc(body) {
+        return `<!doctype html><html data-theme="${state.theme}"><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600&display=swap" rel="stylesheet">
 <style>${state.tokens}
-html,body{margin:0;min-height:100%;background:var(--ds-surface);}
-body{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:24px;box-sizing:border-box;font-family:var(--ds-font);}
+/* O fundo fica fixo no html (do tamanho da prévia) e só o body rola por cima dele */
+html{height:100%;overflow:hidden;}
+[data-theme="dark"]{background:radial-gradient(66.4% 141.42% at 0% 0%, #0D1312 0%, #090909 100%);}
+[data-theme="light"]{background:linear-gradient(0deg, rgba(95, 221, 211, 0.03) 0%, rgba(95, 221, 211, 0.03) 100%), #FFF;}
+body{margin:0;height:100%;overflow:auto;display:flex;padding:24px;box-sizing:border-box;font-family:var(--ds-font);}
+body>*{margin:auto;}
+::-webkit-scrollbar{width:14px;height:14px;}
+::-webkit-scrollbar-track,::-webkit-scrollbar-corner{background:transparent;}
+::-webkit-scrollbar-track{margin:8px;}
+::-webkit-scrollbar-thumb{background:rgba(255,255,255,.6);background-clip:padding-box;border:4px solid transparent;border-radius:999px;}
+::-webkit-scrollbar-thumb:hover{background-color:rgba(255,255,255,.8);}
+[data-theme="light"] ::-webkit-scrollbar-thumb{background-color:rgba(0,0,0,.3);}
+[data-theme="light"] ::-webkit-scrollbar-thumb:hover{background-color:rgba(0,0,0,.45);}
+@supports (-moz-appearance:none){body{scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.6) transparent;}[data-theme="light"] body{scrollbar-color:rgba(0,0,0,.3) transparent;}}
 </style></head><body>${body}</body></html>`;
-}
+      }
 
-function update() {
-  const body = rendered();
-  $("preview").srcdoc = buildDoc(body);
-  $("code").textContent = copyText();
-}
+      function update() {
+        const body = rendered();
+        $("preview").srcdoc = buildDoc(body);
+        $("code").textContent = copyText();
+      }
 
-function renderNav(filter = "") {
-  const tree = $("tree");
-  tree.innerHTML = "";
-  const f = filter.trim().toLowerCase();
-  const groups = {};
-  state.list.filter((c) => !f || c.name.toLowerCase().includes(f) || c.category.toLowerCase().includes(f))
-    .forEach((c) => (groups[c.category] ||= []).push(c));
-  Object.entries(groups).forEach(([cat, items]) => {
-    const g = document.createElement("div");
-    g.className = "group"; g.textContent = cat; tree.appendChild(g);
-    items.forEach((c) => {
-      const b = document.createElement("button");
-      b.className = "item" + (state.current?.id === c.id ? " active" : "");
-      b.textContent = c.name;
-      b.onclick = () => select(c.id);
-      tree.appendChild(b);
-    });
-  });
-  if (!tree.children.length) tree.innerHTML = '<p class="empty" style="padding:12px 10px">Nada encontrado.</p>';
-}
+      const ICONS = {
+        caret:
+          '<svg class="caret" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 6L8 10L12 6" stroke-linecap="round" stroke-linejoin="round" stroke="white"/></svg>',
+      };
 
-function renderKnobs() {
-  const box = $("knobs");
-  box.innerHTML = "";
-  const knobs = state.current.knobs || [];
-  if (!knobs.length) { box.innerHTML = '<p class="empty">Este componente não tem knobs.</p>'; return; }
-  knobs.forEach((k) => {
-    const wrap = document.createElement("label");
-    wrap.className = "knob";
-    wrap.innerHTML = `<span>${esc(k.label || k.name)}</span>`;
-    let field;
-    if (k.type === "select") {
-      field = document.createElement("select");
-      k.options.forEach((o) => field.add(new Option(o, o)));
-    } else {
-      field = document.createElement("input");
-      field.type = "text";
-    }
-    field.value = state.values[k.name];
-    field.oninput = () => { state.values[k.name] = field.value; update(); };
-    wrap.appendChild(field);
-    box.appendChild(wrap);
-  });
-}
+      // Monta as pastas a partir da categoria: "Botões / Glow" vira Botões > Glow.
+      function buildTree(list) {
+        const root = { folders: {}, items: [] };
+        list.forEach((c) => {
+          let node = root;
+          (c.category || "")
+            .split("/")
+            .map((s) => s.trim())
+            .filter(Boolean)
+            .forEach((name) => {
+              node = node.folders[name] ||= { folders: {}, items: [] };
+            });
+          node.items.push(c);
+        });
+        return root;
+      }
 
-async function select(id) {
-  const c = state.list.find((x) => x.id === id) || state.list[0];
-  state.current = c;
-  history.replaceState(null, "", "#" + c.id);
-  $("title").textContent = c.name;
-  $("desc").textContent = c.description || "";
-  state.values = Object.fromEntries((c.knobs || []).map((k) => [k.name, k.default ?? ""]));
-  state.raw = cache[c.file] ??= await fetch(c.file).then((r) => r.text());
-  renderNav($("search").value);
-  renderKnobs();
-  update();
-}
+      function renderNav(filter = "") {
+        const tree = $("tree");
+        tree.innerHTML = "";
+        const f = filter.trim().toLowerCase();
+        const list = state.list.filter(
+          (c) =>
+            !f ||
+            c.name.toLowerCase().includes(f) ||
+            c.category.toLowerCase().includes(f),
+        );
 
-async function copy() {
-  const text = copyText();
-  try { await navigator.clipboard.writeText(text); }
-  catch {
-    const t = document.createElement("textarea");
-    t.value = text; document.body.appendChild(t); t.select();
-    document.execCommand("copy"); t.remove();
-  }
-  $("toast").classList.add("show");
-  setTimeout(() => $("toast").classList.remove("show"), 1600);
-}
+        const row = (cls, depth, html) => {
+          const b = document.createElement("button");
+          b.className = "node " + cls;
+          b.style.setProperty("--depth", depth);
+          b.innerHTML = html;
+          tree.appendChild(b);
+          return b;
+        };
 
-function segment(groupId, attr, key, after) {
-  $(groupId).addEventListener("click", (e) => {
-    const b = e.target.closest("button"); if (!b) return;
-    [...$(groupId).children].forEach((x) => x.classList.toggle("on", x === b));
-    state[key] = b.dataset[attr];
-    after();
-  });
-}
+        (function draw(node, depth, path) {
+          Object.entries(node.folders).forEach(([name, child]) => {
+            const key = [...path, name].join("/");
+            const open = f || state.open.has(key);
+            const b = row(
+              "folder" + (open ? "" : " closed"),
+              depth,
+              `${ICONS.caret}<span>${esc(name)}</span>`,
+            );
+            b.onclick = () => {
+              state.open.has(key)
+                ? state.open.delete(key)
+                : state.open.add(key);
+              renderNav($("search").value);
+            };
+            if (open) draw(child, depth + 1, [...path, name]);
+          });
+          node.items.forEach((c) => {
+            const b = row(
+              "item" + (state.current?.id === c.id ? " active" : ""),
+              depth,
+              `<i class="spacer"></i><span>${esc(c.name)}</span>`,
+            );
+            b.onclick = () => select(c.id);
+          });
+        })(buildTree(list), 0, []);
 
-async function init() {
-  try {
-    const [list, tokens] = await Promise.all([
-      fetch("components.json").then((r) => r.json()),
-      fetch("tokens.css").then((r) => r.text()),
-    ]);
-    state.list = list; state.tokens = tokens;
-  } catch (err) {
-    $("title").textContent = "Não foi possível carregar os componentes";
-    $("desc").textContent = "Abra pelo GitHub Pages ou por um servidor local (o navegador bloqueia o carregamento abrindo o arquivo direto).";
-    return;
-  }
-  segment("viewport", "v", "viewport", () => { $("frame").className = "frame " + state.viewport; });
-  segment("theme", "t", "theme", update);
-  $("search").oninput = (e) => renderNav(e.target.value);
-  $("withTokens").onchange = update;
-  $("copy").onclick = copy;
-  select(location.hash.slice(1));
-}
-init();
-</script>
-</body>
+        if (!tree.children.length)
+          tree.innerHTML =
+            '<p class="empty" style="padding:12px 10px">Nada encontrado.</p>';
+      }
+
+      function renderKnobs() {
+        const box = $("knobs");
+        box.innerHTML = "";
+        const knobs = state.current.knobs || [];
+        if (!knobs.length) {
+          box.innerHTML = '<p class="empty">Este componente não tem knobs.</p>';
+          return;
+        }
+        // "when" esconde o knob enquanto o toggle indicado estiver desligado.
+        knobs.filter((k) => !k.when || state.values[k.when]).forEach((k) => {
+          const wrap = document.createElement("label");
+          wrap.className = "knob";
+          wrap.innerHTML = `<span>${esc(k.label || k.name)}</span>`;
+          if (k.type === "toggle") {
+            wrap.className = "knob knob-toggle";
+            const sw = document.createElement("input");
+            sw.type = "checkbox";
+            sw.className = "switch";
+            sw.checked = !!state.values[k.name];
+            sw.onchange = () => {
+              state.values[k.name] = sw.checked;
+              renderKnobs();
+              update();
+            };
+            wrap.appendChild(sw);
+            box.appendChild(wrap);
+            return;
+          }
+          let field;
+          if (k.type === "select") {
+            field = document.createElement("select");
+            k.options.forEach((o) => field.add(new Option(o, o)));
+          } else {
+            field = document.createElement("input");
+            field.type = "text";
+          }
+          // "hideLabel" esconde o título do campo (o nome segue disponível para leitores de tela).
+          if (k.hideLabel) {
+            wrap.classList.add("no-label");
+            wrap.firstElementChild.remove();
+            field.setAttribute("aria-label", k.label || k.name);
+          }
+          field.value = state.values[k.name];
+          field.oninput = () => {
+            state.values[k.name] = field.value;
+            update();
+          };
+          wrap.appendChild(field);
+          box.appendChild(wrap);
+        });
+      }
+
+      async function select(id) {
+        const c = state.list.find((x) => x.id === id) || state.list[0];
+        state.current = c;
+        history.replaceState(null, "", "#" + c.id);
+        $("title").textContent = c.name;
+        $("desc").textContent = c.description || "";
+        state.values = Object.fromEntries(
+          (c.knobs || []).map((k) => [k.name, k.default ?? ""]),
+        );
+        state.raw = cache[c.file] ??= await fetch(c.file).then((r) => r.text());
+        renderNav($("search").value);
+        renderKnobs();
+        update();
+      }
+
+      async function copy() {
+        const text = copyText();
+        try {
+          await navigator.clipboard.writeText(text);
+        } catch {
+          const t = document.createElement("textarea");
+          t.value = text;
+          document.body.appendChild(t);
+          t.select();
+          document.execCommand("copy");
+          t.remove();
+        }
+        $("toast").classList.add("show");
+        setTimeout(() => $("toast").classList.remove("show"), 1600);
+      }
+
+      function segment(groupId, attr, key, after) {
+        $(groupId).addEventListener("click", (e) => {
+          const b = e.target.closest("button");
+          if (!b) return;
+          [...$(groupId).children].forEach((x) =>
+            x.classList.toggle("on", x === b),
+          );
+          state[key] = b.dataset[attr];
+          after();
+        });
+      }
+
+      async function init() {
+        try {
+          const [list, tokens] = await Promise.all([
+            fetch("components.json").then((r) => r.json()),
+            fetch("tokens.css").then((r) => r.text()),
+          ]);
+          state.list = list;
+          state.tokens = tokens;
+        } catch (err) {
+          $("title").textContent = "Não foi possível carregar os componentes";
+          $("desc").textContent =
+            "Abra pelo GitHub Pages ou por um servidor local (o navegador bloqueia o carregamento abrindo o arquivo direto).";
+          return;
+        }
+        segment("viewport", "v", "viewport", () => {
+          $("frame").className = "frame " + state.viewport;
+        });
+        segment("theme", "t", "theme", update);
+        $("search").oninput = (e) => renderNav(e.target.value);
+        $("copy").onclick = copy;
+        select(location.hash.slice(1));
+      }
+      init();
+    </script>
+  </body>
 </html>

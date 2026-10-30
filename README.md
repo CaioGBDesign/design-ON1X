@@ -26,6 +26,10 @@ Escolha um componente na lateral, ajuste os knobs e clique em **Copiar HTML** pa
 }
 ```
 
+   O `category` define a pasta na lateral. Use `/` para criar subpastas, por exemplo `"Botões / Glow"`.
+   Para partes opcionais, use um knob `"type": "toggle"` (com `"default": true` ou `false`) e envolva o trecho com `{{#nome}}...{{/nome}}`.
+   Ele só aparece, inclusive no "Copiar HTML", com o toggle ligado. `{{^nome}}...{{/nome}}` faz o contrário.
+   Um knob com `"when": "nome"` só aparece no painel enquanto esse toggle estiver ligado.
 3. Faça o commit. O site se atualiza sozinho em cerca de 1 minuto.
 
 ## Tokens

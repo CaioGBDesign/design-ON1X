@@ -1,0 +1,128 @@
+<style>
+  .alert-warning {
+    display: flex;
+    width: 576px;
+    max-width: 100%;
+    box-sizing: border-box;
+    padding: 12px 16px;
+    align-items: center;
+    gap: 12px;
+
+    border-radius: 12px;
+    background: rgba(255, 167, 28, 0.15);
+
+    font-family: "Public Sans";
+    font-style: normal;
+    line-height: normal;
+  }
+  .alert-warning .icon {
+    flex: none;
+    color: #ffa71c;
+  }
+  .alert-warning .content {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+  }
+  .alert-warning .title {
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+  }
+  .alert-warning .description {
+    color: #717171;
+    font-size: 12px;
+    font-weight: 400;
+  }
+  .alert-warning .close {
+    display: flex;
+    flex: none;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: #fff;
+    cursor: pointer;
+  }
+
+  /* Light mode */
+  [data-theme="light"] .alert-warning {
+    background: #ffeed2;
+  }
+  [data-theme="light"] .alert-warning .icon {
+    color: #b27515;
+  }
+  [data-theme="light"] .alert-warning .title {
+    color: #734c0d;
+  }
+  [data-theme="light"] .alert-warning .description {
+    color: #734c0d;
+  }
+  [data-theme="light"] .alert-warning .close {
+    color: #734c0d;
+  }
+</style>
+<div class="alert-warning" role="alert">
+  {{#icon}}
+  <svg
+    class="icon"
+    width="16"
+    height="16"
+    viewBox="0 0 16 16"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M14.4867 12L9.15333 2.66667C9.03704 2.46147 8.8684 2.29079 8.66462 2.17204C8.46083 2.0533 8.22919 1.99073 7.99333 1.99073C7.75747 1.99073 7.52584 2.0533 7.32205 2.17204C7.11826 2.29079 6.94962 2.46147 6.83333 2.66667L1.5 12C1.38245 12.2036 1.32082 12.4346 1.32134 12.6697C1.32186 12.9047 1.38452 13.1355 1.50296 13.3385C1.62141 13.5416 1.79143 13.7097 1.9958 13.8259C2.20016 13.942 2.4316 14.0021 2.66667 14H13.3333C13.5673 13.9998 13.797 13.938 13.9995 13.8209C14.202 13.7037 14.3701 13.5354 14.487 13.3327C14.6039 13.1301 14.6654 12.9003 14.6653 12.6663C14.6652 12.4324 14.6036 12.2026 14.4867 12Z"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke="currentColor"
+    />
+    <path
+      d="M8 6V8.66667"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke="currentColor"
+    />
+    <path
+      d="M8 11.3333H8.00667"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke="currentColor"
+    />
+  </svg>
+  {{/icon}}
+  <div class="content">
+    {{#showTitle}}<span class="title">{{title}}</span>{{/showTitle}}
+    {{#showDescription}}<span class="description">{{description}}</span
+    >{{/showDescription}}
+  </div>
+  {{#close}}
+  <button
+    class="close"
+    type="button"
+    aria-label="Fechar"
+    onclick="this.closest('.alert-warning').remove()"
+  >
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 16 16"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M12 4L4 12"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke="currentColor"
+      />
+      <path
+        d="M4 4L12 12"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke="currentColor"
+      />
+    </svg>
+  </button>
+  {{/close}}
+</div>
