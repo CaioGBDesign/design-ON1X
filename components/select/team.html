@@ -57,31 +57,60 @@
     transform: rotate(180deg);
   }
 
-  /* Avatares */
+  /* Avatar da lista */
   .select-team .avatar {
-    display: inline-flex;
-    flex: none;
-    align-items: center;
-    justify-content: center;
+    display: block;
     width: 20px;
     height: 20px;
+    flex: none;
+
     border-radius: 50%;
-    background: var(--c, #333);
-    color: #0a181c;
-    font-size: 8px;
-    font-weight: 600;
+    object-fit: cover;
   }
-  .select-team .stack {
-    display: flex;
+
+  /* Avatares do campo: mesmo estilo do componente Avatar Group (components/Avatar/group.html) */
+  .select-team .avatar-group {
     flex: none;
   }
-  .select-team .stack .avatar + .avatar {
-    margin-left: -6px;
+  .avatar-group {
+    display: flex;
+    width: calc(var(--size) * 3.75);
+    max-width: 100%;
+    min-width: 0;
+    align-items: center;
   }
-  .select-team .stack .more {
-    border: 1.5px solid #000;
-    background: #333;
+  .avatar-group > * {
+    width: 26.667%;
+    flex: none;
+    aspect-ratio: 1/1;
+  }
+  /* Cada item entra por cima do anterior */
+  .avatar-group > * + * {
+    margin-left: -8.333%;
+  }
+  .avatar-group img {
+    display: block;
+    height: auto;
+
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  .avatar-group .add {
+    display: flex;
+    padding: 0;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: #262626;
     color: #fff;
+  }
+  .avatar-group .add svg {
+    width: min(calc(var(--size) / 2), 57.2%);
+    height: auto;
+    flex: none;
   }
 
   /* Lista de opções */
@@ -171,7 +200,7 @@
     color: rgba(255, 255, 255, 0.4);
     font-size: inherit;
   }
-  .select-team .count {
+  .select-team .option .count {
     padding: 2px 6px;
     border-radius: 6px;
     border: 1px solid rgba(255, 255, 255, 0.15);
@@ -227,11 +256,16 @@
   [data-theme="light"] .select-team .person small {
     color: #717171;
   }
-  [data-theme="light"] .select-team .count {
+  [data-theme="light"] .select-team .option .count {
     border: 1px solid rgba(0, 0, 0, 0.15);
   }
   [data-theme="light"] .select-team .meta {
     color: #e5e5e5;
+  }
+  [data-theme="light"] .avatar-group .add {
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    background: #e5e5e5;
+    color: #000;
   }
 </style>
 <div class="select-team">
@@ -257,22 +291,15 @@
   <div class="control">
     <button class="field" type="button">
       {{#avatars}}
-      <span class="stack">
-        <span class="avatar" style="--c: #b9a6f2">CG</span>
-        <span class="avatar" style="--c: #6aa0b8">FK</span>
-        <span class="avatar" style="--c: #c9b18a">JP</span>
-        <span class="avatar more">
-          <svg
-            width="12"
-            height="12"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-          >
-            <path d="M5 12h14" />
-            <path d="M12 5v14" />
+      <span class="avatar-group" style="--size: 20px">
+        <img src="components/Avatar/caio.jpg" alt="Caio" />
+        <img src="components/Avatar/flavia.jpg" alt="Flávia" />
+        <img src="components/Avatar/jennifer.jpg" alt="Jennifer" />
+        <img src="components/Avatar/heverton.png" alt="Heverton" />
+        <span class="add">
+          <svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M4 1.66668V6.33401" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" />
+            <path d="M6.33405 4.00066L1.66672 4.00066" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" />
           </svg>
         </span>
       </span>
@@ -317,7 +344,7 @@
         <li class="group-title">Consultores</li>
         <li class="bp">
           <button class="option selected" type="button">
-            <span class="avatar" style="--c: #b9a6f2">CG</span>
+            <img class="avatar" src="components/Avatar/caio.jpg" alt="" />
             <span class="person"
               >Caio Goulart<small>modelo@w1.com.br</small></span
             >
@@ -329,7 +356,7 @@
         </li>
         <li class="bp">
           <button class="option" type="button">
-            <span class="avatar" style="--c: #6aa0b8">FK</span>
+            <img class="avatar" src="components/Avatar/flavia.jpg" alt="" />
             <span class="person"
               >Flavia Kawazoe<small>modelo@w1.com.br</small></span
             >
@@ -341,7 +368,7 @@
         </li>
         <li class="bp">
           <button class="option" type="button">
-            <span class="avatar" style="--c: #c9b18a">JP</span>
+            <img class="avatar" src="components/Avatar/jennifer.jpg" alt="" />
             <span class="person"
               >Jennifer Paiva<small>modelo@w1.com.br</small></span
             >

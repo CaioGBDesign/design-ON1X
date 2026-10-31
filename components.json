@@ -4,7 +4,7 @@
     "name": "Small",
     "category": "Botões / Glow",
     "file": "components/botoes/Glow/small.html",
-    "description": "Botão Glow pequeno, com brilho na cor primária. Ideal para ações em espaços compactos.",
+    "description": "Botão Glow pequeno, preenchido com a cor primária. Ideal para ações em espaços compactos.",
     "knobs": [
       {
         "name": "label",
@@ -374,7 +374,7 @@
     "name": "Team",
     "category": "Select",
     "file": "components/select/team.html",
-    "description": "Select para escolher pessoas e estruturas da equipe. O campo mostra os avatares e um contador; na lista, as opções ficam agrupadas e marcadas com check ao clicar.",
+    "description": "Select para escolher pessoas e estruturas da equipe. O campo mostra o Avatar Group e um contador; na lista, as opções ficam agrupadas e marcadas com check ao clicar.",
     "knobs": [
       {
         "name": "avatars",
@@ -502,6 +502,522 @@
         "title": "Título do alerta"
       }
     }
+  },
+  {
+    "id": "alert-dialog-basic",
+    "name": "Basic",
+    "category": "Alert dialog / Popover",
+    "file": "components/alert-dialog/popover/basic.html",
+    "description": "Alert dialog com título, descrição e dois botões. Use para pedir uma confirmação.",
+    "knobs": [
+      {
+        "name": "title",
+        "label": "Título",
+        "type": "text",
+        "default": "Tem certeza?"
+      },
+      {
+        "name": "description",
+        "label": "Descrição",
+        "type": "text",
+        "default": "Esta ação não pode ser desfeita e os dados serão removidos."
+      },
+      {
+        "name": "cancel",
+        "label": "Botão secundário",
+        "type": "text",
+        "default": "Cancelar"
+      },
+      {
+        "name": "confirm",
+        "label": "Botão principal",
+        "type": "text",
+        "default": "Continuar"
+      }
+    ],
+    "grid": {
+      "title": "Alert dialog / Popover",
+      "options": [
+        {
+          "id": "alert-dialog-basic",
+          "label": "Basic"
+        },
+        {
+          "id": "alert-dialog-checkbox",
+          "label": "Checkbox"
+        },
+        {
+          "id": "alert-dialog-radio",
+          "label": "Radio"
+        }
+      ]
+    }
+  },
+  {
+    "id": "alert-dialog-checkbox",
+    "name": "Checkbox",
+    "category": "Alert dialog / Popover",
+    "file": "components/alert-dialog/popover/checkbox.html",
+    "description": "Alert dialog com um checkbox antes dos botões. Use para uma escolha opcional junto da confirmação.",
+    "knobs": [
+      {
+        "name": "title",
+        "label": "Título",
+        "type": "text",
+        "default": "Excluir projeto?"
+      },
+      {
+        "name": "description",
+        "label": "Descrição",
+        "type": "text",
+        "default": "O projeto será removido e não poderá ser recuperado."
+      },
+      {
+        "name": "option",
+        "label": "Texto do checkbox",
+        "type": "text",
+        "default": "Excluir também os arquivos"
+      },
+      {
+        "name": "checked",
+        "label": "Marcado",
+        "type": "toggle",
+        "default": false
+      },
+      {
+        "name": "cancel",
+        "label": "Botão secundário",
+        "type": "text",
+        "default": "Cancelar"
+      },
+      {
+        "name": "confirm",
+        "label": "Botão principal",
+        "type": "text",
+        "default": "Excluir"
+      }
+    ]
+  },
+  {
+    "id": "alert-dialog-radio",
+    "name": "Radio",
+    "category": "Alert dialog / Popover",
+    "file": "components/alert-dialog/popover/radio.html",
+    "description": "Alert dialog com dois radio buttons antes dos botões. Use quando a pessoa precisa escolher entre opções.",
+    "knobs": [
+      {
+        "name": "title",
+        "label": "Título",
+        "type": "text",
+        "default": "Como continuar?"
+      },
+      {
+        "name": "description",
+        "label": "Descrição",
+        "type": "text",
+        "default": "Escolha o que fazer com os arquivos do projeto."
+      },
+      {
+        "name": "option1",
+        "label": "Texto da 1ª opção",
+        "type": "text",
+        "default": "Manter os arquivos"
+      },
+      {
+        "name": "option2",
+        "label": "Texto da 2ª opção",
+        "type": "text",
+        "default": "Excluir os arquivos"
+      },
+      {
+        "name": "cancel",
+        "label": "Botão secundário",
+        "type": "text",
+        "default": "Cancelar"
+      },
+      {
+        "name": "confirm",
+        "label": "Botão principal",
+        "type": "text",
+        "default": "Confirmar"
+      }
+    ]
+  },
+  {
+    "id": "avatar-single",
+    "name": "Single",
+    "category": "Avatar",
+    "file": "components/Avatar/single.html",
+    "description": "Avatar único: foto em círculo, para identificar uma pessoa.",
+    "grid": {
+      "title": "Avatar",
+      "options": [
+        {
+          "id": "avatar-single",
+          "label": "Single"
+        },
+        {
+          "id": "avatar-group",
+          "label": "Group"
+        }
+      ]
+    }
+  },
+  {
+    "id": "avatar-group",
+    "name": "Group",
+    "category": "Avatar",
+    "file": "components/Avatar/group.html",
+    "description": "Grupo de avatares sobrepostos que termina com o botão de adicionar ou com um contador, para mostrar várias pessoas em pouco espaço.",
+    "knobs": [
+      {
+        "name": "size",
+        "label": "Tamanho",
+        "type": "range",
+        "min": 16,
+        "max": 80,
+        "step": 1,
+        "unit": "px",
+        "liveVar": "--size",
+        "default": 16
+      },
+      {
+        "name": "showCount",
+        "label": "Contador",
+        "type": "toggle",
+        "default": false
+      },
+      {
+        "name": "count",
+        "label": "Texto do contador",
+        "type": "text",
+        "default": "+9",
+        "hideLabel": true
+      }
+    ]
+  },
+  {
+    "id": "badge-error",
+    "name": "Error",
+    "category": "Badge",
+    "file": "components/badge/error.html",
+    "description": "Badge de erro, em vermelho. Use para falhas e estados críticos. Ligue ícone, avatar, identificador ou botão de fechar conforme a necessidade.",
+    "knobs": [
+      {
+        "name": "icon",
+        "label": "Ícone",
+        "type": "toggle",
+        "default": false
+      },
+      {
+        "name": "avatar",
+        "label": "Avatar",
+        "type": "toggle",
+        "default": false
+      },
+      {
+        "name": "dot",
+        "label": "Identificador",
+        "type": "toggle",
+        "default": false
+      },
+      {
+        "name": "label",
+        "label": "Texto",
+        "type": "text",
+        "default": "Error"
+      },
+      {
+        "name": "close",
+        "label": "Botão fechar",
+        "type": "toggle",
+        "default": false
+      }
+    ],
+    "grid": {
+      "title": "Badge",
+      "options": [
+        {
+          "id": "badge-error",
+          "label": "Error"
+        },
+        {
+          "id": "badge-success",
+          "label": "Success"
+        },
+        {
+          "id": "badge-alert",
+          "label": "Alert"
+        },
+        {
+          "id": "badge-info",
+          "label": "Info"
+        },
+        {
+          "id": "badge-neutral",
+          "label": "Neutral"
+        },
+        {
+          "id": "badge-outline",
+          "label": "Outline"
+        }
+      ]
+    }
+  },
+  {
+    "id": "badge-success",
+    "name": "Success",
+    "category": "Badge",
+    "file": "components/badge/success.html",
+    "description": "Badge de sucesso, em verde. Use para estados concluídos ou positivos. Ligue ícone, avatar, identificador ou botão de fechar conforme a necessidade.",
+    "knobs": [
+      {
+        "name": "icon",
+        "label": "Ícone",
+        "type": "toggle",
+        "default": false
+      },
+      {
+        "name": "avatar",
+        "label": "Avatar",
+        "type": "toggle",
+        "default": false
+      },
+      {
+        "name": "dot",
+        "label": "Identificador",
+        "type": "toggle",
+        "default": false
+      },
+      {
+        "name": "label",
+        "label": "Texto",
+        "type": "text",
+        "default": "Success"
+      },
+      {
+        "name": "close",
+        "label": "Botão fechar",
+        "type": "toggle",
+        "default": false
+      }
+    ]
+  },
+  {
+    "id": "badge-alert",
+    "name": "Alert",
+    "category": "Badge",
+    "file": "components/badge/alert.html",
+    "description": "Badge de alerta, em laranja. Use para estados que pedem atenção. Ligue ícone, avatar, identificador ou botão de fechar conforme a necessidade.",
+    "knobs": [
+      {
+        "name": "icon",
+        "label": "Ícone",
+        "type": "toggle",
+        "default": false
+      },
+      {
+        "name": "avatar",
+        "label": "Avatar",
+        "type": "toggle",
+        "default": false
+      },
+      {
+        "name": "dot",
+        "label": "Identificador",
+        "type": "toggle",
+        "default": false
+      },
+      {
+        "name": "label",
+        "label": "Texto",
+        "type": "text",
+        "default": "Alert"
+      },
+      {
+        "name": "close",
+        "label": "Botão fechar",
+        "type": "toggle",
+        "default": false
+      }
+    ]
+  },
+  {
+    "id": "badge-info",
+    "name": "Info",
+    "category": "Badge",
+    "file": "components/badge/info.html",
+    "description": "Badge informativo, em azul. Use para destacar uma informação. Ligue ícone, avatar, identificador ou botão de fechar conforme a necessidade.",
+    "knobs": [
+      {
+        "name": "icon",
+        "label": "Ícone",
+        "type": "toggle",
+        "default": false
+      },
+      {
+        "name": "avatar",
+        "label": "Avatar",
+        "type": "toggle",
+        "default": false
+      },
+      {
+        "name": "dot",
+        "label": "Identificador",
+        "type": "toggle",
+        "default": false
+      },
+      {
+        "name": "label",
+        "label": "Texto",
+        "type": "text",
+        "default": "Info"
+      },
+      {
+        "name": "close",
+        "label": "Botão fechar",
+        "type": "toggle",
+        "default": false
+      }
+    ]
+  },
+  {
+    "id": "badge-neutral",
+    "name": "Neutral",
+    "category": "Badge",
+    "file": "components/badge/neutral.html",
+    "description": "Badge neutro, com fundo cinza. Use para rótulos sem significado de estado. Ligue ícone, avatar, identificador ou botão de fechar conforme a necessidade.",
+    "knobs": [
+      {
+        "name": "icon",
+        "label": "Ícone",
+        "type": "toggle",
+        "default": false
+      },
+      {
+        "name": "avatar",
+        "label": "Avatar",
+        "type": "toggle",
+        "default": false
+      },
+      {
+        "name": "dot",
+        "label": "Identificador",
+        "type": "toggle",
+        "default": false
+      },
+      {
+        "name": "label",
+        "label": "Texto",
+        "type": "text",
+        "default": "Neutral"
+      },
+      {
+        "name": "close",
+        "label": "Botão fechar",
+        "type": "toggle",
+        "default": false
+      }
+    ]
+  },
+  {
+    "id": "badge-outline",
+    "name": "Outline",
+    "category": "Badge",
+    "file": "components/badge/outline.html",
+    "description": "Badge só com contorno. Use para rótulos discretos. Ligue ícone, avatar, identificador ou botão de fechar conforme a necessidade.",
+    "knobs": [
+      {
+        "name": "icon",
+        "label": "Ícone",
+        "type": "toggle",
+        "default": false
+      },
+      {
+        "name": "avatar",
+        "label": "Avatar",
+        "type": "toggle",
+        "default": false
+      },
+      {
+        "name": "dot",
+        "label": "Identificador",
+        "type": "toggle",
+        "default": false
+      },
+      {
+        "name": "label",
+        "label": "Texto",
+        "type": "text",
+        "default": "Outline"
+      },
+      {
+        "name": "close",
+        "label": "Botão fechar",
+        "type": "toggle",
+        "default": false
+      }
+    ]
+  },
+  {
+    "id": "dropdown-basic",
+    "name": "Basic",
+    "category": "Dropdown",
+    "file": "components/dropdown/basic.html",
+    "description": "Dropdown com itens de texto agrupados. Abre ao clicar no botão; a seta de um item abre um segundo dropdown.",
+    "grid": {
+      "title": "Dropdown",
+      "options": [
+        {
+          "id": "dropdown-basic",
+          "label": "Basic"
+        },
+        {
+          "id": "dropdown-icon",
+          "label": "Item com ícone"
+        },
+        {
+          "id": "dropdown-toggle",
+          "label": "Item com toggle"
+        },
+        {
+          "id": "dropdown-action",
+          "label": "Item com ação"
+        },
+        {
+          "id": "dropdown-mini",
+          "label": "Mini"
+        }
+      ]
+    }
+  },
+  {
+    "id": "dropdown-icon",
+    "name": "Item com ícone",
+    "category": "Dropdown",
+    "file": "components/dropdown/icon.html",
+    "description": "Dropdown com título e itens com ícone. O item escolhido fica marcado com um check."
+  },
+  {
+    "id": "dropdown-toggle",
+    "name": "Item com toggle",
+    "category": "Dropdown",
+    "file": "components/dropdown/toggle.html",
+    "description": "Dropdown com título e itens com ícone e toggle. Clicar na linha liga ou desliga, e o menu continua aberto."
+  },
+  {
+    "id": "dropdown-action",
+    "name": "Item com ação",
+    "category": "Dropdown",
+    "file": "components/dropdown/action.html",
+    "description": "Dropdown com lista de contatos: avatar, nome, e-mail e uma ação em cada linha, com um botão no final."
+  },
+  {
+    "id": "dropdown-mini",
+    "name": "Mini",
+    "category": "Dropdown",
+    "file": "components/dropdown/mini.html",
+    "description": "Dropdown compacto de ações, sem título. A ação de deletar fica separada por uma linha e em vermelho."
   },
   {
     "id": "search",
@@ -851,19 +1367,33 @@
     "name": "Default",
     "category": "Radio",
     "file": "components/radio/default.html",
-    "description": "Dois radio buttons sem texto, um desmarcado e um marcado. Clique em um para trocar a seleção.",
+    "description": "Dois radio buttons, um desmarcado e um marcado. Ligue o label de cada um para mostrar um texto ao lado; clicar no texto também seleciona.",
     "knobs": [
       {
-        "name": "ariaLabel1",
-        "label": "Nome do 1º radio (leitores de tela)",
-        "type": "text",
-        "default": "Opção 1"
+        "name": "showLabel1",
+        "label": "Label 1ª opção",
+        "type": "toggle",
+        "default": false
       },
       {
-        "name": "ariaLabel2",
-        "label": "Nome do 2º radio (leitores de tela)",
+        "name": "label1",
+        "label": "Texto da 1ª opção",
         "type": "text",
-        "default": "Opção 2"
+        "default": "Opção 1",
+        "hideLabel": true
+      },
+      {
+        "name": "showLabel2",
+        "label": "Label 2ª opção",
+        "type": "toggle",
+        "default": false
+      },
+      {
+        "name": "label2",
+        "label": "Texto da 2ª opção",
+        "type": "text",
+        "default": "Opção 2",
+        "hideLabel": true
       }
     ],
     "grid": {
@@ -876,34 +1406,9 @@
         {
           "id": "radio-default",
           "label": "Default"
-        },
-        {
-          "id": "radio-label",
-          "label": "Label"
         }
       ]
     }
-  },
-  {
-    "id": "radio-label",
-    "name": "Label",
-    "category": "Radio",
-    "file": "components/radio/label.html",
-    "description": "Dois radio buttons com texto ao lado, um desmarcado e um marcado. Clicar no texto também seleciona.",
-    "knobs": [
-      {
-        "name": "label1",
-        "label": "Texto da opção desmarcada",
-        "type": "text",
-        "default": "Opção 1"
-      },
-      {
-        "name": "label2",
-        "label": "Texto da opção marcada",
-        "type": "text",
-        "default": "Opção 2"
-      }
-    ]
   },
   {
     "id": "radio-box",
@@ -957,7 +1462,7 @@
     "name": "Default",
     "category": "Toggle",
     "file": "components/toggle/default.html",
-    "description": "Toggle sem texto. Clique para ligar ou desligar.",
+    "description": "Toggle com label opcional. Clique para ligar ou desligar.",
     "knobs": [
       {
         "name": "checked",
@@ -966,10 +1471,17 @@
         "default": true
       },
       {
-        "name": "ariaLabel",
-        "label": "Nome para leitores de tela",
+        "name": "showLabel",
+        "label": "Label",
+        "type": "toggle",
+        "default": false
+      },
+      {
+        "name": "label",
+        "label": "Texto do label",
         "type": "text",
-        "default": "Opção"
+        "default": "Notificações por e-mail",
+        "hideLabel": true
       }
     ],
     "grid": {
@@ -983,30 +1495,56 @@
           "label": "Default"
         },
         {
-          "id": "toggle-label",
-          "label": "Label"
+          "id": "toggle-segmented",
+          "label": "Segmented",
+          "values": {
+            "name": "segmented"
+          }
         }
       ]
     }
   },
   {
-    "id": "toggle-label",
-    "name": "Label",
+    "id": "toggle-segmented",
+    "name": "Segmented",
     "category": "Toggle",
-    "file": "components/toggle/label.html",
-    "description": "Toggle com texto ao lado. Clicar no texto também liga ou desliga.",
+    "file": "components/toggle/segmented.html",
+    "description": "Toggle com ícones lado a lado: duas opções, e mais quantas forem adicionadas. A opção selecionada fica destacada. Ligue o label de cada opção para mostrar um texto ao lado do ícone. É o mesmo componente que troca o tema deste site.",
     "knobs": [
       {
-        "name": "checked",
-        "label": "Ligado",
+        "name": "label1",
+        "label": "Label 1ª opção",
         "type": "toggle",
-        "default": true
+        "default": false
       },
       {
-        "name": "label",
-        "label": "Texto",
+        "name": "label1Text",
+        "label": "Texto da 1ª opção",
         "type": "text",
-        "default": "Notificações por e-mail"
+        "default": "Escuro",
+        "hideLabel": true
+      },
+      {
+        "name": "label2",
+        "label": "Label 2ª opção",
+        "type": "toggle",
+        "default": false
+      },
+      {
+        "name": "label2Text",
+        "label": "Texto da 2ª opção",
+        "type": "text",
+        "default": "Claro",
+        "hideLabel": true
+      },
+      {
+        "name": "extraOptions",
+        "label": "Adicionar opção",
+        "type": "list",
+        "default": [],
+        "start": 3,
+        "itemLabel": "Label {n}ª opção",
+        "itemText": "Opção {n}"
       }
     ]
   },

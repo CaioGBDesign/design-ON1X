@@ -1,0 +1,190 @@
+<style>
+  .alert-dialog {
+    display: flex;
+    width: 380px;
+    padding: 24px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+    box-sizing: border-box;
+
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    background: #262626;
+    box-shadow: var(--shadow-lg-1-offset-x, 0) var(--shadow-lg-1-offset-y, 1px) var(--shadow-lg-1-blur-radius, 3px) var(--shadow-lg-1-spread-radius, 0) var(--shadow-lg-1-color, rgba(0, 0, 0, 0.01)), var(--shadow-lg-2-offset-x, 0) var(--shadow-lg-2-offset-y, 4px) var(--shadow-lg-2-blur-radius, 6px) var(--shadow-lg-2-spread-radius, -1px) var(--shadow-lg-2-color, rgba(0, 0, 0, 0.01));
+  }
+  .alert-dialog-title {
+    align-self: stretch;
+    margin: 0;
+
+    color: #fff;
+    font-family: "Public Sans";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+  }
+  .alert-dialog-description {
+    display: flex;
+    height: 36px;
+    flex-direction: column;
+    justify-content: center;
+    align-self: stretch;
+    margin: 0;
+
+    color: #fff;
+    font-family: "Public Sans";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+  }
+  .alert-dialog-options {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    align-self: stretch;
+    gap: 8px;
+  }
+  .alert-dialog-option {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    color: #fff;
+    font-family: "Public Sans";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 16px;
+    cursor: pointer;
+  }
+  /* Mesmo estilo do componente Radio */
+  .alert-dialog-option input {
+    display: flex;
+    width: 16px;
+    height: 16px;
+    flex: none;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    margin: 0;
+
+    appearance: none;
+    border-radius: 50px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: #262626;
+    cursor: pointer;
+  }
+  .alert-dialog-option input:checked {
+    background: none;
+  }
+  /* Marcador no centro do radio selecionado */
+  .alert-dialog-option input::before {
+    content: "";
+    width: 10px;
+    height: 10px;
+    flex-shrink: 0;
+
+    border-radius: 50px;
+    background: #5fddd3;
+    transform: scale(0);
+    transition: transform 0.15s;
+  }
+  .alert-dialog-option input:checked::before {
+    transform: scale(1);
+  }
+  .alert-dialog-option input:focus-visible {
+    outline: 2px solid #5fddd3;
+    outline-offset: 2px;
+  }
+  /* Botões à direita, nos estilos Glass Small e Glow Small */
+  .alert-dialog-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-self: stretch;
+    gap: 8px;
+  }
+  .alert-dialog-actions button {
+    display: inline-flex;
+    padding: 8px;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.02);
+
+    color: #fff;
+    font-family: "Public Sans";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 16px;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+  }
+  .alert-dialog-actions button:hover {
+    border-color: rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.08);
+  }
+  .alert-dialog-actions .primary {
+    border: none;
+    background: #5fddd3;
+    color: #0a181c;
+  }
+  .alert-dialog-actions .primary:hover {
+    background: #7fe6de;
+  }
+
+  /* Light mode */
+  [data-theme="light"] .alert-dialog {
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    background: #e5e5e5;
+  }
+  [data-theme="light"] .alert-dialog-title {
+    color: #000;
+    font-weight: 700;
+  }
+  [data-theme="light"] .alert-dialog-description {
+    color: #000;
+  }
+  [data-theme="light"] .alert-dialog-option {
+    color: #000;
+  }
+  [data-theme="light"] .alert-dialog-option input {
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    background: #e5e5e5;
+  }
+  [data-theme="light"] .alert-dialog-option input:checked {
+    background: none;
+  }
+  [data-theme="light"] .alert-dialog-actions button:not(.primary) {
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    background: rgba(0, 0, 0, 0.02);
+    color: #000;
+  }
+  [data-theme="light"] .alert-dialog-actions button:not(.primary):hover {
+    border-color: rgba(0, 0, 0, 0.3);
+    background: rgba(0, 0, 0, 0.06);
+  }
+</style>
+<div class="alert-dialog" role="alertdialog" aria-label="{{title}}">
+  <h2 class="alert-dialog-title">{{title}}</h2>
+  <p class="alert-dialog-description">{{description}}</p>
+  <div class="alert-dialog-options" role="radiogroup" aria-label="{{title}}">
+    <label class="alert-dialog-option">
+      <input type="radio" name="alert-dialog-radio" checked />
+      {{option1}}
+    </label>
+    <label class="alert-dialog-option">
+      <input type="radio" name="alert-dialog-radio" />
+      {{option2}}
+    </label>
+  </div>
+  <div class="alert-dialog-actions">
+    <button type="button">{{cancel}}</button>
+    <button class="primary" type="button">{{confirm}}</button>
+  </div>
+</div>

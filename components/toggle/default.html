@@ -1,4 +1,17 @@
 <style>
+  .toggle-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    color: #fff;
+    font-family: "Public Sans";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 16px;
+    cursor: pointer;
+  }
   /* Corpo desmarcado */
   .toggle {
     display: flex;
@@ -42,6 +55,9 @@
   }
 
   /* Light mode */
+  [data-theme="light"] .toggle-label {
+    color: #000;
+  }
   [data-theme="light"] .toggle {
     background: #e5e5e5;
   }
@@ -52,4 +68,7 @@
     background: #5fddd3;
   }
 </style>
-<input class="toggle" type="checkbox" role="switch"{{#checked}} checked{{/checked}} aria-label="{{ariaLabel}}" />
+<label class="toggle-label">
+  <input class="toggle" type="checkbox" role="switch"{{#checked}} checked{{/checked}}{{^showLabel}} aria-label="{{label}}"{{/showLabel}} />
+  {{#showLabel}}{{label}}{{/showLabel}}
+</label>

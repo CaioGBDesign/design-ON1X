@@ -1,0 +1,235 @@
+<style>
+  .dropdown-icon {
+    position: relative;
+    display: inline-flex;
+  }
+  /* Botão que abre o dropdown: mesmo estilo do botão Ghost Small */
+  .dropdown-icon .trigger {
+    display: inline-flex;
+    padding: 8px;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+
+    color: #fff;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .dropdown-icon .trigger:hover {
+    background: rgba(255, 255, 255, 0.06);
+  }
+  .dropdown-icon .menu {
+    display: none;
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    z-index: 20;
+    width: 216px;
+    flex-direction: column;
+    align-items: flex-start;
+
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: #000;
+    box-shadow: var(--shadow-md-1-offset-x, 0) var(--shadow-md-1-offset-y, 1px) var(--shadow-md-1-blur-radius, 3px) var(--shadow-md-1-spread-radius, 0) var(--shadow-md-1-color, rgba(0, 0, 0, 0.01)), var(--shadow-md-2-offset-x, 0) var(--shadow-md-2-offset-y, 2px) var(--shadow-md-2-blur-radius, 4px) var(--shadow-md-2-spread-radius, -1px) var(--shadow-md-2-color, rgba(0, 0, 0, 0.01));
+
+    /* Surge crescendo a partir do canto, e faz o caminho inverso ao fechar */
+    opacity: 0;
+    transform: translateY(-8px) scale(0.95);
+    transform-origin: top left;
+    transition: opacity 0.15s ease-out, transform 0.15s ease-out, display 0.15s allow-discrete;
+  }
+  .dropdown-icon.open .menu {
+    display: flex;
+    opacity: 1;
+    transform: none;
+  }
+  @starting-style {
+    .dropdown-icon.open .menu {
+      opacity: 0;
+      transform: translateY(-8px) scale(0.95);
+    }
+  }
+  .dropdown-icon .group {
+    display: flex;
+    padding: 4px;
+    flex-direction: column;
+    align-items: flex-start;
+    align-self: stretch;
+  }
+  .dropdown-icon .item {
+    display: flex;
+    padding: 8px;
+    align-items: center;
+    gap: 8px;
+    align-self: stretch;
+
+    border: 0;
+    border-radius: 8px;
+    background: none;
+
+    color: #fff;
+    cursor: pointer;
+  }
+  .dropdown-icon .label {
+    cursor: default;
+  }
+  .dropdown-icon button.item:hover,
+  .dropdown-icon button.item:focus-visible,
+  .dropdown-icon .item.selected {
+    background: rgba(255, 255, 255, 0.08);
+    outline: none;
+  }
+  .dropdown-icon .text {
+    flex: 1;
+    height: 16px;
+    align-self: stretch;
+
+    color: #fff;
+    font-family: "Public Sans";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 16px;
+    text-align: left;
+  }
+  .dropdown-icon svg {
+    flex: none;
+  }
+  .dropdown-icon .check {
+    visibility: hidden;
+  }
+  .dropdown-icon .item.selected .check {
+    visibility: visible;
+  }
+
+  /* Light mode */
+  [data-theme="light"] .dropdown-icon .trigger {
+    color: #000;
+  }
+  [data-theme="light"] .dropdown-icon .trigger:hover {
+    background: rgba(0, 0, 0, 0.06);
+  }
+  [data-theme="light"] .dropdown-icon .menu {
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    background: #fff;
+  }
+  [data-theme="light"] .dropdown-icon .item,
+  [data-theme="light"] .dropdown-icon .text {
+    color: #000;
+  }
+  [data-theme="light"] .dropdown-icon button.item:hover,
+  [data-theme="light"] .dropdown-icon button.item:focus-visible,
+  [data-theme="light"] .dropdown-icon .item.selected {
+    background: rgba(0, 0, 0, 0.08);
+  }
+</style>
+<div class="dropdown-icon">
+  <button class="trigger" type="button" aria-label="Abrir menu" aria-haspopup="menu" aria-expanded="false">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M8.66665 8.00004C8.66665 8.36823 8.36817 8.66671 7.99998 8.66671C7.63179 8.66671 7.33331 8.36823 7.33331 8.00004C7.33331 7.63185 7.63179 7.33337 7.99998 7.33337C8.36817 7.33337 8.66665 7.63185 8.66665 8.00004Z" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" />
+      <path d="M8.66665 3.33335C8.66665 3.70154 8.36817 4.00002 7.99998 4.00002C7.63179 4.00002 7.33331 3.70154 7.33331 3.33335C7.33331 2.96516 7.63179 2.66669 7.99998 2.66669C8.36817 2.66669 8.66665 2.96516 8.66665 3.33335Z" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" />
+      <path d="M8.66665 12.6667C8.66665 13.0349 8.36817 13.3333 7.99998 13.3333C7.63179 13.3333 7.33331 13.0349 7.33331 12.6667C7.33331 12.2985 7.63179 12 7.99998 12C8.36817 12 8.66665 12.2985 8.66665 12.6667Z" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" />
+    </svg>
+  </button>
+  <div class="menu">
+    <div class="group">
+      <div class="item label"><span class="text">User profile</span></div>
+    </div>
+    <div class="group">
+      <button class="item" type="button">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M11.3333 5.33333C11.3333 7.17428 9.84095 8.66667 8.00001 8.66667C6.15906 8.66667 4.66667 7.17428 4.66667 5.33333C4.66667 3.49238 6.15906 2 8.00001 2C9.84095 2 11.3333 3.49238 11.3333 5.33333Z" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" />
+          <path d="M13.3333 14C13.3333 12.5855 12.7714 11.229 11.7712 10.2288C10.771 9.22857 9.41449 8.66666 8.00001 8.66666C6.58552 8.66666 5.22896 9.22857 4.22877 10.2288C3.22857 11.229 2.66667 12.5855 2.66667 14" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" />
+        </svg>
+        <span class="text">Profile</span>
+        <svg class="check" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M13.3333 4L6 11.3333L2.66667 8" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" />
+        </svg>
+      </button>
+      <button class="item selected" type="button">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M6.44734 2.75733C6.48407 2.37089 6.66356 2.01203 6.95074 1.75085C7.23792 1.48967 7.61216 1.34495 8.00034 1.34495C8.38852 1.34495 8.76276 1.48967 9.04994 1.75085C9.33712 2.01203 9.51661 2.37089 9.55334 2.75733C9.57542 3.00697 9.65731 3.24761 9.79209 3.45889C9.92688 3.67017 10.1106 3.84587 10.3276 3.97111C10.5447 4.09636 10.7888 4.16746 11.0391 4.17841C11.2895 4.18936 11.5388 4.13982 11.766 4.034C12.1187 3.87385 12.5185 3.85068 12.8873 3.96899C13.2562 4.0873 13.5679 4.33863 13.7617 4.67407C13.9555 5.0095 14.0175 5.40505 13.9358 5.78371C13.854 6.16238 13.6343 6.49707 13.3193 6.72266C13.1143 6.86656 12.9469 7.05774 12.8313 7.28001C12.7157 7.50229 12.6554 7.74914 12.6554 7.99966C12.6554 8.25019 12.7157 8.49704 12.8313 8.71931C12.9469 8.94159 13.1143 9.13277 13.3193 9.27666C13.6343 9.50225 13.854 9.83695 13.9358 10.2156C14.0175 10.5943 13.9555 10.9898 13.7617 11.3253C13.5679 11.6607 13.2562 11.912 12.8873 12.0303C12.5185 12.1487 12.1187 12.1255 11.766 11.9653C11.5388 11.8595 11.2895 11.81 11.0391 11.8209C10.7888 11.8319 10.5447 11.903 10.3276 12.0282C10.1106 12.1535 9.92688 12.3292 9.79209 12.5404C9.65731 12.7517 9.57542 12.9924 9.55334 13.242C9.51661 13.6284 9.33712 13.9873 9.04994 14.2485C8.76276 14.5097 8.38852 14.6544 8.00034 14.6544C7.61216 14.6544 7.23792 14.5097 6.95074 14.2485C6.66356 13.9873 6.48407 13.6284 6.44734 13.242C6.4253 12.9923 6.3434 12.7515 6.20858 12.5402C6.07376 12.3288 5.88999 12.1531 5.67283 12.0278C5.45567 11.9026 5.21152 11.8315 4.96106 11.8206C4.7106 11.8097 4.46121 11.8594 4.234 11.9653C3.88126 12.1255 3.48156 12.1487 3.11267 12.0303C2.74379 11.912 2.43212 11.6607 2.23833 11.3253C2.04453 10.9898 1.98248 10.5943 2.06424 10.2156C2.14601 9.83695 2.36574 9.50225 2.68067 9.27666C2.88575 9.13277 3.05316 8.94159 3.16873 8.71931C3.2843 8.49704 3.34464 8.25019 3.34464 7.99966C3.34464 7.74914 3.2843 7.50229 3.16873 7.28001C3.05316 7.05774 2.88575 6.86656 2.68067 6.72266C2.36618 6.49696 2.14684 6.16239 2.06527 5.78398C1.98371 5.40558 2.04574 5.01036 2.23933 4.67514C2.43291 4.33992 2.74421 4.08865 3.11273 3.97016C3.48125 3.85167 3.88066 3.87442 4.23334 4.034C4.46051 4.13982 4.70983 4.18936 4.96021 4.17841C5.21058 4.16746 5.45463 4.09636 5.6717 3.97111C5.88877 3.84587 6.07247 3.67017 6.20725 3.45889C6.34203 3.24761 6.42393 3.00697 6.446 2.75733" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" />
+          <path d="M10 8C10 9.10457 9.10457 10 8 10C6.89543 10 6 9.10457 6 8C6 6.89543 6.89543 6 8 6C9.10457 6 10 6.89543 10 8Z" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" />
+        </svg>
+        <span class="text">Settings</span>
+        <svg class="check" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M13.3333 4L6 11.3333L2.66667 8" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" />
+        </svg>
+      </button>
+      <button class="item" type="button">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M2.56667 5.74666C2.46937 5.30834 2.48431 4.85256 2.61011 4.42155C2.73591 3.99055 2.9685 3.59829 3.28632 3.28114C3.60413 2.96399 3.99688 2.73222 4.42814 2.60732C4.85941 2.48242 5.31523 2.46844 5.75334 2.56666C5.99448 2.18953 6.32668 1.87917 6.71931 1.66418C7.11194 1.4492 7.55237 1.33652 8.00001 1.33652C8.44764 1.33652 8.88807 1.4492 9.28071 1.66418C9.67334 1.87917 10.0055 2.18953 10.2467 2.56666C10.6855 2.46801 11.1421 2.48193 11.574 2.60714C12.006 2.73234 12.3992 2.96475 12.7172 3.28276C13.0352 3.60077 13.2677 3.99404 13.3929 4.42599C13.5181 4.85795 13.532 5.31455 13.4333 5.75333C13.8105 5.99447 14.1208 6.32666 14.3358 6.71929C14.5508 7.11193 14.6635 7.55236 14.6635 7.99999C14.6635 8.44763 14.5508 8.88806 14.3358 9.28069C14.1208 9.67333 13.8105 10.0055 13.4333 10.2467C13.5316 10.6848 13.5176 11.1406 13.3927 11.5719C13.2678 12.0031 13.036 12.3959 12.7189 12.7137C12.4017 13.0315 12.0094 13.2641 11.5784 13.3899C11.1474 13.5157 10.6917 13.5306 10.2533 13.4333C10.0125 13.8119 9.68006 14.1236 9.28676 14.3395C8.89346 14.5555 8.45202 14.6687 8.00334 14.6687C7.55466 14.6687 7.11322 14.5555 6.71992 14.3395C6.32662 14.1236 5.99417 13.8119 5.75334 13.4333C5.31523 13.5316 4.85941 13.5176 4.42814 13.3927C3.99688 13.2678 3.60413 13.036 3.28632 12.7188C2.9685 12.4017 2.73591 12.0094 2.61011 11.5784C2.48431 11.1474 2.46937 10.6916 2.56667 10.2533C2.18664 10.0128 1.87362 9.68011 1.65671 9.28614C1.4398 8.89216 1.32605 8.44973 1.32605 7.99999C1.32605 7.55026 1.4398 7.10782 1.65671 6.71385C1.87362 6.31988 2.18664 5.98717 2.56667 5.74666Z" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" />
+          <path d="M10.6667 5.33333H6.66666C6.31304 5.33333 5.9739 5.4738 5.72385 5.72385C5.4738 5.9739 5.33333 6.31304 5.33333 6.66666C5.33333 7.02028 5.4738 7.35942 5.72385 7.60947C5.9739 7.85952 6.31304 7.99999 6.66666 7.99999H9.33333C9.68695 7.99999 10.0261 8.14047 10.2761 8.39052C10.5262 8.64057 10.6667 8.97971 10.6667 9.33333C10.6667 9.68695 10.5262 10.0261 10.2761 10.2761C10.0261 10.5262 9.68695 10.6667 9.33333 10.6667H5.33333" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" />
+          <path d="M8 12V4" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" />
+        </svg>
+        <span class="text">Billing plans</span>
+        <svg class="check" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M13.3333 4L6 11.3333L2.66667 8" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" />
+        </svg>
+      </button>
+      <button class="item" type="button">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M8 1.33333V14.6667" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" />
+          <path d="M11.3333 3.33333H6.33333C5.71449 3.33333 5.121 3.57916 4.68342 4.01675C4.24583 4.45433 4 5.04782 4 5.66666C4 6.2855 4.24583 6.87899 4.68342 7.31658C5.121 7.75416 5.71449 7.99999 6.33333 7.99999H9.66667C10.2855 7.99999 10.879 8.24583 11.3166 8.68341C11.7542 9.121 12 9.71449 12 10.3333C12 10.9522 11.7542 11.5457 11.3166 11.9832C10.879 12.4208 10.2855 12.6667 9.66667 12.6667H4" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" />
+        </svg>
+        <span class="text">Pricing</span>
+        <svg class="check" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M13.3333 4L6 11.3333L2.66667 8" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" />
+        </svg>
+      </button>
+      <button class="item" type="button">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M14.6667 8C14.6667 11.6819 11.6819 14.6667 8 14.6667C4.3181 14.6667 1.33333 11.6819 1.33333 8C1.33333 4.3181 4.3181 1.33333 8 1.33333C11.6819 1.33333 14.6667 4.3181 14.6667 8Z" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" />
+          <path d="M6.06 6C6.21673 5.55444 6.5261 5.17874 6.9333 4.93942C7.3405 4.7001 7.81926 4.61262 8.28478 4.69247C8.7503 4.77232 9.17254 5.01435 9.47672 5.37568C9.78089 5.73702 9.94737 6.19435 9.94666 6.66667C9.94666 8 7.94666 8.66667 7.94666 8.66667" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" />
+          <path d="M8 11.3333H8.00667" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" />
+        </svg>
+        <span class="text">FAQ</span>
+        <svg class="check" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M13.3333 4L6 11.3333L2.66667 8" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" />
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
+<script>
+  // Abre e fecha o dropdown, marca o item clicado e mantém o menu visível quando falta espaço à direita.
+  document.querySelectorAll(".dropdown-icon").forEach((root) => {
+    const trigger = root.querySelector(".trigger");
+    const menu = root.querySelector(".menu");
+
+    const keepInside = (panel) => {
+      panel.style.left = "";
+      // O limite é o contêiner mais próximo que corta o conteúdo, ou a tela.
+      let clip = panel.parentElement;
+      while (clip && getComputedStyle(clip).overflowX === "visible") clip = clip.parentElement;
+      const limit = clip ? clip.getBoundingClientRect().right : document.documentElement.clientWidth;
+      const over = panel.getBoundingClientRect().left + panel.offsetWidth - (limit - 16);
+      if (over > 0) panel.style.left = `calc(${getComputedStyle(panel).left} - ${over}px)`;
+    };
+    const setOpen = (open) => {
+      root.classList.toggle("open", open);
+      trigger.setAttribute("aria-expanded", open);
+      if (open) keepInside(menu);
+    };
+
+    trigger.addEventListener("click", () => setOpen(!root.classList.contains("open")));
+    menu.querySelectorAll("button.item").forEach((item) => {
+      item.addEventListener("click", () => {
+        menu.querySelector(".selected")?.classList.remove("selected");
+        item.classList.add("selected");
+        setOpen(false);
+      });
+    });
+    document.addEventListener("click", (e) => {
+      if (!root.contains(e.target)) setOpen(false);
+    });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") setOpen(false);
+    });
+  });
+</script>

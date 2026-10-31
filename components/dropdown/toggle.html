@@ -1,0 +1,255 @@
+<style>
+  .dropdown-toggle {
+    position: relative;
+    display: inline-flex;
+  }
+  /* Botão que abre o dropdown: mesmo estilo do botão Ghost Small */
+  .dropdown-toggle .trigger {
+    display: inline-flex;
+    padding: 8px;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+
+    color: #fff;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .dropdown-toggle .trigger:hover {
+    background: rgba(255, 255, 255, 0.06);
+  }
+  .dropdown-toggle .menu {
+    display: none;
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    z-index: 20;
+    width: 216px;
+    flex-direction: column;
+    align-items: flex-start;
+
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: #000;
+    box-shadow: var(--shadow-md-1-offset-x, 0) var(--shadow-md-1-offset-y, 1px) var(--shadow-md-1-blur-radius, 3px) var(--shadow-md-1-spread-radius, 0) var(--shadow-md-1-color, rgba(0, 0, 0, 0.01)), var(--shadow-md-2-offset-x, 0) var(--shadow-md-2-offset-y, 2px) var(--shadow-md-2-blur-radius, 4px) var(--shadow-md-2-spread-radius, -1px) var(--shadow-md-2-color, rgba(0, 0, 0, 0.01));
+
+    /* Surge crescendo a partir do canto, e faz o caminho inverso ao fechar */
+    opacity: 0;
+    transform: translateY(-8px) scale(0.95);
+    transform-origin: top left;
+    transition: opacity 0.15s ease-out, transform 0.15s ease-out, display 0.15s allow-discrete;
+  }
+  .dropdown-toggle.open .menu {
+    display: flex;
+    opacity: 1;
+    transform: none;
+  }
+  @starting-style {
+    .dropdown-toggle.open .menu {
+      opacity: 0;
+      transform: translateY(-8px) scale(0.95);
+    }
+  }
+  .dropdown-toggle .group {
+    display: flex;
+    padding: 4px;
+    flex-direction: column;
+    align-items: flex-start;
+    align-self: stretch;
+  }
+  .dropdown-toggle .item {
+    display: flex;
+    padding: 8px;
+    align-items: center;
+    gap: 8px;
+    align-self: stretch;
+
+    border: 0;
+    border-radius: 8px;
+    background: none;
+
+    color: #fff;
+    cursor: pointer;
+  }
+  .dropdown-toggle .label {
+    cursor: default;
+  }
+  .dropdown-toggle label.item:hover,
+  .dropdown-toggle label.item:focus-within {
+    background: rgba(255, 255, 255, 0.08);
+    outline: none;
+  }
+  .dropdown-toggle .text {
+    flex: 1;
+    height: 16px;
+    align-self: center; /* A linha é mais alta por causa do toggle */
+
+    color: #fff;
+    font-family: "Public Sans";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 16px;
+    text-align: left;
+  }
+  .dropdown-toggle svg {
+    flex: none;
+  }
+  /* Mesmo estilo do componente Toggle (components/toggle/default.html) */
+  .dropdown-toggle .toggle {
+    display: flex;
+    width: 40px;
+    height: 20px;
+    flex: none;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 4px;
+    align-items: center;
+    gap: 8px;
+
+    appearance: none;
+    border-radius: 40px;
+    background: #262626;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .dropdown-toggle .toggle::before {
+    content: "";
+    width: 10px;
+    height: 6px;
+    transform: rotate(-180deg);
+    flex-shrink: 0;
+
+    border-radius: 4px;
+    background: #fff;
+    transition: transform 0.15s;
+  }
+  .dropdown-toggle .toggle:checked {
+    background: #5fddd3;
+  }
+  .dropdown-toggle .toggle:checked::before {
+    transform: translateX(22px) rotate(-180deg);
+  }
+  .dropdown-toggle .toggle:focus-visible {
+    outline: 2px solid #5fddd3;
+    outline-offset: 2px;
+  }
+
+  /* Light mode */
+  [data-theme="light"] .dropdown-toggle .trigger {
+    color: #000;
+  }
+  [data-theme="light"] .dropdown-toggle .trigger:hover {
+    background: rgba(0, 0, 0, 0.06);
+  }
+  [data-theme="light"] .dropdown-toggle .menu {
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    background: #fff;
+  }
+  [data-theme="light"] .dropdown-toggle .item,
+  [data-theme="light"] .dropdown-toggle .text {
+    color: #000;
+  }
+  [data-theme="light"] .dropdown-toggle label.item:hover,
+  [data-theme="light"] .dropdown-toggle label.item:focus-within {
+    background: rgba(0, 0, 0, 0.08);
+  }
+  [data-theme="light"] .dropdown-toggle .toggle {
+    background: #e5e5e5;
+  }
+  [data-theme="light"] .dropdown-toggle .toggle::before {
+    background: #000;
+  }
+  [data-theme="light"] .dropdown-toggle .toggle:checked {
+    background: #5fddd3;
+  }
+</style>
+<div class="dropdown-toggle">
+  <button class="trigger" type="button" aria-label="Abrir menu" aria-haspopup="menu" aria-expanded="false">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M8.66665 8.00004C8.66665 8.36823 8.36817 8.66671 7.99998 8.66671C7.63179 8.66671 7.33331 8.36823 7.33331 8.00004C7.33331 7.63185 7.63179 7.33337 7.99998 7.33337C8.36817 7.33337 8.66665 7.63185 8.66665 8.00004Z" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" />
+      <path d="M8.66665 3.33335C8.66665 3.70154 8.36817 4.00002 7.99998 4.00002C7.63179 4.00002 7.33331 3.70154 7.33331 3.33335C7.33331 2.96516 7.63179 2.66669 7.99998 2.66669C8.36817 2.66669 8.66665 2.96516 8.66665 3.33335Z" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" />
+      <path d="M8.66665 12.6667C8.66665 13.0349 8.36817 13.3333 7.99998 13.3333C7.63179 13.3333 7.33331 13.0349 7.33331 12.6667C7.33331 12.2985 7.63179 12 7.99998 12C8.36817 12 8.66665 12.2985 8.66665 12.6667Z" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" />
+    </svg>
+  </button>
+  <div class="menu">
+    <div class="group">
+      <div class="item label"><span class="text">Apps notification</span></div>
+    </div>
+    <div class="group">
+      <label class="item">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M14.537 6.69433H14V6.66667H8.00001V9.33333H11.7677C11.218 10.8857 9.74101 12 8.00001 12C5.79101 12 4.00001 10.209 4.00001 8C4.00001 5.791 5.79101 4 8.00001 4C9.01968 4 9.94734 4.38467 10.6537 5.013L12.5393 3.12733C11.3487 2.01767 9.75601 1.33333 8.00001 1.33333C4.31834 1.33333 1.33334 4.31833 1.33334 8C1.33334 11.6817 4.31834 14.6667 8.00001 14.6667C11.6817 14.6667 14.6667 11.6817 14.6667 8C14.6667 7.553 14.6207 7.11666 14.537 6.69433Z" fill="#FFC107" />
+          <path d="M2.10199 4.897L4.29232 6.50333C4.88499 5.036 6.32032 4 7.99999 4C9.01966 4 9.94732 4.38467 10.6537 5.013L12.5393 3.12733C11.3487 2.01767 9.75599 1.33333 7.99999 1.33333C5.43932 1.33333 3.21866 2.779 2.10199 4.897Z" fill="#FF3D00" />
+          <path d="M8 14.6667C9.722 14.6667 11.2867 14.0077 12.4697 12.936L10.4063 11.19C9.737 11.697 8.905 12 8 12C6.266 12 4.79367 10.8943 4.239 9.35133L2.065 11.0263C3.16834 13.1853 5.409 14.6667 8 14.6667Z" fill="#4CAF50" />
+          <path d="M14.537 6.69433H14V6.66667H8V9.33333H11.7677C11.5037 10.079 11.024 10.722 10.4053 11.1903L10.4063 11.1897L12.4697 12.9357C12.3237 13.0683 14.6667 11.3333 14.6667 8C14.6667 7.553 14.6207 7.11667 14.537 6.69433Z" fill="#1976D2" />
+        </svg>
+        <span class="text">Google</span>
+        <input class="toggle" type="checkbox" role="switch" checked />
+      </label>
+      <label class="item">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M14.3194 4.76848C14.329 4.90676 14.329 5.04505 14.329 5.18461C14.329 9.43701 11.0516 14.3413 5.05871 14.3413V14.3388C3.28839 14.3413 1.55484 13.8404 0.0645142 12.896C0.321934 12.9266 0.580643 12.9419 0.839998 12.9425C2.30709 12.9438 3.73226 12.4576 4.88645 11.5623C3.49226 11.5361 2.26968 10.6382 1.84258 9.3274C2.33097 9.42044 2.83419 9.40132 3.31355 9.27196C1.79355 8.96863 0.699998 7.64951 0.699998 6.11755V6.07676C1.1529 6.32593 1.66 6.46422 2.17871 6.47951C0.747095 5.53446 0.305804 3.65328 1.17032 2.1825C2.82451 4.19304 5.26516 5.41529 7.88516 5.54466C7.62258 4.42691 7.98129 3.25564 8.82774 2.4699C10.14 1.25147 12.2039 1.31392 13.4374 2.60946C14.1671 2.46735 14.8664 2.20289 15.5064 1.82819C15.2632 2.57314 14.7542 3.20593 14.0742 3.60804C14.72 3.53284 15.351 3.36206 15.9452 3.10142C15.5077 3.74887 14.9568 4.31284 14.3194 4.76848Z" fill="#1D9BF0" />
+        </svg>
+        <span class="text">Twitter</span>
+        <input class="toggle" type="checkbox" role="switch" />
+      </label>
+      <label class="item">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M16 16H12.7125V10.4007C12.7125 8.86546 12.1292 8.00755 10.9141 8.00755C9.59219 8.00755 8.90156 8.90034 8.90156 10.4007V16H5.73333V5.33333H8.90156V6.77013C8.90156 6.77013 9.85417 5.00745 12.1177 5.00745C14.3802 5.00745 16 6.38907 16 9.24653V16ZM1.95365 3.93662C0.874479 3.93662 0 3.05528 0 1.96831C0 0.881341 0.874479 0 1.95365 0C3.03281 0 3.90677 0.881341 3.90677 1.96831C3.90677 3.05528 3.03281 3.93662 1.95365 3.93662ZM0.317708 16H3.62135V5.33333H0.317708V16Z" fill-rule="evenodd" clip-rule="evenodd" fill="#007EBB" />
+        </svg>
+        <span class="text">Linkedin</span>
+        <input class="toggle" type="checkbox" role="switch" />
+      </label>
+      <label class="item">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M8.00001 0.53125C12.125 0.53125 15.4625 3.86875 15.4625 7.9875C15.4625 12.1063 12.125 15.45 8.00001 15.45C3.87501 15.45 0.537506 12.1125 0.537506 7.99375C0.537506 3.875 3.87501 0.53125 8.00001 0.53125Z" fill="#E74D89" />
+          <path d="M8 15.9812C3.5875 15.9812 0 12.4 0 7.99375C0 3.58125 3.5875 0 8 0C12.4125 0 16 3.58125 16 7.9875C16 12.3938 12.4125 15.9812 8 15.9812ZM14.7437 9.08125C14.5125 9.00625 12.6313 8.45 10.4875 8.7875C11.3813 11.2375 11.7437 13.2375 11.8125 13.65C13.35 12.6187 14.4437 10.9812 14.7437 9.08125ZM10.6687 14.2812C10.5687 13.6812 10.1687 11.5938 9.2125 9.10625C9.2 9.1125 9.18125 9.11875 9.16875 9.11875C5.3125 10.4625 3.93125 13.1313 3.80625 13.3813C4.9625 14.2812 6.41875 14.8188 8 14.8188C8.94375 14.825 9.85 14.6313 10.6687 14.2812ZM2.925 12.5625C3.08125 12.3 4.95625 9.2 8.48125 8.05625C8.56875 8.025 8.6625 8 8.75 7.975C8.58125 7.5875 8.39375 7.2 8.19375 6.81875C4.78125 7.8375 1.46875 7.79375 1.16875 7.7875C1.16875 7.85625 1.1625 7.925 1.1625 7.99375C1.16875 9.75 1.83125 11.35 2.925 12.5625ZM1.3125 6.6C1.61875 6.60625 4.43125 6.61875 7.63125 5.76875C6.5 3.75625 5.275 2.06875 5.1 1.825C3.18125 2.725 1.75625 4.4875 1.3125 6.6ZM6.4 1.3625C6.5875 1.6125 7.83125 3.3 8.95 5.35625C11.3813 4.44375 12.4062 3.06875 12.5312 2.89375C11.325 1.825 9.7375 1.175 8 1.175C7.45 1.175 6.9125 1.24375 6.4 1.3625ZM13.2875 3.68125C13.1438 3.875 12 5.34375 9.475 6.375C9.63125 6.7 9.7875 7.03125 9.93125 7.3625C9.98125 7.48125 10.0312 7.6 10.0813 7.7125C12.3563 7.425 14.6125 7.8875 14.8375 7.93125C14.8187 6.325 14.2438 4.84375 13.2875 3.68125Z" fill="#B2215A" />
+        </svg>
+        <span class="text">Dribbble</span>
+        <input class="toggle" type="checkbox" role="switch" />
+      </label>
+      <label class="item">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M14.6667 4.66667H10V3.33334H14.6667V4.66667ZM15.8173 11.3333C15.5227 12.198 14.4647 13.3333 12.4167 13.3333C10.3673 13.3333 8.70733 12.1807 8.70733 9.55C8.70733 6.94334 10.2573 5.60334 12.3513 5.60334C14.406 5.60334 15.6607 6.79134 15.9347 8.554C15.9867 8.89134 16.0073 9.346 15.998 9.98067H10.6467C10.7333 12.1213 12.9687 12.1887 13.7053 11.3333H15.8173ZM10.6933 8.66667H14.0033C13.9333 7.63534 13.246 7.18734 12.352 7.18734C11.3747 7.18734 10.834 7.69934 10.6933 8.66667ZM4.31067 13.3253H0V3.34734H4.63533C8.286 3.40134 8.35533 6.97667 6.44867 7.95134C8.756 8.79134 8.83333 13.3253 4.31067 13.3253ZM2 7.33334H4.38933C6.06133 7.33334 6.32667 5.33334 4.18133 5.33334H2V7.33334ZM4.26067 9.33334H2V11.344H4.22733C6.264 11.344 6.13933 9.33334 4.26067 9.33334Z" fill="#1769FF" />
+        </svg>
+        <span class="text">Behance</span>
+        <input class="toggle" type="checkbox" role="switch" checked />
+      </label>
+    </div>
+  </div>
+</div>
+<script>
+  // Abre e fecha o dropdown e mantém o menu visível quando falta espaço à direita.
+  document.querySelectorAll(".dropdown-toggle").forEach((root) => {
+    const trigger = root.querySelector(".trigger");
+    const menu = root.querySelector(".menu");
+
+    const keepInside = (panel) => {
+      panel.style.left = "";
+      // O limite é o contêiner mais próximo que corta o conteúdo, ou a tela.
+      let clip = panel.parentElement;
+      while (clip && getComputedStyle(clip).overflowX === "visible") clip = clip.parentElement;
+      const limit = clip ? clip.getBoundingClientRect().right : document.documentElement.clientWidth;
+      const over = panel.getBoundingClientRect().left + panel.offsetWidth - (limit - 16);
+      if (over > 0) panel.style.left = `calc(${getComputedStyle(panel).left} - ${over}px)`;
+    };
+    const setOpen = (open) => {
+      root.classList.toggle("open", open);
+      trigger.setAttribute("aria-expanded", open);
+      if (open) keepInside(menu);
+    };
+
+    trigger.addEventListener("click", () => setOpen(!root.classList.contains("open")));
+    document.addEventListener("click", (e) => {
+      if (!root.contains(e.target)) setOpen(false);
+    });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") setOpen(false);
+    });
+  });
+</script>

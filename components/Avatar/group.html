@@ -1,0 +1,75 @@
+<style>
+  /* As medidas seguem --size, em porcentagem da largura do grupo:
+     assim ele encolhe por inteiro quando não cabe no espaço disponível */
+  .avatar-group {
+    display: flex;
+    width: calc(var(--size) * 3.75);
+    max-width: 100%;
+    min-width: 0;
+    align-items: center;
+  }
+  .avatar-group > * {
+    width: 26.667%;
+    flex: none;
+    aspect-ratio: 1/1;
+  }
+  /* Cada item entra por cima do anterior */
+  .avatar-group > * + * {
+    margin-left: -8.333%;
+  }
+  .avatar-group img {
+    display: block;
+    height: auto;
+
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  .avatar-group .add {
+    display: flex;
+    padding: 0;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    container-type: inline-size;
+
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: #262626;
+    color: #fff;
+    cursor: pointer;
+  }
+  .avatar-group .add svg {
+    width: min(calc(var(--size) / 2), 57.2%);
+    height: auto;
+    flex: none;
+  }
+  /* O texto acompanha a largura do círculo */
+  .avatar-group .count {
+    font-family: "Public Sans";
+    font-size: 50cqw;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  /* Light mode */
+  [data-theme="light"] .avatar-group .add {
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    background: #e5e5e5;
+    color: #000;
+  }
+</style>
+<div class="avatar-group" style="--size: {{size}}px">
+  <img src="components/Avatar/caio.jpg" alt="Caio" />
+  <img src="components/Avatar/flavia.jpg" alt="Flávia" />
+  <img src="components/Avatar/jennifer.jpg" alt="Jennifer" />
+  <img src="components/Avatar/heverton.png" alt="Heverton" />
+  <button class="add" type="button"{{^showCount}} aria-label="Adicionar pessoa"{{/showCount}}>
+    {{#showCount}}<span class="count">{{count}}</span>{{/showCount}}
+    {{^showCount}}<svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M4 1.66668V6.33401" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" />
+      <path d="M6.33405 4.00066L1.66672 4.00066" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" />
+    </svg>{{/showCount}}
+  </button>
+</div>

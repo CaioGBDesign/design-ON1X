@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
     <style>
@@ -67,7 +67,13 @@
 
       /* Página no Light */
       body[data-theme="light"] {
-        background: linear-gradient(0deg, rgba(95, 221, 211, 0.03) 0%, rgba(95, 221, 211, 0.03) 100%), #fff;
+        background:
+          linear-gradient(
+            0deg,
+            rgba(95, 221, 211, 0.03) 0%,
+            rgba(95, 221, 211, 0.03) 100%
+          ),
+          #fff;
       }
       body[data-theme="light"]::before {
         display: none;
@@ -100,6 +106,7 @@
         background: #e5e5e5;
       }
       body[data-theme="light"] .stage::-webkit-scrollbar-thumb,
+      body[data-theme="light"] .drawer-body::-webkit-scrollbar-thumb,
       body[data-theme="light"] pre::-webkit-scrollbar-thumb {
         background-color: rgba(0, 0, 0, 0.3);
       }
@@ -128,7 +135,7 @@
         border-color: rgba(0, 0, 0, 0.15);
         background: rgba(0, 0, 0, 0.02);
       }
-      body[data-theme="light"] .knob input:not(.switch),
+      body[data-theme="light"] .knob input:not(.switch, .slider),
       body[data-theme="light"] .knob select {
         border-color: rgba(0, 0, 0, 0.15);
         background: #fff;
@@ -139,6 +146,14 @@
       }
       body[data-theme="light"] .knob .switch::before {
         background: #000;
+      }
+      body[data-theme="light"] .add-item {
+        border: 1px solid rgba(0, 0, 0, 0.15);
+        color: #000;
+      }
+      body[data-theme="light"] .add-item:hover {
+        border-color: rgba(0, 0, 0, 0.3);
+        background: rgba(0, 0, 0, 0.06);
       }
 
       /* Lateral */
@@ -239,7 +254,9 @@
         cursor: pointer;
       }
       .filter input:checked {
-        background: #5fddd3 url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2712%27 height=%2712%27 viewBox=%270 0 12 12%27 fill=%27none%27%3E%3Cpath d=%27M10 3L4.5 8.5L2 6%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27 stroke=%27%230A181C%27/%3E%3C/svg%3E") no-repeat center;
+        background: #5fddd3
+          url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2712%27 height=%2712%27 viewBox=%270 0 12 12%27 fill=%27none%27%3E%3Cpath d=%27M10 3L4.5 8.5L2 6%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27 stroke=%27%230A181C%27/%3E%3C/svg%3E")
+          no-repeat center;
       }
       .filter input:focus-visible {
         outline: 2px solid var(--accent);
@@ -247,7 +264,9 @@
       }
       /* Quando só parte dos itens está marcada, mostra o traço do Minus */
       .filter input:indeterminate {
-        background: #5fddd3 url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2712%27 height=%2712%27 viewBox=%270 0 12 12%27 fill=%27none%27%3E%3Cpath d=%27M2.5 6H9.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27 stroke=%27%230A181C%27/%3E%3C/svg%3E") no-repeat center;
+        background: #5fddd3
+          url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2712%27 height=%2712%27 viewBox=%270 0 12 12%27 fill=%27none%27%3E%3Cpath d=%27M2.5 6H9.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27 stroke=%27%230A181C%27/%3E%3C/svg%3E")
+          no-repeat center;
       }
 
       /* Centro */
@@ -269,45 +288,9 @@
         font-weight: 400;
         margin: 0 auto 0 0;
       }
-      .seg {
-        display: flex;
-        padding: 4px;
-        align-items: center;
-
-        border-radius: 16px;
-        border: 1px solid rgba(255, 255, 255, 0.15);
-        background: rgba(255, 255, 255, 0.03);
-      }
-      .seg button {
-        display: flex;
-        padding: 2px 8px;
-        align-items: center;
-        gap: 4px;
-
-        border: 0;
-        border-radius: 12px;
-        background: none;
-        color: #ffffff;
-        cursor: pointer;
-      }
-      .seg button:not(.on):hover {
-        background: var(--hover);
-      }
-      .seg button.on {
-        align-self: stretch;
-        background: #5fddd3;
-        color: #0a181c;
-      }
-      .seg button:focus-visible {
-        outline: 2px solid var(--accent);
-        outline-offset: 2px;
-      }
-      .seg[data-theme="light"] {
-        border: 1px solid rgba(0, 0, 0, 0.15);
-        background: rgba(0, 0, 0, 0.03);
-      }
-      .seg[data-theme="light"] button {
-        color: #000000;
+      /* Reserva a altura do Segmented, que só entra depois de carregar */
+      #theme {
+        min-height: 30px;
       }
       .stage {
         display: flex;
@@ -327,6 +310,8 @@
         border-radius: 16px;
         border: 1px solid rgba(255, 255, 255, 0.15);
         background: rgba(255, 255, 255, 0.03);
+
+        overflow: hidden;
       }
       .frame[data-theme="dark"] {
         --cell-line: rgba(255, 255, 255, 0.08);
@@ -341,19 +326,22 @@
       }
       .grid {
         display: grid;
-        width: 100%;
+        /* O 1px a mais esconde a última linha de cada lado: colada na borda do frame, o tracejado borra */
+        width: calc(100% + 1px);
         grid-template-columns: repeat(auto-fill, minmax(256px, 1fr));
+        margin: 0 -1px -1px 0;
       }
+      /* Altura do modelo mais alto (Alert dialog Radio): trocar de modelo não mexe na grade */
       .cell {
         display: flex;
-        min-height: 150px;
+        min-height: 342px;
         padding: 20px 16px;
         flex-direction: column;
         gap: 16px;
-        border-right: 1px solid var(--cell-line);
-        border-bottom: 1px solid var(--cell-line);
+        border-right: 1px dashed var(--cell-line);
+        border-bottom: 1px dashed var(--cell-line);
         cursor: pointer;
-        transition: background 0.15s;
+        transition: background 0.2s;
       }
       .grid[hidden],
       .cell[hidden] {
@@ -383,14 +371,30 @@
       .tooltip.show {
         opacity: 1;
       }
+      /* O cabeçalho só aparece com o hover na célula. Ele segue ocupando espaço, para o
+         componente não pular, e também aparece no foco do teclado e com o select aberto. */
       .cell-head {
         display: flex;
         min-height: 32px;
         align-items: center;
         gap: 8px;
+        opacity: 0;
+        transition: opacity 0.2s;
+      }
+      .cell:hover .cell-head,
+      .cell-head:has(:focus-visible),
+      .cell-head:has(.open) {
+        opacity: 1;
+      }
+      /* Sem mouse não existe hover: o cabeçalho fica sempre visível */
+      @media (hover: none) {
+        .cell-head {
+          opacity: 1;
+        }
       }
       .cell-title {
-        flex: 1 0 auto;
+        flex: 1 1 auto;
+        min-width: 0;
       }
 
       /* Select de modelos da célula */
@@ -469,21 +473,25 @@
         background: rgba(255, 255, 255, 0.08);
         outline: none;
       }
-      .frame[data-theme="light"] .cell-select-btn {
+      body[data-theme="light"] .cell-select-btn {
         border-color: rgba(0, 0, 0, 0.15);
         background: rgba(0, 0, 0, 0.02);
       }
-      .frame[data-theme="light"] .cell-select.open .cell-select-btn {
+      body[data-theme="light"] .cell-select.open .cell-select-btn {
         background: #fff;
       }
-      .frame[data-theme="light"] .cell-select-menu {
+      body[data-theme="light"] .cell-select-menu {
         border-color: rgba(0, 0, 0, 0.15);
         background: #fff;
       }
-      .frame[data-theme="light"] .cell-select-menu button:hover,
-      .frame[data-theme="light"] .cell-select-menu button:focus-visible,
-      .frame[data-theme="light"] .cell-select-menu button[aria-current="true"] {
+      body[data-theme="light"] .cell-select-menu button:hover,
+      body[data-theme="light"] .cell-select-menu button:focus-visible,
+      body[data-theme="light"] .cell-select-menu button[aria-current="true"] {
         background: rgba(0, 0, 0, 0.08);
+      }
+      /* No drawer, o select ocupa a largura toda */
+      #variant .cell-select {
+        width: 100%;
       }
       .cell-body {
         display: flex;
@@ -496,8 +504,8 @@
       .cell .cell-body > * {
         align-self: center;
       }
-      /* Na grade, o Radio mostra um único botão */
-      .cell-body .radio-group .radio + .radio {
+      /* Na grade, o Radio sem label mostra um único botão */
+      .cell-body .radio-group:not(:has(span)) .radio-label + .radio-label {
         display: none;
       }
 
@@ -515,7 +523,9 @@
 
         color: #ffffff;
         cursor: pointer;
-        transition: background 0.15s, border-color 0.15s;
+        transition:
+          background 0.15s,
+          border-color 0.15s;
       }
       .icon-btn:hover {
         border-color: rgba(255, 255, 255, 0.3);
@@ -615,11 +625,10 @@
         font-weight: 400;
         line-height: 16px;
         cursor: pointer;
-        transition: background 0.15s, box-shadow 0.15s;
+        transition: background 0.15s;
       }
       .apply:hover {
         background: #7fe6de;
-        box-shadow: 0 0 16px 0 rgba(95, 221, 211, 0.5);
       }
       .apply:focus-visible {
         outline: 2px solid var(--accent);
@@ -735,6 +744,60 @@
         outline: 2px solid var(--accent);
         outline-offset: 2px;
       }
+      .knob .slider {
+        grid-column: 2;
+        height: 20px;
+        padding: 0;
+        overflow: visible;
+
+        border: 0;
+        background: none;
+        accent-color: #5fddd3;
+        cursor: pointer;
+      }
+      .knob .slider:focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 2px;
+      }
+      .knob-value {
+        grid-column: 3;
+        justify-self: end;
+        font-size: 12px;
+        line-height: 16px;
+      }
+      /* Mesmo estilo do botão Outline Small (components/botoes/Outline/small.html) */
+      .add-item {
+        display: inline-flex;
+        grid-column: 1 / 4;
+        justify-self: end;
+        padding: 8px;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+
+        border-radius: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        background: none;
+
+        color: #fff;
+        font-family: "Public Sans";
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 16px;
+        cursor: pointer;
+        transition:
+          background 0.15s,
+          border-color 0.15s;
+      }
+      .add-item:hover {
+        border-color: rgba(255, 255, 255, 0.3);
+        background: rgba(255, 255, 255, 0.06);
+      }
+      .add-item:focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 2px;
+      }
       .empty {
         grid-column: 1 / -1;
         color: var(--muted);
@@ -777,16 +840,19 @@
       }
       /* Scrollbar fina e arredondada, sem trilho, afastada das bordas */
       pre::-webkit-scrollbar,
+      .drawer-body::-webkit-scrollbar,
       .stage::-webkit-scrollbar {
         width: 14px;
         height: 14px;
       }
       pre::-webkit-scrollbar-track,
+      .drawer-body::-webkit-scrollbar-track,
       .stage::-webkit-scrollbar-track {
         background: transparent;
         margin: 8px 0;
       }
       pre::-webkit-scrollbar-thumb,
+      .drawer-body::-webkit-scrollbar-thumb,
       .stage::-webkit-scrollbar-thumb {
         background: rgba(255, 255, 255, 0.6);
         background-clip: padding-box;
@@ -794,12 +860,14 @@
         border-radius: 999px;
       }
       pre::-webkit-scrollbar-thumb:hover,
+      .drawer-body::-webkit-scrollbar-thumb:hover,
       .stage::-webkit-scrollbar-thumb:hover {
         background-color: rgba(255, 255, 255, 0.8);
       }
       /* Firefox não aceita os estilos acima; usa a versão fina na mesma cor */
       @supports (-moz-appearance: none) {
         pre,
+        .drawer-body,
         .stage {
           scrollbar-width: thin;
           scrollbar-color: rgba(255, 255, 255, 0.6) transparent;
@@ -845,9 +913,25 @@
       </div>
       <div class="search-box">
         <label class="nav-search">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M14 14L11.1067 11.1067" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" />
-            <path d="M12.6667 7.33333C12.6667 10.2789 10.2789 12.6667 7.33333 12.6667C4.38781 12.6667 2 10.2789 2 7.33333C2 4.38781 4.38781 2 7.33333 2C10.2789 2 12.6667 4.38781 12.6667 7.33333Z" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" />
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 16 16"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M14 14L11.1067 11.1067"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke="currentColor"
+            />
+            <path
+              d="M12.6667 7.33333C12.6667 10.2789 10.2789 12.6667 7.33333 12.6667C4.38781 12.6667 2 10.2789 2 7.33333C2 4.38781 4.38781 2 7.33333 2C10.2789 2 12.6667 4.38781 12.6667 7.33333Z"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke="currentColor"
+            />
           </svg>
           <input id="search" type="search" placeholder="Buscar componente" />
         </label>
@@ -858,43 +942,55 @@
     <main>
       <div class="toolbar">
         <h1>Componentes</h1>
-        <div class="seg" id="theme" data-theme="dark">
-          <button data-t="dark" class="on" type="button" aria-label="Modo escuro" aria-pressed="true" title="Dark">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M13.9901 8.324C13.9276 9.48143 13.5312 10.596 12.8488 11.5329C12.1664 12.4699 11.2272 13.1891 10.1447 13.6037C9.0623 14.0183 7.88294 14.1104 6.74924 13.869C5.61554 13.6276 4.57603 13.063 3.75636 12.2434C2.9367 11.4239 2.37198 10.3844 2.13047 9.25074C1.88895 8.11706 1.98099 6.9377 2.39544 5.85521C2.8099 4.77273 3.52903 3.83346 4.46591 3.15096C5.40279 2.46846 6.5173 2.07194 7.67472 2.00933C7.94472 1.99467 8.08606 2.316 7.94272 2.54467C7.46332 3.3117 7.25804 4.21858 7.36039 5.1173C7.46274 6.01602 7.86667 6.85352 8.50627 7.49312C9.14587 8.13272 9.98337 8.53665 10.8821 8.639C11.7808 8.74135 12.6877 8.53607 13.4547 8.05667C13.6841 7.91333 14.0047 8.054 13.9901 8.324Z" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" />
-            </svg>
-          </button>
-          <button data-t="light" type="button" aria-label="Modo claro" aria-pressed="false" title="Light">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
-              <path d="M10.6667 7.99998C10.6667 9.47274 9.4728 10.6666 8.00004 10.6666C6.52728 10.6666 5.33337 9.47274 5.33337 7.99998C5.33337 6.52722 6.52728 5.33331 8.00004 5.33331C9.4728 5.33331 10.6667 6.52722 10.6667 7.99998Z" />
-              <path d="M8 2.66669H8.00667" />
-              <path d="M13.3334 8H13.34" />
-              <path d="M8 13.3333H8.00667" />
-              <path d="M2.66663 8H2.67329" />
-              <path d="M11.7714 4.22864H11.778" />
-              <path d="M11.7714 11.7714H11.778" />
-              <path d="M4.22864 11.7714H4.2353" />
-              <path d="M4.22864 4.22864H4.2353" />
-            </svg>
-          </button>
-        </div>
+        <div id="theme"></div>
       </div>
       <div class="stage">
         <div class="frame" id="frame" data-theme="dark">
           <div class="grid" id="grid"></div>
-          <p class="empty grid-empty" id="grid-empty" hidden>Nenhum componente selecionado.</p>
+          <p class="empty grid-empty" id="grid-empty" hidden>
+            Nenhum componente selecionado.
+          </p>
         </div>
       </div>
     </main>
 
     <div class="backdrop" id="backdrop"></div>
-    <aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="drawer-title" inert>
+    <aside
+      class="drawer"
+      id="drawer"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="drawer-title"
+      inert
+    >
       <header class="drawer-head">
         <h2 id="drawer-title">Detalhes do componente</h2>
-        <button class="icon-btn" id="close" type="button" aria-label="Fechar" title="Fechar">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12 4L4 12" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" />
-            <path d="M4 4L12 12" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" />
+        <button
+          class="icon-btn"
+          id="close"
+          type="button"
+          aria-label="Fechar"
+          title="Fechar"
+        >
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 16 16"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M12 4L4 12"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke="currentColor"
+            />
+            <path
+              d="M4 4L12 12"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke="currentColor"
+            />
           </svg>
         </button>
       </header>
@@ -902,6 +998,10 @@
         <section>
           <p class="section-title">Descrição</p>
           <p class="desc" id="desc"></p>
+        </section>
+        <section id="variant-section" hidden>
+          <p class="section-title">Modelo</p>
+          <div id="variant"></div>
         </section>
         <section>
           <p class="section-title">Preview</p>
@@ -916,8 +1016,23 @@
           <p class="section-title">Código</p>
           <div class="code-box">
             <pre id="code"></pre>
-            <button class="icon-btn copy" id="copy" type="button" aria-label="Copiar HTML" title="Copiar HTML">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <button
+              class="icon-btn copy"
+              id="copy"
+              type="button"
+              aria-label="Copiar HTML"
+              title="Copiar HTML"
+            >
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
                 <rect x="9" y="9" width="12" height="12" rx="2" />
                 <path d="M5 15V5a2 2 0 0 1 2-2h10" />
               </svg>
@@ -927,7 +1042,16 @@
       </div>
       <footer class="drawer-foot">
         <button class="apply" id="apply" type="button">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
             <path d="M20 6 9 17l-5-5" />
           </svg>
           Aplicar
@@ -943,9 +1067,11 @@
       const state = {
         list: [],
         current: null, // componente aberto no drawer
+        cell: null, // célula da grade que abriu o drawer
         opener: null, // botão que abriu o drawer
         raw: "",
         values: {}, // edição em andamento no drawer
+        drafts: {}, // edições dos outros modelos enquanto o drawer está aberto
         applied: {}, // valores mostrados na grade, por componente
         variant: {}, // modelo escolhido no select de cada célula
         filters: new Set(), // células marcadas na lateral
@@ -967,10 +1093,19 @@
         );
 
       // {{#nome}}...{{/nome}} só aparece com o toggle ligado; {{^nome}}...{{/nome}}, só desligado.
+      // {{@nome}}...{{/nome}} em linhas próprias repete o trecho para cada item da lista.
       function render(raw, values) {
         const CUT = "\u0000";
-        const section = /\{\{([#^])\s*(\w+)\s*\}\}([\s\S]*?)\{\{\/\s*\2\s*\}\}/g;
-        let out = raw;
+        const section =
+          /\{\{([#^])\s*(\w+)\s*\}\}([\s\S]*?)\{\{\/\s*\2\s*\}\}/g;
+        const list =
+          /^([ \t]*)\{\{@\s*(\w+)\s*\}\}([\s\S]*?)\{\{\/\s*\2\s*\}\}/gm;
+        let out = raw.replace(list, (_, indent, k, inner) => {
+          const items = (values[k] || []).map((item) =>
+            render(inner, { ...values, ...item }),
+          );
+          return items.length ? indent + items.join(`\n${indent}`) : CUT;
+        });
         for (let prev; prev !== out; ) {
           prev = out;
           out = out.replace(section, (_, type, k, inner) =>
@@ -978,14 +1113,24 @@
           );
         }
         return out
-          .replace(new RegExp(`^[ \\t${CUT}]*${CUT}[ \\t${CUT}]*\\r?\\n`, "gm"), "")
+          .replace(
+            new RegExp(`^[ \\t${CUT}]*${CUT}[ \\t${CUT}]*\\r?\\n`, "gm"),
+            "",
+          )
           .replaceAll(CUT, "")
           .replace(/\{\{\s*(\w+)\s*\}\}/g, (_, k) => esc(values[k] ?? ""))
           .trim();
       }
 
+      // O HTML copiado é colado fora do site: as imagens precisam do endereço completo.
+      const absoluteSrc = (html) =>
+        html.replace(
+          /src="(components\/[^"]+)"/g,
+          (_, path) => `src="${new URL(path, location.href)}"`,
+        );
+
       function copyText() {
-        return render(state.raw, state.values);
+        return absoluteSrc(render(state.raw, state.values));
       }
 
       const PREVIEW_BG = {
@@ -997,7 +1142,7 @@
       // não se misturam com os da grade, que mostra o mesmo componente.
       function previewDoc() {
         return `<!doctype html><html data-theme="${state.theme}"><head><meta charset="utf-8">
-<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 html{height:100%;overflow:hidden;background:${PREVIEW_BG[state.theme]};}
 body{display:flex;height:100%;margin:0;padding:16px;overflow:auto;box-sizing:border-box;}
@@ -1009,15 +1154,36 @@ body{display:flex;height:100%;margin:0;padding:16px;overflow:auto;box-sizing:bor
 </style></head><body><div id="component">${copyText()}</div></body></html>`;
       }
 
-      // A prévia acompanha a altura do componente, até o limite de 320px.
+      // A prévia acompanha a altura do componente, até o limite de 420px. Um menu que abre
+      // dentro dela conta na altura, e o componente sobe para o menu caber embaixo dele.
+      function fitContent(frame, content) {
+        content.style.marginTop = "";
+        const open = content.scrollHeight > content.offsetHeight;
+        content.style.marginTop = open ? "0" : "";
+        frame.style.height = `${Math.min(Math.max(content.scrollHeight + 32, 140), 420)}px`;
+      }
+
       function fitPreview() {
         const frame = $("preview");
         const content = frame.contentDocument?.getElementById("component");
-        if (content) frame.style.height = `${Math.min(Math.max(content.scrollHeight + 32, 140), 320)}px`;
+        if (content) {
+          fitContent(frame, content);
+          new frame.contentWindow.MutationObserver(() => fitContent(frame, content)).observe(content, {
+            attributes: true,
+            attributeFilter: ["class"],
+            subtree: true,
+          });
+          // O menu animado só muda de tamanho de vez quando a animação termina.
+          content.addEventListener("transitionend", () => fitContent(frame, content));
+        }
         // Com o foco dentro da prévia, o Esc não chega à página.
         frame.contentDocument?.addEventListener("keydown", (e) => {
           if (e.key === "Escape") closeDrawer();
         });
+        // Clique dentro do iframe não chega à página, que fecharia o select.
+        frame.contentDocument?.addEventListener("click", () =>
+          closeCellSelects(),
+        );
       }
 
       let previewTimer;
@@ -1030,32 +1196,41 @@ body{display:flex;height:100%;margin:0;padding:16px;overflow:auto;box-sizing:bor
       }
 
       // Ignora acentos e maiúsculas: "botoes" encontra "Botões".
-      const plain = (s) => s.normalize("NFD").replace(/\p{M}/gu, "").toLowerCase();
+      const plain = (s) =>
+        s.normalize("NFD").replace(/\p{M}/gu, "").toLowerCase();
 
       // Filtra só a lista da lateral: a seleção e a grade não mudam.
       function searchFilters() {
         const q = plain($("search").value.trim());
         let found = 0;
-        document.querySelectorAll(".filter:not(#filter-all-row)").forEach((row) => {
-          row.hidden = !plain(row.textContent).includes(q);
-          if (!row.hidden) found++;
-        });
+        document
+          .querySelectorAll(".filter:not(#filter-all-row)")
+          .forEach((row) => {
+            row.hidden = !plain(row.textContent).includes(q);
+            if (!row.hidden) found++;
+          });
         $("filter-all-row").hidden = !!q;
         $("filters-empty").hidden = found > 0;
       }
 
       // Componentes em ordem alfabética (ignora acentos e maiúsculas).
-      const byName = (a, b) => a.localeCompare(b, "pt-BR", { sensitivity: "base", numeric: true });
+      const byName = (a, b) =>
+        a.localeCompare(b, "pt-BR", { sensitivity: "base", numeric: true });
 
       const EDIT_ICON =
         '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"/></svg>';
+
+      const PLUS_ICON =
+        '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3.33334 8H12.6667" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor"/><path d="M8 3.33333V12.6667" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor"/></svg>';
 
       const ARROW_ICON =
         '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 6L8 10L12 6" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor"/></svg>';
 
       // Cada entrada com "grid" no components.json vira uma célula da grade.
       const cells = () =>
-        state.list.filter((c) => c.grid).sort((a, b) => byName(a.grid.title, b.grid.title));
+        state.list
+          .filter((c) => c.grid)
+          .sort((a, b) => byName(a.grid.title, b.grid.title));
 
       const byId = (id) => state.list.find((x) => x.id === id);
 
@@ -1078,7 +1253,17 @@ body{display:flex;height:100%;margin:0;padding:16px;overflow:auto;box-sizing:bor
 
       function setCellSelect(box, open) {
         box.classList.toggle("open", open);
-        box.querySelector(".cell-select-btn").setAttribute("aria-expanded", open);
+        box
+          .querySelector(".cell-select-btn")
+          .setAttribute("aria-expanded", open);
+      }
+
+      function bindCellSelect(box, pick) {
+        box.querySelector(".cell-select-btn").onclick = () =>
+          setCellSelect(box, !box.classList.contains("open"));
+        box.querySelectorAll("[data-variant]").forEach((b) => {
+          b.onclick = () => pick(b.dataset.variant);
+        });
       }
 
       function closeCellSelects(except) {
@@ -1087,7 +1272,8 @@ body{display:flex;height:100%;margin:0;padding:16px;overflow:auto;box-sizing:bor
         });
       }
 
-      const CELL_CONTROLS = "button, input, select, textarea, label, a, .cell-select, .menu";
+      const CELL_CONTROLS =
+        "button, input, select, textarea, label, a, .cell-select, .menu";
 
       function renderGrid() {
         const grid = $("grid");
@@ -1098,22 +1284,27 @@ body{display:flex;height:100%;margin:0;padding:16px;overflow:auto;box-sizing:bor
           cell.className = "cell";
           cell.dataset.cell = c.id;
           cell.innerHTML = `<header class="cell-head"><span class="cell-title">${esc(c.grid.title)}</span>${cellSelect(c, shown)}<button class="icon-btn" type="button" data-edit="${esc(shown.id)}" aria-label="Editar ${esc(c.grid.title)}" title="Editar">${EDIT_ICON}</button></header><div class="cell-body">${render(cache[shown.file], state.applied[shown.id])}</div>`;
-          cell.querySelector("[data-edit]").onclick = (e) => openDrawer(shown, e.currentTarget);
+          cell.querySelector("[data-edit]").onclick = (e) =>
+            openDrawer(c, shown, e.currentTarget);
           cell.onclick = (e) => {
             // Controles do componente e do cabeçalho seguem funcionando sem copiar.
-            if (e.target.closest(CELL_CONTROLS) || document.querySelector(".cell .open")) return;
+            if (
+              e.target.closest(CELL_CONTROLS) ||
+              document.querySelector(".cell .open")
+            )
+              return;
             copyCell(shown, e);
           };
           const box = cell.querySelector(".cell-select");
           if (box) {
-            box.querySelector(".cell-select-btn").onclick = () => setCellSelect(box, !box.classList.contains("open"));
-            box.querySelectorAll("[data-variant]").forEach((b) => {
-              b.onclick = () => {
-                state.variant[c.id] = b.dataset.variant;
-                renderGrid();
-                document.querySelector(`[data-edit="${b.dataset.variant}"]`)
-                  .closest(".cell").querySelector(".cell-select-btn").focus();
-              };
+            bindCellSelect(box, (id) => {
+              state.variant[c.id] = id;
+              renderGrid();
+              document
+                .querySelector(`[data-edit="${id}"]`)
+                .closest(".cell")
+                .querySelector(".cell-select-btn")
+                .focus();
             });
           }
           grid.appendChild(cell);
@@ -1129,9 +1320,13 @@ body{display:flex;height:100%;margin:0;padding:16px;overflow:auto;box-sizing:bor
 
       function renderFilters() {
         const rows = cells()
-          .map((c) => `<label class="filter"><input type="checkbox" data-filter="${esc(c.id)}" checked />${esc(c.grid.title)}</label>`)
+          .map(
+            (c) =>
+              `<label class="filter"><input type="checkbox" data-filter="${esc(c.id)}" checked />${esc(c.grid.title)}</label>`,
+          )
           .join("");
-        $("filters").innerHTML = `<label class="filter" id="filter-all-row"><input type="checkbox" id="filter-all" /><span id="filter-all-label"></span></label>${rows}<p class="empty" id="filters-empty" hidden>Nada encontrado.</p>`;
+        $("filters").innerHTML =
+          `<label class="filter" id="filter-all-row"><input type="checkbox" id="filter-all" /><span id="filter-all-label"></span></label>${rows}<p class="empty" id="filters-empty" hidden>Nada encontrado.</p>`;
         const boxes = document.querySelectorAll("[data-filter]");
         boxes.forEach((box) => {
           box.onchange = () => {
@@ -1152,7 +1347,9 @@ body{display:flex;height:100%;margin:0;padding:16px;overflow:auto;box-sizing:bor
         const allOn = filters.size === cells().length;
         $("filter-all").checked = allOn;
         $("filter-all").indeterminate = filters.size > 0 && !allOn;
-        $("filter-all-label").textContent = allOn ? "Desmarcar todos" : "Selecionar todos";
+        $("filter-all-label").textContent = allOn
+          ? "Desmarcar todos"
+          : "Selecionar todos";
         document.querySelectorAll(".cell").forEach((cell) => {
           cell.hidden = !filters.has(cell.dataset.cell);
         });
@@ -1160,21 +1357,21 @@ body{display:flex;height:100%;margin:0;padding:16px;overflow:auto;box-sizing:bor
         $("grid-empty").hidden = filters.size > 0;
       }
 
-      function makeSwitch(k) {
+      function makeSwitch(k, store = state.values) {
         const sw = document.createElement("input");
         sw.type = "checkbox";
         sw.className = "switch";
-        sw.checked = !!state.values[k.name];
+        sw.checked = !!store[k.name];
         sw.setAttribute("aria-label", k.label || k.name);
         sw.onchange = () => {
-          state.values[k.name] = sw.checked;
+          store[k.name] = sw.checked;
           if (state.current.knobs.some((x) => x.when === k.name)) renderKnobs();
           update();
         };
         return sw;
       }
 
-      function makeField(k) {
+      function makeField(k, store = state.values) {
         let field;
         if (k.type === "select") {
           field = document.createElement("select");
@@ -1184,29 +1381,91 @@ body{display:flex;height:100%;margin:0;padding:16px;overflow:auto;box-sizing:bor
           field.type = "text";
         }
         field.setAttribute("aria-label", k.label || k.name);
-        field.value = state.values[k.name];
+        field.value = store[k.name];
         field.oninput = () => {
-          state.values[k.name] = field.value;
+          store[k.name] = field.value;
           update();
         };
         return field;
+      }
+
+      // Knob "range": slider com o valor ao lado. "liveVar" é a variável CSS do componente,
+      // aplicada direto na prévia para acompanhar o arraste sem esperar o iframe recarregar.
+      function makeRange(k) {
+        const range = document.createElement("input");
+        range.type = "range";
+        range.className = "slider";
+        range.min = k.min;
+        range.max = k.max;
+        range.step = k.step ?? 1;
+        range.value = state.values[k.name];
+        range.setAttribute("aria-label", k.label || k.name);
+        const value = document.createElement("output");
+        value.className = "knob-value";
+        value.textContent = `${range.value}${k.unit ?? ""}`;
+        range.oninput = () => {
+          state.values[k.name] = range.value;
+          value.textContent = `${range.value}${k.unit ?? ""}`;
+          if (k.liveVar) {
+            $("preview")
+              .contentDocument?.querySelector(`[style*="${k.liveVar}"]`)
+              ?.style.setProperty(k.liveVar, value.textContent);
+          }
+          update();
+        };
+        return [range, value];
+      }
+
+      // Knob "list": uma linha de toggle e texto por item, e o botão que cria mais um.
+      function renderList(k, box) {
+        const items = state.values[k.name];
+        items.forEach((item) => {
+          const title = k.itemLabel.replace("{n}", item.n);
+          const wrap = document.createElement("label");
+          wrap.className = "knob knob-row";
+          wrap.innerHTML = `<span>${esc(title)}</span>`;
+          wrap.append(
+            makeField({ name: "text", label: `Texto: ${title}` }, item),
+            makeSwitch({ name: "show", label: title }, item),
+          );
+          box.appendChild(wrap);
+        });
+        const add = document.createElement("button");
+        add.type = "button";
+        add.className = "add-item";
+        add.innerHTML = `${PLUS_ICON}${esc(k.label)}`;
+        add.onclick = () => {
+          const n = k.start + items.length;
+          items.push({ n, show: false, text: k.itemText.replace("{n}", n) });
+          renderKnobs();
+          update();
+          box.querySelector(".add-item").focus();
+        };
+        box.appendChild(add);
       }
 
       function renderKnobs() {
         const box = $("knobs");
         box.innerHTML = "";
         // "when" esconde o knob enquanto o toggle indicado estiver desligado.
-        const knobs = (state.current.knobs || []).filter((k) => !k.when || state.values[k.when]);
+        const knobs = (state.current.knobs || []).filter(
+          (k) => !k.when || state.values[k.when],
+        );
         if (!knobs.length) {
           box.innerHTML = '<p class="empty">Este componente não tem knobs.</p>';
           return;
         }
         knobs.forEach((k, i) => {
+          if (k.type === "list") return renderList(k, box);
           const title = `<span>${esc(k.label || k.name)}</span>`;
           // "hideLabel" logo depois de um toggle vai para a mesma linha dele.
           if (k.hideLabel && knobs[i - 1]?.type === "toggle") return;
           const wrap = document.createElement("label");
-          if (k.type === "toggle" && knobs[i + 1]?.hideLabel) {
+          if (k.type === "range") {
+            wrap.className = "knob knob-row";
+            wrap.innerHTML = title;
+            wrap.append(...makeRange(k));
+          } else if (k.type === "toggle" && knobs[i + 1]?.hideLabel) {
             wrap.className = "knob knob-row";
             wrap.innerHTML = title;
             wrap.append(makeField(knobs[i + 1]), makeSwitch(k));
@@ -1226,17 +1485,38 @@ body{display:flex;height:100%;margin:0;padding:16px;overflow:auto;box-sizing:bor
         });
       }
 
-      function openDrawer(c, opener) {
+      // Select de modelos do drawer: troca o componente sem fechar e guarda a edição do anterior.
+      function renderVariants() {
+        const box = $("variant");
+        box.innerHTML = cellSelect(state.cell, state.current);
+        $("variant-section").hidden = !box.innerHTML;
+        if (!box.innerHTML) return;
+        bindCellSelect(box.querySelector(".cell-select"), (id) => {
+          state.drafts[state.current.id] = state.values;
+          showInDrawer(byId(id));
+          box.querySelector(".cell-select-btn").focus();
+        });
+      }
+
+      function showInDrawer(c) {
         state.current = c;
-        state.opener = opener;
         state.raw = cache[c.file];
-        state.values = { ...state.applied[c.id] };
+        state.values =
+          state.drafts[c.id] ?? structuredClone(state.applied[c.id]);
         $("desc").textContent = c.description || "";
+        renderVariants();
         renderKnobs();
         update();
         clearTimeout(previewTimer);
         $("preview").srcdoc = previewDoc();
         $("code").scrollTop = 0;
+      }
+
+      function openDrawer(cell, c, opener) {
+        state.cell = cell;
+        state.opener = opener;
+        state.drafts = {};
+        showInDrawer(c);
         $("drawer").inert = false;
         $("drawer").classList.add("open");
         $("backdrop").classList.add("open");
@@ -1251,9 +1531,11 @@ body{display:flex;height:100%;margin:0;padding:16px;overflow:auto;box-sizing:bor
       }
 
       // As edições só chegam à grade ao aplicar; fechar descarta.
+      // A célula passa a mostrar o modelo que estava aberto no drawer.
       function applyDrawer() {
         const { id } = state.current;
         state.applied[id] = { ...state.values };
+        state.variant[state.cell.id] = id;
         renderGrid();
         state.opener = document.querySelector(`[data-edit="${id}"]`);
         closeDrawer();
@@ -1274,7 +1556,9 @@ body{display:flex;height:100%;margin:0;padding:16px;overflow:auto;box-sizing:bor
 
       let tooltipTimer;
       async function copyCell(c, e) {
-        await writeClipboard(render(cache[c.file], state.applied[c.id]));
+        await writeClipboard(
+          absoluteSrc(render(cache[c.file], state.applied[c.id])),
+        );
         const tip = $("tooltip");
         tip.style.left = `${e.clientX}px`;
         tip.style.top = `${e.clientY}px`;
@@ -1289,33 +1573,28 @@ body{display:flex;height:100%;margin:0;padding:16px;overflow:auto;box-sizing:bor
         setTimeout(() => $("toast").classList.remove("show"), 1600);
       }
 
-      function segment(groupId, attr, key, after) {
-        $(groupId).addEventListener("click", (e) => {
-          const b = e.target.closest("button");
-          if (!b) return;
-          [...$(groupId).children].forEach((x) => {
-            x.classList.toggle("on", x === b);
-            x.setAttribute("aria-pressed", x === b);
-          });
-          state[key] = b.dataset[attr];
-          after();
-        });
-      }
-
       async function init() {
         try {
           state.list = await fetch("components.json").then((r) => r.json());
           const load = async (c, values) => {
             cache[c.file] = await fetch(c.file).then((r) => r.text());
-            const defaults = (c.knobs || []).map((k) => [k.name, k.default ?? ""]);
-            state.applied[c.id] = { ...Object.fromEntries(defaults), ...values };
+            const defaults = (c.knobs || []).map((k) => [
+              k.name,
+              k.default ?? "",
+            ]);
+            state.applied[c.id] = {
+              ...Object.fromEntries(defaults),
+              ...values,
+            };
           };
           await Promise.all(
             cells().flatMap((c) => [
               load(c, c.grid.values),
               ...optionsOf(c)
                 .filter((o) => o.id !== c.id)
-                .map((o) => load(byId(o.id), { ...c.grid.values, ...o.values })),
+                .map((o) =>
+                  load(byId(o.id), { ...c.grid.values, ...o.values }),
+                ),
             ]),
           );
         } catch (err) {
@@ -1323,9 +1602,16 @@ body{display:flex;height:100%;margin:0;padding:16px;overflow:auto;box-sizing:bor
             '<p class="empty" style="padding:20px">Não foi possível carregar os componentes. Abra pelo GitHub Pages ou por um servidor local (o navegador bloqueia o carregamento abrindo o arquivo direto).</p>';
           return;
         }
-        segment("theme", "t", "theme", () => {
+        // O seletor de tema é o componente Segmented, com "name" próprio para não
+        // agrupar seus radios com os do mesmo componente na grade.
+        const segmented = byId("toggle-segmented");
+        $("theme").innerHTML = render(cache[segmented.file], {
+          ...state.applied[segmented.id],
+          name: "theme",
+        });
+        $("theme").addEventListener("change", (e) => {
+          state.theme = e.target.value;
           $("frame").dataset.theme = state.theme;
-          $("theme").dataset.theme = state.theme;
           document.body.dataset.theme = state.theme;
         });
         $("copy").onclick = copy;
@@ -1336,10 +1622,14 @@ body{display:flex;height:100%;margin:0;padding:16px;overflow:auto;box-sizing:bor
         $("apply").onclick = applyDrawer;
         document.addEventListener("keydown", (e) => {
           if (e.key !== "Escape") return;
-          closeCellSelects();
+          // Com um select aberto, o Esc fecha só ele.
+          if (document.querySelector(".cell-select.open"))
+            return closeCellSelects();
           if ($("drawer").classList.contains("open")) closeDrawer();
         });
-        document.addEventListener("click", (e) => closeCellSelects(e.target.closest(".cell-select")));
+        document.addEventListener("click", (e) =>
+          closeCellSelects(e.target.closest(".cell-select")),
+        );
         state.filters = new Set(cells().map((c) => c.id));
         renderFilters();
         renderGrid();

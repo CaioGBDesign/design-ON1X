@@ -1,0 +1,260 @@
+<style>
+  .dropdown-basic {
+    position: relative;
+    display: inline-flex;
+  }
+  /* Botão que abre o dropdown: mesmo estilo do botão Ghost Small */
+  .dropdown-basic .trigger {
+    display: inline-flex;
+    padding: 8px;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+
+    color: #fff;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .dropdown-basic .trigger:hover {
+    background: rgba(255, 255, 255, 0.06);
+  }
+  .dropdown-basic .menu {
+    display: none;
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    z-index: 20;
+    width: 216px;
+    flex-direction: column;
+    align-items: flex-start;
+
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: #000;
+    box-shadow: var(--shadow-md-1-offset-x, 0) var(--shadow-md-1-offset-y, 1px) var(--shadow-md-1-blur-radius, 3px) var(--shadow-md-1-spread-radius, 0) var(--shadow-md-1-color, rgba(0, 0, 0, 0.01)), var(--shadow-md-2-offset-x, 0) var(--shadow-md-2-offset-y, 2px) var(--shadow-md-2-blur-radius, 4px) var(--shadow-md-2-spread-radius, -1px) var(--shadow-md-2-color, rgba(0, 0, 0, 0.01));
+
+    /* Surge crescendo a partir do canto, e faz o caminho inverso ao fechar */
+    opacity: 0;
+    transform: translateY(-8px) scale(0.95);
+    transform-origin: top left;
+    transition: opacity 0.15s ease-out, transform 0.15s ease-out, display 0.15s allow-discrete;
+  }
+  .dropdown-basic.open .menu {
+    display: flex;
+    opacity: 1;
+    transform: none;
+  }
+  @starting-style {
+    .dropdown-basic.open .menu {
+      opacity: 0;
+      transform: translateY(-8px) scale(0.95);
+    }
+  }
+  .dropdown-basic .group {
+    display: flex;
+    padding: 4px;
+    flex-direction: column;
+    align-items: flex-start;
+    align-self: stretch;
+  }
+  /* A linha só aparece entre os grupos: o primeiro já encosta na borda do dropdown */
+  .dropdown-basic .group + .group {
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+  }
+  .dropdown-basic .item {
+    display: flex;
+    padding: 8px;
+    align-items: center;
+    gap: 16px;
+    align-self: stretch;
+
+    border: 0;
+    border-radius: 8px;
+    background: none;
+
+    color: #fff;
+    cursor: pointer;
+  }
+  .dropdown-basic .label {
+    cursor: default;
+  }
+  .dropdown-basic button.item:hover,
+  .dropdown-basic button.item:focus-visible {
+    background: rgba(255, 255, 255, 0.08);
+    outline: none;
+  }
+  .dropdown-basic .text {
+    flex: 1;
+    height: 16px;
+    align-self: stretch;
+
+    color: #fff;
+    font-family: "Public Sans";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 16px;
+    text-align: left;
+  }
+  .dropdown-basic svg {
+    flex: none;
+  }
+  /* Item que abre outro dropdown */
+  .dropdown-basic .sub {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-self: stretch;
+  }
+  .dropdown-basic .sub:hover > .item,
+  .dropdown-basic .sub:focus-within > .item {
+    background: rgba(255, 255, 255, 0.08);
+  }
+  .dropdown-basic .submenu {
+    display: none;
+    position: absolute;
+    top: -5px;
+    left: calc(100% + 9px);
+    z-index: 10;
+    width: 216px;
+
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: #000;
+    box-shadow: var(--shadow-md-1-offset-x, 0) var(--shadow-md-1-offset-y, 1px) var(--shadow-md-1-blur-radius, 3px) var(--shadow-md-1-spread-radius, 0) var(--shadow-md-1-color, rgba(0, 0, 0, 0.01)), var(--shadow-md-2-offset-x, 0) var(--shadow-md-2-offset-y, 2px) var(--shadow-md-2-blur-radius, 4px) var(--shadow-md-2-spread-radius, -1px) var(--shadow-md-2-color, rgba(0, 0, 0, 0.01));
+
+    /* Surge crescendo a partir do canto, e faz o caminho inverso ao fechar */
+    opacity: 0;
+    transform: scale(0.95);
+    transform-origin: top left;
+    transition: opacity 0.15s ease-out, transform 0.15s ease-out, display 0.15s allow-discrete;
+  }
+  /* Ponte sobre o vão: o mouse passa de um dropdown ao outro sem fechar */
+  .dropdown-basic .submenu::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: -10px;
+    width: 10px;
+  }
+  .dropdown-basic .sub:hover > .submenu,
+  .dropdown-basic .sub:focus-within > .submenu {
+    display: block;
+    opacity: 1;
+    transform: none;
+  }
+  @starting-style {
+    .dropdown-basic .sub:hover > .submenu,
+    .dropdown-basic .sub:focus-within > .submenu {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+  }
+
+  /* Light mode */
+  [data-theme="light"] .dropdown-basic .trigger {
+    color: #000;
+  }
+  [data-theme="light"] .dropdown-basic .trigger:hover {
+    background: rgba(0, 0, 0, 0.06);
+  }
+  [data-theme="light"] .dropdown-basic .menu,
+  [data-theme="light"] .dropdown-basic .submenu {
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    background: #fff;
+  }
+  [data-theme="light"] .dropdown-basic .group + .group {
+    border-top: 1px solid rgba(0, 0, 0, 0.15);
+  }
+  [data-theme="light"] .dropdown-basic .item,
+  [data-theme="light"] .dropdown-basic .text {
+    color: #000;
+  }
+  [data-theme="light"] .dropdown-basic button.item:hover,
+  [data-theme="light"] .dropdown-basic button.item:focus-visible,
+  [data-theme="light"] .dropdown-basic .sub:hover > .item,
+  [data-theme="light"] .dropdown-basic .sub:focus-within > .item {
+    background: rgba(0, 0, 0, 0.08);
+  }
+</style>
+<div class="dropdown-basic">
+  <button class="trigger" type="button" aria-label="Abrir menu" aria-haspopup="menu" aria-expanded="false">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M8.66665 8.00004C8.66665 8.36823 8.36817 8.66671 7.99998 8.66671C7.63179 8.66671 7.33331 8.36823 7.33331 8.00004C7.33331 7.63185 7.63179 7.33337 7.99998 7.33337C8.36817 7.33337 8.66665 7.63185 8.66665 8.00004Z" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" />
+      <path d="M8.66665 3.33335C8.66665 3.70154 8.36817 4.00002 7.99998 4.00002C7.63179 4.00002 7.33331 3.70154 7.33331 3.33335C7.33331 2.96516 7.63179 2.66669 7.99998 2.66669C8.36817 2.66669 8.66665 2.96516 8.66665 3.33335Z" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" />
+      <path d="M8.66665 12.6667C8.66665 13.0349 8.36817 13.3333 7.99998 13.3333C7.63179 13.3333 7.33331 13.0349 7.33331 12.6667C7.33331 12.2985 7.63179 12 7.99998 12C8.36817 12 8.66665 12.2985 8.66665 12.6667Z" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" />
+    </svg>
+  </button>
+  <div class="menu">
+    <div class="group">
+      <div class="item label"><span class="text">My account</span></div>
+    </div>
+    <div class="group">
+      <button class="item" type="button"><span class="text">Profile</span></button>
+      <button class="item" type="button"><span class="text">Billing</span></button>
+    </div>
+    <div class="group">
+      <div class="sub">
+        <button class="item" type="button" aria-haspopup="menu">
+          <span class="text">Invite users</span>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M6 12L10 8L6 4" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" />
+          </svg>
+        </button>
+        <div class="submenu">
+          <div class="group">
+            <button class="item" type="button"><span class="text">Caio Goulart</span></button>
+            <button class="item" type="button"><span class="text">Flavia Kawazoe</span></button>
+            <button class="item" type="button"><span class="text">Jennifer Paiva</span></button>
+          </div>
+        </div>
+      </div>
+      <button class="item" type="button"><span class="text">GitHub</span></button>
+      <button class="item" type="button"><span class="text">Support</span></button>
+      <button class="item" type="button"><span class="text">API</span></button>
+    </div>
+  </div>
+</div>
+<script>
+  // Abre e fecha o dropdown e mantém os menus visíveis quando falta espaço à direita.
+  document.querySelectorAll(".dropdown-basic").forEach((root) => {
+    const trigger = root.querySelector(".trigger");
+    const menu = root.querySelector(".menu");
+
+    const keepInside = (panel) => {
+      panel.style.left = "";
+      // O limite é o contêiner mais próximo que corta o conteúdo, ou a tela.
+      let clip = panel.parentElement;
+      while (clip && getComputedStyle(clip).overflowX === "visible") clip = clip.parentElement;
+      const limit = clip ? clip.getBoundingClientRect().right : document.documentElement.clientWidth;
+      const over = panel.getBoundingClientRect().left + panel.offsetWidth - (limit - 16);
+      if (over > 0) panel.style.left = `calc(${getComputedStyle(panel).left} - ${over}px)`;
+    };
+    const setOpen = (open) => {
+      root.classList.toggle("open", open);
+      trigger.setAttribute("aria-expanded", open);
+      if (open) keepInside(menu);
+    };
+
+    trigger.addEventListener("click", () => setOpen(!root.classList.contains("open")));
+    menu.querySelectorAll("button.item:not([aria-haspopup])").forEach((item) => {
+      item.addEventListener("click", () => setOpen(false));
+    });
+    root.querySelectorAll(".sub").forEach((sub) => {
+      const place = () => keepInside(sub.querySelector(".submenu"));
+      sub.addEventListener("mouseenter", place);
+      sub.addEventListener("focusin", place);
+    });
+    document.addEventListener("click", (e) => {
+      if (!root.contains(e.target)) setOpen(false);
+    });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") setOpen(false);
+    });
+  });
+</script>

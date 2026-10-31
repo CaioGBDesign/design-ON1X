@@ -1,0 +1,281 @@
+<style>
+  .dropdown-action {
+    position: relative;
+    display: inline-flex;
+  }
+  /* Botão que abre o dropdown: mesmo estilo do botão Ghost Small */
+  .dropdown-action .trigger {
+    display: inline-flex;
+    padding: 8px;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+
+    color: #fff;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .dropdown-action .trigger:hover {
+    background: rgba(255, 255, 255, 0.06);
+  }
+  .dropdown-action .menu {
+    display: none;
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    z-index: 20;
+    width: 216px;
+    flex-direction: column;
+    align-items: flex-start;
+
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: #000;
+    box-shadow: var(--shadow-md-1-offset-x, 0) var(--shadow-md-1-offset-y, 1px) var(--shadow-md-1-blur-radius, 3px) var(--shadow-md-1-spread-radius, 0) var(--shadow-md-1-color, rgba(0, 0, 0, 0.01)), var(--shadow-md-2-offset-x, 0) var(--shadow-md-2-offset-y, 2px) var(--shadow-md-2-blur-radius, 4px) var(--shadow-md-2-spread-radius, -1px) var(--shadow-md-2-color, rgba(0, 0, 0, 0.01));
+
+    /* Surge crescendo a partir do canto, e faz o caminho inverso ao fechar */
+    opacity: 0;
+    transform: translateY(-8px) scale(0.95);
+    transform-origin: top left;
+    transition: opacity 0.15s ease-out, transform 0.15s ease-out, display 0.15s allow-discrete;
+  }
+  .dropdown-action.open .menu {
+    display: flex;
+    opacity: 1;
+    transform: none;
+  }
+  @starting-style {
+    .dropdown-action.open .menu {
+      opacity: 0;
+      transform: translateY(-8px) scale(0.95);
+    }
+  }
+  .dropdown-action .group {
+    display: flex;
+    padding: 4px;
+    flex-direction: column;
+    align-items: flex-start;
+    align-self: stretch;
+  }
+  .dropdown-action .item {
+    display: flex;
+    padding: 8px;
+    align-items: center;
+    gap: 8px;
+    align-self: stretch;
+
+    border: 0;
+    border-radius: 8px;
+    background: none;
+
+    color: #fff;
+    cursor: pointer;
+  }
+  .dropdown-action .label,
+  .dropdown-action .contact {
+    cursor: default;
+  }
+  .dropdown-action .contact:hover,
+  .dropdown-action .contact:focus-within {
+    background: rgba(255, 255, 255, 0.08);
+    outline: none;
+  }
+  .dropdown-action .text {
+    flex: 1;
+    height: 16px;
+    align-self: stretch;
+
+    color: #fff;
+    font-family: "Public Sans";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 16px;
+    text-align: left;
+  }
+  .dropdown-action svg {
+    flex: none;
+  }
+  .dropdown-action .avatar {
+    display: block;
+    width: 16px;
+    height: 16px;
+    flex: none;
+
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  .dropdown-action .person {
+    display: flex;
+    flex: 1;
+    min-width: 0;
+    flex-direction: column;
+
+    color: #fff;
+    font-family: "Public Sans";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 16px;
+  }
+  .dropdown-action .person small {
+    color: rgba(255, 255, 255, 0.4);
+    font-size: inherit;
+  }
+  /* Mesmo estilo do Badge Neutral (components/badge/neutral.html) */
+  .dropdown-action .send {
+    display: flex;
+    flex: none;
+    padding: 4px 8px;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+
+    border: 0;
+    border-radius: 8px;
+    background: #262626;
+
+    color: #fff;
+    text-align: center;
+    font-family: "Public Sans";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 16px;
+    cursor: pointer;
+  }
+  /* Mesmo estilo do botão Glow Small, na largura do dropdown */
+  .dropdown-action .primary {
+    display: flex;
+    padding: 8px;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    align-self: stretch;
+
+    border: none;
+    border-radius: 8px;
+    background: #5fddd3;
+
+    color: #0a181c;
+    font-family: "Public Sans";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 16px;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .dropdown-action .primary:hover {
+    background: #7fe6de;
+  }
+
+  /* Light mode */
+  [data-theme="light"] .dropdown-action .trigger {
+    color: #000;
+  }
+  [data-theme="light"] .dropdown-action .trigger:hover {
+    background: rgba(0, 0, 0, 0.06);
+  }
+  [data-theme="light"] .dropdown-action .menu {
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    background: #fff;
+  }
+  [data-theme="light"] .dropdown-action .item,
+  [data-theme="light"] .dropdown-action .text {
+    color: #000;
+  }
+  [data-theme="light"] .dropdown-action .contact:hover,
+  [data-theme="light"] .dropdown-action .contact:focus-within {
+    background: rgba(0, 0, 0, 0.08);
+  }
+  [data-theme="light"] .dropdown-action .person {
+    color: #000;
+  }
+  [data-theme="light"] .dropdown-action .person small {
+    color: #717171;
+  }
+  [data-theme="light"] .dropdown-action .send {
+    background: #e5e5e5;
+    color: #000;
+  }
+</style>
+<div class="dropdown-action">
+  <button class="trigger" type="button" aria-label="Abrir menu" aria-haspopup="menu" aria-expanded="false">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M8.66665 8.00004C8.66665 8.36823 8.36817 8.66671 7.99998 8.66671C7.63179 8.66671 7.33331 8.36823 7.33331 8.00004C7.33331 7.63185 7.63179 7.33337 7.99998 7.33337C8.36817 7.33337 8.66665 7.63185 8.66665 8.00004Z" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" />
+      <path d="M8.66665 3.33335C8.66665 3.70154 8.36817 4.00002 7.99998 4.00002C7.63179 4.00002 7.33331 3.70154 7.33331 3.33335C7.33331 2.96516 7.63179 2.66669 7.99998 2.66669C8.36817 2.66669 8.66665 2.96516 8.66665 3.33335Z" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" />
+      <path d="M8.66665 12.6667C8.66665 13.0349 8.36817 13.3333 7.99998 13.3333C7.63179 13.3333 7.33331 13.0349 7.33331 12.6667C7.33331 12.2985 7.63179 12 7.99998 12C8.36817 12 8.66665 12.2985 8.66665 12.6667Z" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" />
+    </svg>
+  </button>
+  <div class="menu">
+    <div class="group">
+      <div class="item label"><span class="text">Contact LIST</span></div>
+    </div>
+    <div class="group">
+      <div class="item contact">
+        <img class="avatar" src="components/Avatar/caio.jpg" alt="" />
+        <span class="person">Nome completo<small>email@w1.com</small></span>
+        <button class="send" type="button">Enviar</button>
+      </div>
+      <div class="item contact">
+        <img class="avatar" src="components/Avatar/caio.jpg" alt="" />
+        <span class="person">Nome completo<small>email@w1.com</small></span>
+        <button class="send" type="button">Enviar</button>
+      </div>
+      <div class="item contact">
+        <img class="avatar" src="components/Avatar/caio.jpg" alt="" />
+        <span class="person">Nome completo<small>email@w1.com</small></span>
+        <button class="send" type="button">Enviar</button>
+      </div>
+      <div class="item contact">
+        <img class="avatar" src="components/Avatar/caio.jpg" alt="" />
+        <span class="person">Nome completo<small>email@w1.com</small></span>
+        <button class="send" type="button">Enviar</button>
+      </div>
+      <div class="item contact">
+        <img class="avatar" src="components/Avatar/caio.jpg" alt="" />
+        <span class="person">Nome completo<small>email@w1.com</small></span>
+        <button class="send" type="button">Enviar</button>
+      </div>
+    </div>
+    <div class="group">
+      <button class="primary" type="button">Add contact</button>
+    </div>
+  </div>
+</div>
+<script>
+  // Abre e fecha o dropdown e mantém o menu visível quando falta espaço à direita.
+  document.querySelectorAll(".dropdown-action").forEach((root) => {
+    const trigger = root.querySelector(".trigger");
+    const menu = root.querySelector(".menu");
+
+    const keepInside = (panel) => {
+      panel.style.left = "";
+      // O limite é o contêiner mais próximo que corta o conteúdo, ou a tela.
+      let clip = panel.parentElement;
+      while (clip && getComputedStyle(clip).overflowX === "visible") clip = clip.parentElement;
+      const limit = clip ? clip.getBoundingClientRect().right : document.documentElement.clientWidth;
+      const over = panel.getBoundingClientRect().left + panel.offsetWidth - (limit - 16);
+      if (over > 0) panel.style.left = `calc(${getComputedStyle(panel).left} - ${over}px)`;
+    };
+    const setOpen = (open) => {
+      root.classList.toggle("open", open);
+      trigger.setAttribute("aria-expanded", open);
+      if (open) keepInside(menu);
+    };
+
+    trigger.addEventListener("click", () => setOpen(!root.classList.contains("open")));
+    menu.querySelector(".primary").addEventListener("click", () => setOpen(false));
+    document.addEventListener("click", (e) => {
+      if (!root.contains(e.target)) setOpen(false);
+    });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") setOpen(false);
+    });
+  });
+</script>
