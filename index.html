@@ -180,7 +180,6 @@
       }
       .search-box {
         padding: 12px;
-        border-bottom: 1px solid var(--line);
       }
       /* Mesmo estilo do componente Search (components/search/search.html) */
       .nav-search {
@@ -224,7 +223,7 @@
         flex: 1;
         min-height: 0;
         overflow: auto;
-        padding: 12px 20px;
+        padding: 0px 20px;
       }
       .filter[hidden] {
         display: none;
@@ -371,24 +370,33 @@
       .tooltip.show {
         opacity: 1;
       }
-      /* O cabeçalho só aparece com o hover na célula. Ele segue ocupando espaço, para o
-         componente não pular, e também aparece no foco do teclado e com o select aberto. */
       .cell-head {
         display: flex;
         min-height: 32px;
         align-items: center;
         gap: 8px;
-        opacity: 0;
-        transition: opacity 0.2s;
       }
-      .cell:hover .cell-head,
-      .cell-head:has(:focus-visible),
-      .cell-head:has(.open) {
+      /* O select e o botão de editar só aparecem com o hover na célula. Eles seguem ocupando
+         espaço, para nada pular, e também aparecem no foco do teclado e com o select aberto. */
+      .cell-head .cell-select,
+      .cell-head .icon-btn {
+        opacity: 0;
+        transition:
+          opacity 0.2s,
+          background 0.15s,
+          border-color 0.15s;
+      }
+      .cell:hover .cell-head .cell-select,
+      .cell:hover .cell-head .icon-btn,
+      .cell-head .cell-select:has(:focus-visible),
+      .cell-head .cell-select.open,
+      .cell-head .icon-btn:focus-visible {
         opacity: 1;
       }
-      /* Sem mouse não existe hover: o cabeçalho fica sempre visível */
+      /* Sem mouse não existe hover: os controles ficam sempre visíveis */
       @media (hover: none) {
-        .cell-head {
+        .cell-head .cell-select,
+        .cell-head .icon-btn {
           opacity: 1;
         }
       }
@@ -1168,13 +1176,17 @@ body{display:flex;height:100%;margin:0;padding:16px;overflow:auto;box-sizing:bor
         const content = frame.contentDocument?.getElementById("component");
         if (content) {
           fitContent(frame, content);
-          new frame.contentWindow.MutationObserver(() => fitContent(frame, content)).observe(content, {
+          new frame.contentWindow.MutationObserver(() =>
+            fitContent(frame, content),
+          ).observe(content, {
             attributes: true,
             attributeFilter: ["class"],
             subtree: true,
           });
           // O menu animado só muda de tamanho de vez quando a animação termina.
-          content.addEventListener("transitionend", () => fitContent(frame, content));
+          content.addEventListener("transitionend", () =>
+            fitContent(frame, content),
+          );
         }
         // Com o foco dentro da prévia, o Esc não chega à página.
         frame.contentDocument?.addEventListener("keydown", (e) => {
