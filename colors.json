@@ -1,0 +1,318 @@
+{
+  "palette": {
+    "turquoise/500": "#5FDDD3",
+    "turquoise/700": "#429B94",
+    "turquoise/900": "#2B6460",
+    "petroleo/975": "#0A181C",
+    "neutral/50": "#FFFFFF",
+    "neutral/200": "#E5E5E5",
+    "neutral/500": "#717171",
+    "neutral/700": "#262626",
+    "orange/100": "#FFEED2",
+    "orange/500": "#FFA71C",
+    "orange/700": "#B27515",
+    "orange/900": "#734C0D",
+    "red/100": "#FADCDD",
+    "red/500": "#C44545",
+    "red/600": "#A13939",
+    "red/900": "#45181A",
+    "green/100": "#E8F7E2",
+    "green/500": "#8DD56F",
+    "green/700": "#63954D",
+    "green/900": "#3F6131",
+    "blue/100": "#CCEDFA",
+    "blue/500": "#00A5E4",
+    "blue/700": "#0074A0",
+    "blue/900": "#014B67",
+    "Surface/OnSurface": "#FFFFFF"
+  },
+  "groups": [
+    {
+      "name": "Primary",
+      "roles": [
+        {
+          "name": "Primary",
+          "dark": { "color": "turquoise/500" },
+          "light": { "color": "turquoise/500" },
+          "description": "Cor de destaque — usada em botões de ação principal, barra de progresso e elementos ativos (ex: linha do gráfico)."
+        },
+        {
+          "name": "OnPrimary",
+          "dark": { "color": "petroleo/975" },
+          "light": { "color": "petroleo/975" },
+          "description": "Cor que vem sobre a Primary — usada em textos e ícones que ficam por cima dela (ex: o texto do botão \"Adicionar transação\")."
+        },
+        {
+          "name": "PrimaryContainer",
+          "dark": { "color": "turquoise/900", "opacity": 15 },
+          "light": { "color": "petroleo/975", "opacity": 5 },
+          "description": "Variação mais escura/contida da Primary — usada em fundos de elementos selecionados ou em destaque sutil (ex: item ativo no menu lateral)."
+        },
+        {
+          "name": "OnPrimaryContainer",
+          "dark": { "color": "neutral/50" },
+          "light": { "color": "petroleo/975" },
+          "description": "Cor de texto/ícone sobre a PrimaryContainer."
+        }
+      ]
+    },
+    {
+      "name": "Secondary",
+      "roles": [
+        {
+          "name": "Secondary",
+          "dark": { "color": "turquoise/900" },
+          "light": { "color": "turquoise/900" },
+          "description": "Cor de destaque alternativa — ações secundárias, chips e toggles menos importantes que a principal."
+        },
+        {
+          "name": "OnSecondary",
+          "dark": { "color": "neutral/50" },
+          "light": { "color": "neutral/50" },
+          "description": "Cor que vem sobre a Secondary."
+        }
+      ]
+    },
+    {
+      "name": "Tertiary",
+      "roles": [
+        {
+          "name": "Tertiary",
+          "dark": { "color": "orange/500" },
+          "light": { "color": "orange/700" },
+          "description": "Cor de acento complementar — usada para variedade visual (ex: categorização, badges)."
+        },
+        {
+          "name": "OnTertiary",
+          "dark": { "color": "orange/900" },
+          "light": { "color": "neutral/50" },
+          "description": "Cor que vem sobre a Tertiary."
+        },
+        {
+          "name": "TertiaryContainer",
+          "dark": { "color": "orange/500", "opacity": 15 },
+          "light": { "color": "orange/100" },
+          "description": "Variação contida da Tertiary."
+        },
+        {
+          "name": "OnTertiaryContainer",
+          "dark": { "color": "neutral/50" },
+          "light": { "color": "orange/900" },
+          "description": "Cor de texto/ícone sobre a TertiaryContainer."
+        }
+      ]
+    },
+    {
+      "name": "Error",
+      "roles": [
+        {
+          "name": "Error",
+          "dark": { "color": "red/500" },
+          "light": { "color": "red/600" },
+          "description": "Cor de estados de erro — validações inválidas, alertas críticos."
+        },
+        {
+          "name": "OnError",
+          "dark": { "color": "red/900", "opacity": 0 },
+          "light": { "color": "neutral/50" },
+          "description": "Cor que vem sobre a Error."
+        },
+        {
+          "name": "ErrorContainer",
+          "dark": { "color": "red/500", "opacity": 15 },
+          "light": { "color": "red/100" },
+          "description": "Fundo contido de erro — banners ou blocos de alerta menos agressivos."
+        },
+        {
+          "name": "OnErrorContainer",
+          "dark": { "color": "neutral/50" },
+          "light": { "color": "red/900" },
+          "description": "Cor de texto/ícone sobre a ErrorContainer."
+        }
+      ]
+    },
+    {
+      "name": "Surface",
+      "roles": [
+        {
+          "name": "Surface",
+          "dark": { "color": "neutral/50", "opacity": 3 },
+          "light": { "color": "#000000", "opacity": 3 },
+          "description": "Fundo dos cards e blocos de conteúdo — camada elevada sobre o fundo geral."
+        },
+        {
+          "name": "OnSurface",
+          "dark": { "color": "neutral/50" },
+          "light": { "color": "#000000" },
+          "description": "Cor de texto principal — usada sobre fundos de superfície (cards, telas) para o conteúdo de maior ênfase."
+        },
+        {
+          "name": "SurfaceContainer",
+          "dark": { "color": "neutral/50", "opacity": 2 },
+          "light": { "color": "#000000", "opacity": 2 },
+          "description": "Fundo sutil de componentes interativos — usada em botões \"glass\"/secundários sobre a superfície."
+        },
+        {
+          "name": "OnSurfaceVariant",
+          "dark": { "color": "neutral/500" },
+          "light": { "color": "neutral/500" },
+          "description": "Cor de texto secundário — usada em labels e informações de apoio, com ênfase intermediária (ex: eixo do gráfico)."
+        },
+        {
+          "name": "SurfaceContainerHighest",
+          "dark": { "color": "neutral/700" },
+          "light": { "color": "neutral/200" },
+          "description": "Trilho de barras de progresso."
+        },
+        {
+          "name": "SurfaceContainerLowest",
+          "dark": { "color": "#000000" },
+          "light": { "color": "neutral/50" },
+          "description": "Elementos recuados — ex: input de busca."
+        }
+      ]
+    },
+    {
+      "name": "State Layer",
+      "roles": [
+        {
+          "name": "Hover",
+          "dark": { "color": "Surface/OnSurface", "opacity": 8 },
+          "light": { "color": "#000000", "opacity": 8 },
+          "description": "Camada de estado sobreposta ao componente quando o cursor passa sobre ele."
+        },
+        {
+          "name": "Focus",
+          "dark": { "color": "Surface/OnSurface", "opacity": 10 },
+          "light": { "color": "#000000", "opacity": 10 },
+          "description": "Camada de estado sobreposta ao componente quando ele recebe foco, como na navegação por teclado."
+        },
+        {
+          "name": "Pressed",
+          "dark": { "color": "Surface/OnSurface", "opacity": 12 },
+          "light": { "color": "#000000", "opacity": 12 },
+          "description": "Camada de estado sobreposta ao componente enquanto ele é pressionado."
+        }
+      ]
+    },
+    {
+      "name": "Outline",
+      "roles": [
+        {
+          "name": "Outline",
+          "dark": { "color": "neutral/50", "opacity": 15 },
+          "light": { "color": "#000000", "opacity": 15 },
+          "description": "Contorno de limites importantes — bordas de inputs, botões e outros elementos que precisam ser identificados."
+        },
+        {
+          "name": "OutlineVariant",
+          "dark": { "color": "#FFFFFF", "opacity": 4 },
+          "light": { "color": "#000000", "opacity": 4 },
+          "description": "Contorno decorativo de baixa ênfase — divisores e bordas sutis, quando o contraste não é essencial."
+        }
+      ]
+    },
+    {
+      "name": "Shadow",
+      "roles": [
+        {
+          "name": "Shadow",
+          "dark": { "color": "#000000", "opacity": 25.1 },
+          "light": { "color": "#000000" },
+          "description": "Cor das sombras de elevação — cards, menus e diálogos."
+        }
+      ]
+    },
+    {
+      "name": "Scrim",
+      "roles": [
+        {
+          "name": "Scrim",
+          "dark": { "color": "#000000", "opacity": 25 },
+          "light": { "color": "#000000", "opacity": 25 },
+          "description": "Véu que cobre o conteúdo atrás de modais, drawers e diálogos, mantendo a atenção no elemento à frente."
+        }
+      ]
+    },
+    {
+      "name": "SurfaceTint",
+      "roles": [
+        {
+          "name": "SurfaceTint",
+          "dark": { "color": "neutral/50", "opacity": 0 },
+          "light": { "color": "turquoise/700" },
+          "description": "Tonalidade aplicada sobre superfícies para indicar elevação — quanto mais alto o elemento, mais forte o tom."
+        }
+      ]
+    },
+    {
+      "name": "Background",
+      "roles": [
+        {
+          "name": "OnBackground",
+          "dark": { "color": "#FFFFFF" },
+          "light": { "color": "#0A0A0A" },
+          "description": "Cor de textos e ícones aplicados diretamente sobre o fundo geral da tela."
+        }
+      ]
+    },
+    {
+      "name": "Success",
+      "roles": [
+        {
+          "name": "Success",
+          "dark": { "color": "green/500" },
+          "light": { "color": "green/700" },
+          "description": "Cor de estados de sucesso — confirmações, validações aprovadas e ações concluídas."
+        },
+        {
+          "name": "OnSuccess",
+          "dark": { "color": "green/900" },
+          "light": { "color": "neutral/50" },
+          "description": "Cor que vem sobre a Success."
+        },
+        {
+          "name": "SuccessContainer",
+          "dark": { "color": "green/500", "opacity": 15 },
+          "light": { "color": "green/100" },
+          "description": "Fundo contido de sucesso — banners ou blocos de confirmação discretos."
+        },
+        {
+          "name": "OnSuccessContainer",
+          "dark": { "color": "neutral/50" },
+          "light": { "color": "green/900" },
+          "description": "Cor de texto/ícone sobre a SuccessContainer."
+        }
+      ]
+    },
+    {
+      "name": "Info",
+      "roles": [
+        {
+          "name": "Info",
+          "dark": { "color": "blue/500" },
+          "light": { "color": "blue/700" },
+          "description": "Cor de mensagens informativas — avisos neutros, dicas e novidades."
+        },
+        {
+          "name": "OnInfo",
+          "dark": { "color": "blue/900" },
+          "light": { "color": "neutral/50" },
+          "description": "Cor que vem sobre a Info."
+        },
+        {
+          "name": "InfoContainer",
+          "dark": { "color": "blue/500", "opacity": 15 },
+          "light": { "color": "blue/100" },
+          "description": "Fundo contido de informação — banners ou blocos de aviso discretos."
+        },
+        {
+          "name": "OnInfoContainer",
+          "dark": { "color": "neutral/50" },
+          "light": { "color": "blue/900" },
+          "description": "Cor de texto/ícone sobre a InfoContainer."
+        }
+      ]
+    }
+  ]
+}

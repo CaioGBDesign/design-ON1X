@@ -15,6 +15,7 @@
     ],
     "grid": {
       "title": "Botões",
+      "group": "Ações",
       "options": [
         {
           "id": "glow-small",
@@ -180,6 +181,7 @@
     ],
     "grid": {
       "title": "Select",
+      "group": "Formulários",
       "values": {
         "topLeft": false,
         "topRight": false,
@@ -497,6 +499,7 @@
     ],
     "grid": {
       "title": "Alert",
+      "group": "Feedback",
       "values": {
         "showDescription": false,
         "title": "Título do alerta"
@@ -537,6 +540,8 @@
     ],
     "grid": {
       "title": "Alert dialog / Popover",
+      "group": "Feedback",
+      "navTitle": "Alert dialog",
       "options": [
         {
           "id": "alert-dialog-basic",
@@ -651,6 +656,7 @@
     "description": "Avatar único: foto em círculo, para identificar uma pessoa.",
     "grid": {
       "title": "Avatar",
+      "group": "Exibição",
       "options": [
         {
           "id": "avatar-single",
@@ -736,6 +742,7 @@
     ],
     "grid": {
       "title": "Badge",
+      "group": "Feedback",
       "options": [
         {
           "id": "badge-error",
@@ -967,6 +974,7 @@
     "description": "Dropdown com itens de texto agrupados. Abre ao clicar no botão; a seta de um item abre um segundo dropdown.",
     "grid": {
       "title": "Dropdown",
+      "group": "Ações",
       "options": [
         {
           "id": "dropdown-basic",
@@ -1040,7 +1048,8 @@
       }
     ],
     "grid": {
-      "title": "Search"
+      "title": "Search",
+      "group": "Formulários"
     }
   },
   {
@@ -1117,6 +1126,8 @@
     ],
     "grid": {
       "title": "Input Text",
+      "group": "Formulários",
+      "navTitle": "Input text",
       "values": {
         "topLeft": false,
         "topRight": false,
@@ -1398,6 +1409,7 @@
     ],
     "grid": {
       "title": "Radio",
+      "group": "Formulários",
       "options": [
         {
           "id": "radio-box",
@@ -1486,6 +1498,7 @@
     ],
     "grid": {
       "title": "Toggle",
+      "group": "Formulários",
       "values": {
         "checked": false
       },
@@ -1571,6 +1584,8 @@
     ],
     "grid": {
       "title": "Checkboxes",
+      "group": "Formulários",
+      "navTitle": "Checkbox",
       "options": [
         {
           "id": "checkbox-uncheck",

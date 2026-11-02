@@ -86,11 +86,18 @@
         color: #000;
       }
       body[data-theme="light"] .nav {
+        --hover: rgba(0, 0, 0, 0.06);
         border-right: 1px solid rgba(0, 0, 0, 0.15);
         background: rgba(0, 0, 0, 0.03);
       }
       body[data-theme="light"] .frame {
         border-color: rgba(0, 0, 0, 0.15);
+      }
+      body[data-theme="light"] .colors-nav {
+        --hover: rgba(0, 0, 0, 0.06);
+      }
+      body[data-theme="light"] .nav-link[aria-current="page"] {
+        background: rgba(10, 24, 28, 0.05);
       }
       body[data-theme="light"] .nav-search {
         border-color: rgba(0, 0, 0, 0.15);
@@ -99,12 +106,6 @@
       }
       body[data-theme="light"] .nav-search input {
         color: #000;
-      }
-      body[data-theme="light"] .filter input {
-        border-color: rgba(0, 0, 0, 0.04);
-      }
-      body[data-theme="light"] .filter input:not(:checked, :indeterminate) {
-        background: #e5e5e5;
       }
       body[data-theme="light"] .stage::-webkit-scrollbar-thumb,
       body[data-theme="light"] .drawer-body::-webkit-scrollbar-thumb,
@@ -222,55 +223,63 @@
       .nav-search input::-webkit-search-cancel-button {
         display: none;
       }
-      .filters {
-        display: flex;
-        flex-direction: column;
+      .nav-list {
         flex: 1;
         min-height: 0;
         overflow: auto;
-        padding: 0px 20px;
+        padding: 0 12px 12px;
       }
-      .filter[hidden] {
-        display: none;
-      }
-      .filter {
+      .nav-group {
         display: flex;
         min-height: 32px;
-        align-items: center;
-        gap: 12px;
-        cursor: pointer;
-      }
-      /* Mesmo estilo do componente Checkboxes (components/checkboxes/uncheck.html) */
-      .filter input {
-        display: flex;
-        width: 16px;
-        height: 16px;
-        flex: none;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
         margin: 0;
+        padding: 0 8px;
+        align-items: center;
 
-        appearance: none;
-        border-radius: 4px;
-        border: 1px solid rgba(255, 255, 255, 0.04);
-        background: #262626;
-        cursor: pointer;
+        color: #717171;
+        font-size: 12px;
       }
-      .filter input:checked {
-        background: #5fddd3
-          url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2712%27 height=%2712%27 viewBox=%270 0 12 12%27 fill=%27none%27%3E%3Cpath d=%27M10 3L4.5 8.5L2 6%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27 stroke=%27%230A181C%27/%3E%3C/svg%3E")
-          no-repeat center;
+      .nav-link[hidden] {
+        display: none;
       }
-      .filter input:focus-visible {
+      .nav-link {
+        display: flex;
+        min-height: 32px;
+        padding: 0 8px;
+        justify-content: space-between;
+        align-items: center;
+        gap: 8px;
+
+        border-radius: 8px;
+
+        color: inherit;
+        text-decoration: none;
+        transition: background 0.15s;
+      }
+      .nav-link:hover {
+        background: var(--hover);
+      }
+      /* PrimaryContainer: fundo do item ativo */
+      .nav-link[aria-current="page"] {
+        background: rgba(43, 100, 96, 0.15);
+      }
+      .nav-link:focus-visible {
         outline: 2px solid var(--accent);
-        outline-offset: 2px;
+        outline-offset: -2px;
       }
-      /* Quando só parte dos itens está marcada, mostra o traço do Minus */
-      .filter input:indeterminate {
-        background: #5fddd3
-          url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2712%27 height=%2712%27 viewBox=%270 0 12 12%27 fill=%27none%27%3E%3Cpath d=%27M2.5 6H9.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27 stroke=%27%230A181C%27/%3E%3C/svg%3E")
-          no-repeat center;
+      .nav-label {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      /* Fundamentos fica separado dos grupos de componentes */
+      .nav-section:first-child {
+        margin: 0 -12px 8px;
+        padding: 0 12px 8px;
+        border-bottom: 1px solid var(--line);
+      }
+      .nav-list .empty {
+        padding: 0 8px;
       }
 
       /* Centro */
@@ -304,6 +313,11 @@
         align-items: flex-start;
         overflow: auto;
       }
+      @media (prefers-reduced-motion: no-preference) {
+        .stage {
+          scroll-behavior: smooth;
+        }
+      }
       /* Simulador: uma única div com todos os componentes */
       .frame {
         display: flex;
@@ -315,7 +329,11 @@
         border: 1px solid rgba(255, 255, 255, 0.15);
         background: rgba(255, 255, 255, 0.03);
 
-        overflow: hidden;
+        /* clip, não hidden: as âncoras do menu não podem rolar o frame */
+        overflow: clip;
+      }
+      .frame[hidden] {
+        display: none;
       }
       .frame[data-theme="dark"] {
         --cell-line: rgba(255, 255, 255, 0.08);
@@ -335,6 +353,120 @@
         grid-template-columns: repeat(auto-fill, minmax(256px, 1fr));
         margin: 0 -1px -1px 0;
       }
+      /* Sessão de cores */
+      .section-view[hidden] {
+        display: none;
+      }
+      .section-view {
+        display: flex;
+        width: 100%;
+        align-items: flex-start;
+        gap: 26px;
+      }
+      /* O menu acompanha a rolagem da tabela */
+      .colors-nav {
+        position: sticky;
+        top: 0;
+        flex: none;
+        flex-direction: column;
+        width: 265px;
+        padding: 12px;
+        justify-content: flex-start;
+        align-items: stretch;
+      }
+      .colors-frame {
+        flex: 1;
+        min-width: 0;
+      }
+      @media (max-width: 1100px) {
+        .colors-nav {
+          display: none;
+        }
+      }
+      .colors tbody {
+        scroll-margin-top: 1px;
+        transition: background 0.2s;
+      }
+      .colors {
+        width: 100%;
+        border-collapse: collapse;
+        table-layout: fixed;
+        font-size: 12px;
+        line-height: 16px;
+      }
+      .colors th,
+      .colors td {
+        padding: 16px;
+        border-right: 1px dashed var(--cell-line);
+        border-bottom: 1px dashed var(--cell-line);
+        font-weight: 400;
+        text-align: left;
+        vertical-align: top;
+      }
+      .colors th:last-child,
+      .colors td:last-child {
+        border-right: none;
+      }
+      .colors tbody:last-child tr:last-child td {
+        border-bottom: none;
+      }
+      .colors-mode {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .colors .colors-group {
+        font-size: 14px;
+        font-weight: 600;
+      }
+      .swatch {
+        overflow: hidden;
+        border-radius: 8px;
+        background: #111414;
+        color: #fff;
+      }
+      .swatch.light {
+        border-color: rgba(0, 0, 0, 0.15);
+        /*background: #fff;*/
+      }
+      .swatch {
+        cursor: pointer;
+      }
+      .swatch-color {
+        position: relative;
+        height: 84px;
+      }
+      .swatch .copy {
+        backdrop-filter: none;
+        opacity: 0;
+        transition: opacity 0.2s;
+      }
+      .swatch:hover .copy,
+      .swatch .copy:focus-visible {
+        opacity: 1;
+      }
+      @media (hover: none) {
+        .swatch .copy {
+          opacity: 1;
+        }
+      }
+      .swatch-info {
+        display: flex;
+        padding: 8px;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 0 8px;
+        background: rgba(255, 255, 255, 0.03);
+      }
+      .swatch-info span:last-child {
+        text-align: right;
+      }
+      .swatch-info small {
+        display: block;
+        color: #717171;
+        font-size: inherit;
+      }
+
       /* Altura do modelo mais alto (Alert dialog Radio): trocar de modelo não mexe na grade */
       .cell {
         display: flex;
@@ -348,12 +480,13 @@
         cursor: pointer;
         transition: background 0.2s;
       }
-      .grid[hidden],
-      .cell[hidden] {
-        display: none;
-      }
       .cell:hover {
         background: var(--cell-hover);
+      }
+      /* Marca a célula aberta pelo menu: a da última linha não chega ao topo */
+      .highlight,
+      .cell.highlight {
+        background: rgba(43, 100, 96, 0.15);
       }
       .tooltip {
         position: fixed;
@@ -828,9 +961,6 @@
         color: var(--muted);
         margin: 0;
       }
-      .grid-empty {
-        padding: 20px;
-      }
       /* Clicar em qualquer parte do código copia; o ícone indica a ação */
       .code-box {
         position: relative;
@@ -963,21 +1093,19 @@
           <input id="search" type="search" placeholder="Buscar componente" />
         </label>
       </div>
-      <div class="filters" id="filters"></div>
+      <nav class="nav-list" id="nav-list" aria-label="Componentes"></nav>
     </aside>
 
     <main>
       <div class="toolbar">
-        <h1>Componentes</h1>
+        <h1 id="view-title">Componentes</h1>
         <div id="theme"></div>
       </div>
       <div class="stage">
         <div class="frame" id="frame" data-theme="dark">
           <div class="grid" id="grid"></div>
-          <p class="empty grid-empty" id="grid-empty" hidden>
-            Nenhum componente selecionado.
-          </p>
         </div>
+        <div class="section-view" id="section" hidden></div>
       </div>
     </main>
 
@@ -1043,11 +1171,7 @@
           <p class="section-title">Código</p>
           <div class="code-box" id="code-box" title="Copiar HTML">
             <pre id="code"></pre>
-            <button
-              class="copy"
-              type="button"
-              aria-label="Copiar HTML"
-            >
+            <button class="copy" type="button" aria-label="Copiar HTML">
               <svg
                 width="16"
                 height="16"
@@ -1099,7 +1223,8 @@
         drafts: {}, // edições dos outros modelos enquanto o drawer está aberto
         applied: {}, // valores mostrados na grade, por componente
         variant: {}, // modelo escolhido no select de cada célula
-        filters: new Set(), // células marcadas na lateral
+        colors: null, // conteúdo do colors.json
+        section: null, // sessão aberta no lugar da grade
         theme: "dark",
       };
       const cache = {};
@@ -1228,18 +1353,18 @@ body{display:flex;height:100%;margin:0;padding:16px;overflow:auto;box-sizing:bor
       const plain = (s) =>
         s.normalize("NFD").replace(/\p{M}/gu, "").toLowerCase();
 
-      // Filtra só a lista da lateral: a seleção e a grade não mudam.
-      function searchFilters() {
+      // Filtra só o menu da lateral: a grade não muda.
+      function searchNav() {
         const q = plain($("search").value.trim());
         let found = 0;
-        document
-          .querySelectorAll(".filter:not(#filter-all-row)")
-          .forEach((row) => {
-            row.hidden = !plain(row.textContent).includes(q);
-            if (!row.hidden) found++;
-          });
-        $("filter-all-row").hidden = !!q;
-        $("filters-empty").hidden = found > 0;
+        document.querySelectorAll(".nav-section").forEach((section) => {
+          const links = [...section.querySelectorAll(".nav-link")];
+          links.forEach((a) => (a.hidden = !a.dataset.search.includes(q)));
+          const visible = links.filter((a) => !a.hidden).length;
+          section.hidden = !visible;
+          found += visible;
+        });
+        $("nav-empty").hidden = found > 0;
       }
 
       // Componentes em ordem alfabética (ignora acentos e maiúsculas).
@@ -1255,6 +1380,15 @@ body{display:flex;height:100%;margin:0;padding:16px;overflow:auto;box-sizing:bor
       const COPY_ICON =
         '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>';
 
+      const PALETTE_ICON =
+        '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22a1 1 0 0 1 0-20 10 9 0 0 1 10 9 5 5 0 0 1-5 5h-2.25a1.75 1.75 0 0 0-1.4 2.8l.3.4a1.75 1.75 0 0 1-1.4 2.8z"/><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/></svg>';
+
+      const MOON_ICON =
+        '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>';
+
+      const SUN_ICON =
+        '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>';
+
       const ARROW_ICON =
         '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 6L8 10L12 6" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor"/></svg>';
 
@@ -1265,6 +1399,26 @@ body{display:flex;height:100%;margin:0;padding:16px;overflow:auto;box-sizing:bor
           .sort((a, b) => byName(a.grid.title, b.grid.title));
 
       const byId = (id) => state.list.find((x) => x.id === id);
+
+      // Grupos do menu da lateral, vindos de "grid.group" no components.json.
+      const NAV_GROUPS = [
+        "Feedback",
+        "Ações",
+        "Formulários",
+        "Exibição",
+        "Outros",
+      ];
+      const navLabel = (c) => c.grid.navTitle ?? c.grid.title;
+
+      // Sessões do grupo Fundamentos: cada uma abre no lugar da grade.
+      const SECTIONS = [
+        {
+          id: "cores",
+          label: "Cores",
+          icon: PALETTE_ICON,
+          render: renderColors,
+        },
+      ];
 
       // Modelos do select da célula, vindos de "grid.options" no components.json.
       const optionsOf = (c) =>
@@ -1314,6 +1468,7 @@ body{display:flex;height:100%;margin:0;padding:16px;overflow:auto;box-sizing:bor
           const shown = byId(state.variant[c.id] ?? c.id);
           const cell = document.createElement("article");
           cell.className = "cell";
+          cell.id = `cell-${c.id}`;
           cell.dataset.cell = c.id;
           cell.innerHTML = `<header class="cell-head"><span class="cell-title">${esc(c.grid.title)}</span>${cellSelect(c, shown)}<button class="icon-btn" type="button" data-edit="${esc(shown.id)}" aria-label="Editar ${esc(c.grid.title)}" title="Editar">${EDIT_ICON}</button></header><div class="cell-body">${render(cache[shown.file], state.applied[shown.id])}</div><button class="copy" type="button" aria-label="Copiar HTML de ${esc(c.grid.title)}" title="Copiar HTML">${COPY_ICON}</button>`;
           cell.querySelector("[data-edit]").onclick = (e) =>
@@ -1348,46 +1503,117 @@ body{display:flex;height:100%;margin:0;padding:16px;overflow:auto;box-sizing:bor
             old.replaceWith(s);
           });
         });
-        applyFilters();
       }
 
-      function renderFilters() {
-        const rows = cells()
+      function renderNav() {
+        const foundations = SECTIONS.map(
+          (s) =>
+            `<a class="nav-link" href="#${s.id}" data-search="${esc(plain(`${s.label} fundamentos`))}"><span class="nav-label">${s.icon}${esc(s.label)}</span></a>`,
+        ).join("");
+        const sections = NAV_GROUPS.map((group) => {
+          const links = cells()
+            .filter((c) => (c.grid.group ?? "Outros") === group)
+            .sort((a, b) => byName(navLabel(a), navLabel(b)))
+            .map((c) => {
+              const search = plain(`${navLabel(c)} ${c.grid.title} ${group}`);
+              // Sem "options", o componente tem só um modelo.
+              const count = optionsOf(c).length || 1;
+              return `<a class="nav-link" href="#cell-${esc(c.id)}" data-search="${esc(search)}" title="${count} ${count > 1 ? "variações" : "variação"}"><span>${esc(navLabel(c))}</span><span>${count}</span></a>`;
+            })
+            .join("");
+          return links
+            ? `<div class="nav-section"><p class="nav-group">${esc(group)}</p>${links}</div>`
+            : "";
+        }).join("");
+        $("nav-list").innerHTML =
+          `<div class="nav-section"><p class="nav-group">Fundamentos</p>${foundations}</div>${sections}<p class="empty" id="nav-empty" hidden>Nada encontrado.</p>`;
+      }
+
+      // Cor do ícone sobre a amostra, já misturada com o fundo escuro do card.
+      function inkOn(hex, opacity) {
+        const [r, g, b] = [1, 3, 5].map((i) => {
+          const channel = parseInt(hex.slice(i, i + 2), 16);
+          return (channel * opacity + 0x13 * (100 - opacity)) / 100;
+        });
+        return 0.299 * r + 0.587 * g + 0.114 * b > 128 ? "#0A181C" : "#FFFFFF";
+      }
+
+      // Uma amostra de cor: "tone" aponta para a paleta do colors.json
+      // ou traz o hex direto, quando a cor não tem primitiva.
+      function swatch(name, mode, tone) {
+        const primitive = tone.color in state.colors.palette;
+        const hex = primitive ? state.colors.palette[tone.color] : tone.color;
+        const opacity = tone.opacity ?? 100;
+        const alpha = Math.round(opacity * 2.55)
+          .toString(16)
+          .padStart(2, "0");
+        return `<div class="swatch ${mode}" data-hex="${esc(hex)}"><div class="swatch-color" style="background:${esc(hex + alpha)}"><button class="copy" type="button" style="color:${inkOn(hex, opacity)}" aria-label="Copiar ${esc(hex)}" title="Copiar hexadecimal">${COPY_ICON}</button></div><div class="swatch-info"><span>${esc(name)}<small>${primitive ? esc(tone.color) : "Sem primitiva"}</small></span><span>${esc(hex.slice(1))}${opacity < 100 ? `<small>${opacity}%</small>` : ""}</span></div></div>`;
+      }
+
+      const groupId = (group) =>
+        `cores-${plain(group.name).replace(/\W+/g, "-")}`;
+
+      function renderColors() {
+        const links = state.colors.groups
           .map(
-            (c) =>
-              `<label class="filter"><input type="checkbox" data-filter="${esc(c.id)}" checked />${esc(c.grid.title)}</label>`,
+            (group) =>
+              `<a class="nav-link" href="#${groupId(group)}"><span>${esc(group.name)}</span><span>${group.roles.length}</span></a>`,
           )
           .join("");
-        $("filters").innerHTML =
-          `<label class="filter" id="filter-all-row"><input type="checkbox" id="filter-all" /><span id="filter-all-label"></span></label>${rows}<p class="empty" id="filters-empty" hidden>Nada encontrado.</p>`;
-        const boxes = document.querySelectorAll("[data-filter]");
-        boxes.forEach((box) => {
-          box.onchange = () => {
-            state.filters[box.checked ? "add" : "delete"](box.dataset.filter);
-            applyFilters();
-          };
-        });
-        $("filter-all").onchange = () => {
-          const selectAll = state.filters.size < boxes.length;
-          state.filters = new Set(selectAll ? cells().map((c) => c.id) : []);
-          boxes.forEach((box) => (box.checked = selectAll));
-          applyFilters();
-        };
+        const groups = state.colors.groups
+          .map((group) => {
+            const rows = group.roles
+              .map(
+                (r) =>
+                  `<tr><td>${swatch(r.name, "dark", r.dark)}</td><td>${swatch(r.name, "light", r.light)}</td><td>${esc(r.description)}</td></tr>`,
+              )
+              .join("");
+            return `<tbody id="${groupId(group)}"><tr><th class="colors-group" colspan="3" scope="colgroup">${esc(group.name)}</th></tr>${rows}</tbody>`;
+          })
+          .join("");
+        return `<nav class="frame colors-nav" data-theme="${state.theme}" aria-label="Grupos de cores">${links}</nav><div class="frame colors-frame" data-theme="${state.theme}"><table class="colors"><thead><tr><th scope="col"><span class="colors-mode">${MOON_ICON}Dark mode</span></th><th scope="col"><span class="colors-mode">${SUN_ICON}Light mode</span></th><th scope="col">Explicação</th></tr></thead>${groups}</table></div>`;
       }
 
-      function applyFilters() {
-        const { filters } = state;
-        const allOn = filters.size === cells().length;
-        $("filter-all").checked = allOn;
-        $("filter-all").indeterminate = filters.size > 0 && !allOn;
-        $("filter-all-label").textContent = allOn
-          ? "Desmarcar todos"
-          : "Selecionar todos";
-        document.querySelectorAll(".cell").forEach((cell) => {
-          cell.hidden = !filters.has(cell.dataset.cell);
+      // O endereço decide a tela: "#cores" e "#cores-grupo" abrem a sessão; o resto mostra a grade.
+      function showView() {
+        const section = SECTIONS.find(
+          (s) =>
+            location.hash === `#${s.id}` ||
+            location.hash.startsWith(`#${s.id}-`),
+        );
+        $("frame").hidden = !!section;
+        $("section").hidden = !section;
+        $("view-title").textContent = section?.label ?? "Componentes";
+        if (section && section !== state.section)
+          $("section").innerHTML = section.render();
+        state.section = section;
+        if (section && location.hash === `#${section.id}`)
+          document
+            .querySelector(".stage")
+            .scrollTo({ top: 0, behavior: "instant" });
+        document.querySelectorAll(".nav-link").forEach((a) => {
+          if (section && a.hash === `#${section.id}`)
+            a.setAttribute("aria-current", "page");
+          else a.removeAttribute("aria-current");
         });
-        $("grid").hidden = !filters.size;
-        $("grid-empty").hidden = filters.size > 0;
+      }
+
+      // A rolagem até o destino é a da própria âncora; aqui só marca onde chegou.
+      let highlightTimer;
+      function highlightCell(e) {
+        const link = e.target.closest(".nav-link");
+        if (!link) return;
+        document
+          .querySelector(".cell.highlight")
+          ?.classList.remove("highlight");
+        const cell = $(link.hash.slice(1));
+        if (!cell) return;
+        cell.classList.add("highlight");
+        clearTimeout(highlightTimer);
+        highlightTimer = setTimeout(
+          () => cell.classList.remove("highlight"),
+          500,
+        );
       }
 
       function makeSwitch(k, store = state.values) {
@@ -1589,8 +1815,9 @@ body{display:flex;height:100%;margin:0;padding:16px;overflow:auto;box-sizing:bor
 
       let tooltipTimer;
       // Mostra o tooltip acima do ponto, sem passar da borda direita da tela.
-      function showTooltip(x, y) {
+      function showTooltip(x, y, text) {
         const tip = $("tooltip");
+        tip.textContent = text;
         const maxX = innerWidth - tip.offsetWidth / 2 - 8;
         tip.style.left = `${Math.min(x, maxX)}px`;
         tip.style.top = `${y}px`;
@@ -1600,10 +1827,17 @@ body{display:flex;height:100%;margin:0;padding:16px;overflow:auto;box-sizing:bor
       }
 
       // Pelo teclado o clique não tem posição: usa o botão como referência.
-      function showCopied(e) {
-        if (e.detail) return showTooltip(e.clientX, e.clientY);
+      function showCopied(e, text = "HTML copiado") {
+        if (e.detail) return showTooltip(e.clientX, e.clientY, text);
         const btn = e.target.getBoundingClientRect();
-        showTooltip(btn.left + btn.width / 2, btn.top);
+        showTooltip(btn.left + btn.width / 2, btn.top, text);
+      }
+
+      async function copySwatch(e) {
+        const box = e.target.closest(".swatch");
+        if (!box || String(getSelection())) return;
+        await writeClipboard(box.dataset.hex);
+        showCopied(e, `${box.dataset.hex} copiado`);
       }
 
       async function copyCell(c, e) {
@@ -1628,6 +1862,7 @@ body{display:flex;height:100%;margin:0;padding:16px;overflow:auto;box-sizing:bor
       async function init() {
         try {
           state.list = await fetch("components.json").then((r) => r.json());
+          state.colors = await fetch("colors.json").then((r) => r.json());
           const load = async (c, values) => {
             cache[c.file] = await fetch(c.file).then((r) => r.text());
             const defaults = (c.knobs || []).map((k) => [
@@ -1663,11 +1898,18 @@ body{display:flex;height:100%;margin:0;padding:16px;overflow:auto;box-sizing:bor
         });
         $("theme").addEventListener("change", (e) => {
           state.theme = e.target.value;
-          $("frame").dataset.theme = state.theme;
+          document
+            .querySelectorAll(".frame")
+            .forEach((frame) => (frame.dataset.theme = state.theme));
           document.body.dataset.theme = state.theme;
         });
         $("code-box").onclick = copyFromBox;
-        $("search").oninput = searchFilters;
+        $("section").onclick = (e) => {
+          highlightCell(e);
+          copySwatch(e);
+        };
+        $("search").oninput = searchNav;
+        $("nav-list").onclick = highlightCell;
         $("preview").onload = fitPreview;
         $("close").onclick = closeDrawer;
         $("backdrop").onclick = closeDrawer;
@@ -1682,9 +1924,15 @@ body{display:flex;height:100%;margin:0;padding:16px;overflow:auto;box-sizing:bor
         document.addEventListener("click", (e) =>
           closeCellSelects(e.target.closest(".cell-select")),
         );
-        state.filters = new Set(cells().map((c) => c.id));
-        renderFilters();
+        renderNav();
         renderGrid();
+        // As células só existem agora: o navegador não achou a âncora ao abrir.
+        const goToHash = () => {
+          showView();
+          $(location.hash.slice(1))?.scrollIntoView();
+        };
+        window.addEventListener("hashchange", goToHash);
+        goToHash();
       }
       init();
     </script>
