@@ -1,0 +1,98 @@
+<style>
+  .toast-success {
+    display: flex;
+    width: 450px;
+    max-width: 100%;
+    box-sizing: border-box;
+    padding: 16px;
+    align-items: center;
+    gap: 12px;
+
+    border-radius: 8px;
+    background: rgba(43, 100, 96, 0.15);
+    box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.25);
+
+    font-family: "Public Sans";
+    font-style: normal;
+    font-weight: 400;
+  }
+  .toast-success .icon {
+    flex: none;
+    color: #5fddd3;
+  }
+  .toast-success .content {
+    display: flex;
+    flex: 1;
+    min-width: 0;
+    flex-direction: column;
+  }
+  .toast-success .title {
+    color: #fff;
+    font-size: 14px;
+    line-height: 20px;
+  }
+  .toast-success .description {
+    color: #717171;
+    font-size: 12px;
+    line-height: 16px;
+  }
+  /* Mesmo estilo do botão Glass Small (components/botoes/Glass/small.html) */
+  .toast-success .close {
+    display: inline-flex;
+    flex: none;
+    padding: 8px;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.02);
+
+    color: #fff;
+    font-family: "Public Sans";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 16px;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+  }
+  .toast-success .close:hover {
+    border-color: rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  /* Light mode */
+  [data-theme="light"] .toast-success {
+    background: rgba(10, 24, 28, 0.05);
+    box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.1);
+  }
+  [data-theme="light"] .toast-success .title {
+    color: #000;
+  }
+  [data-theme="light"] .toast-success .close {
+    border-color: rgba(0, 0, 0, 0.15);
+    background: rgba(0, 0, 0, 0.02);
+    color: #000;
+  }
+  [data-theme="light"] .toast-success .close:hover {
+    border-color: rgba(0, 0, 0, 0.3);
+    background: rgba(0, 0, 0, 0.06);
+  }
+</style>
+<div class="toast-success" role="status">
+  {{#icon}}
+  <svg class="icon" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path d="M14.6667 7.99998C14.6667 11.6819 11.6819 14.6666 8 14.6666C4.3181 14.6666 1.33333 11.6819 1.33333 7.99998C1.33333 4.31808 4.3181 1.33331 8 1.33331C11.6819 1.33331 14.6667 4.31808 14.6667 7.99998Z" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" />
+    <path d="M6 8.00002L7.33333 9.33335L10 6.66669" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" />
+  </svg>
+  {{/icon}}
+  <div class="content">
+    <span class="title">{{title}}</span>
+    {{#showDescription}}<span class="description">{{description}}</span>{{/showDescription}}
+  </div>
+  {{#close}}
+  <button class="close" type="button" onclick="this.closest('.toast-success').remove()">{{closeText}}</button>
+  {{/close}}
+</div>

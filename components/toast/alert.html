@@ -1,0 +1,102 @@
+<style>
+  .toast-alert {
+    display: flex;
+    width: 450px;
+    max-width: 100%;
+    box-sizing: border-box;
+    padding: 16px;
+    align-items: center;
+    gap: 12px;
+
+    border-radius: 8px;
+    background: rgba(255, 167, 28, 0.15);
+    box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.25);
+
+    font-family: "Public Sans";
+    font-style: normal;
+    font-weight: 400;
+  }
+  .toast-alert .icon {
+    flex: none;
+    color: #ffa71c;
+  }
+  .toast-alert .content {
+    display: flex;
+    flex: 1;
+    min-width: 0;
+    flex-direction: column;
+  }
+  .toast-alert .title {
+    color: #fff;
+    font-size: 14px;
+    line-height: 20px;
+  }
+  .toast-alert .description {
+    color: #717171;
+    font-size: 12px;
+    line-height: 16px;
+  }
+  /* Mesmo estilo do botão Glass Small (components/botoes/Glass/small.html) */
+  .toast-alert .close {
+    display: inline-flex;
+    flex: none;
+    padding: 8px;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.02);
+
+    color: #fff;
+    font-family: "Public Sans";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 16px;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+  }
+  .toast-alert .close:hover {
+    border-color: rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  /* Light mode */
+  [data-theme="light"] .toast-alert {
+    background: #ffeed2;
+    box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.1);
+  }
+  [data-theme="light"] .toast-alert .icon {
+    color: #b27515;
+  }
+  [data-theme="light"] .toast-alert .title {
+    color: #000;
+  }
+  [data-theme="light"] .toast-alert .close {
+    border-color: rgba(0, 0, 0, 0.15);
+    background: rgba(0, 0, 0, 0.02);
+    color: #000;
+  }
+  [data-theme="light"] .toast-alert .close:hover {
+    border-color: rgba(0, 0, 0, 0.3);
+    background: rgba(0, 0, 0, 0.06);
+  }
+</style>
+<div class="toast-alert" role="status">
+  {{#icon}}
+  <svg class="icon" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path d="M8 10.6667H8.00667" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" />
+    <path d="M8 5.33331V7.99998" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" />
+    <path d="M10.208 1.33331C10.5616 1.33339 10.9007 1.47391 11.1507 1.72398L14.276 4.84931C14.5261 5.0993 14.6666 5.43839 14.6667 5.79198V10.208C14.6666 10.5616 14.5261 10.9007 14.276 11.1506L11.1507 14.276C10.9007 14.526 10.5616 14.6666 10.208 14.6666H5.792C5.43841 14.6666 5.09932 14.526 4.84933 14.276L1.724 11.1506C1.47393 10.9007 1.33341 10.5616 1.33333 10.208V5.79198C1.33341 5.43839 1.47393 5.0993 1.724 4.84931L4.84933 1.72398C5.09932 1.47391 5.43841 1.33339 5.792 1.33331H10.208Z" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" />
+  </svg>
+  {{/icon}}
+  <div class="content">
+    <span class="title">{{title}}</span>
+    {{#showDescription}}<span class="description">{{description}}</span>{{/showDescription}}
+  </div>
+  {{#close}}
+  <button class="close" type="button" onclick="this.closest('.toast-alert').remove()">{{closeText}}</button>
+  {{/close}}
+</div>

@@ -1,0 +1,83 @@
+<style>
+  .tooltip-default {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .tooltip-default .box {
+    display: inline-flex;
+    padding: 6px 12px;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+
+    border-radius: 10px;
+    background: #000;
+
+    color: #fff;
+    font-family: "Public Sans";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+  }
+  /* Mesmo estilo do componente Avatar (components/Avatar/single.html), em 16px */
+  .tooltip-default .avatar {
+    display: block;
+    width: 16px;
+    height: 16px;
+    flex: none;
+
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  /* O ícone acompanha a cor do texto */
+  .tooltip-default .icon {
+    flex: none;
+  }
+  .tooltip-default .text {
+    display: flex;
+    flex-direction: column;
+  }
+  .tooltip-default .description {
+    color: #717171;
+  }
+  /* Triângulo no final do tooltip */
+  .tooltip-default .arrow {
+    display: block;
+    flex: none;
+    fill: #000;
+  }
+
+  /* Light mode */
+  [data-theme="light"] .tooltip-default .box {
+    background: #fff;
+    color: #000;
+  }
+  [data-theme="light"] .tooltip-default .arrow {
+    fill: #fff;
+  }
+</style>
+<div class="tooltip-default" role="tooltip">
+  <span class="box">
+    {{#avatar}}<img class="avatar" src="components/Avatar/caio.jpg" alt="Caio" />{{/avatar}}
+    {{#icon}}<svg class="icon" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M7.33333 11.3333H7.34" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" />
+      <path d="M7.664 1.33333C7.88 1.32266 8.036 1.528 8.01667 1.74333C7.98043 2.12716 8.02785 2.51428 8.15565 2.87801C8.28346 3.24174 8.48862 3.57344 8.75699 3.85024C9.02535 4.12703 9.35055 4.34234 9.71016 4.48133C10.0698 4.62032 10.4552 4.67969 10.84 4.65533C10.9074 4.65093 10.9751 4.66096 11.0383 4.68475C11.1016 4.70855 11.159 4.74556 11.2069 4.79332C11.2547 4.84108 11.2918 4.89849 11.3156 4.96172C11.3395 5.02495 11.3496 5.09255 11.3453 5.16C11.3208 5.54475 11.38 5.93024 11.5188 6.28991C11.6576 6.64958 11.8728 6.97487 12.1495 7.24336C12.4261 7.51186 12.7577 7.71717 13.1214 7.84514C13.4851 7.97312 13.8722 8.02072 14.256 7.98466C14.4713 7.96466 14.676 8.12066 14.6653 8.336C14.5821 9.98545 13.8896 11.5453 12.722 12.7133C11.4709 13.9645 9.77397 14.6675 8.00457 14.6675C6.23516 14.6676 4.5382 13.9648 3.287 12.7137C2.0358 11.4625 1.33284 9.76564 1.33278 7.99623C1.33272 6.22683 2.03555 4.52987 3.28667 3.27866C4.45438 2.11031 6.01427 1.41708 7.664 1.33333Z" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" />
+      <path d="M8 8H8.00667" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" />
+      <path d="M10.6667 10.6667H10.6733" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" />
+      <path d="M10.6667 2H10.6733" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" />
+      <path d="M14 2.66666H14.0067" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" />
+      <path d="M14 5.33334H14.0067" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" />
+      <path d="M4.66667 9.33334H4.67333" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" />
+      <path d="M6 5.33334H6.00667" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" />
+    </svg>{{/icon}}
+    <span class="text">
+      <span>{{label}}</span>
+      {{#description}}<span class="description">{{descriptionText}}</span>{{/description}}
+    </span>
+  </span>
+  <svg class="arrow" xmlns="http://www.w3.org/2000/svg" width="8" height="4" viewBox="0 0 8 4" aria-hidden="true">
+    <path d="M4 4L0 6.05683e-07L8 0L4 4Z" />
+  </svg>
+</div>

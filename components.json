@@ -1733,5 +1733,208 @@
         "default": "Label"
       }
     ]
+  },
+  {
+    "id": "tooltip-default",
+    "name": "Default",
+    "category": "Tooltip",
+    "file": "components/tooltip/default.html",
+    "description": "Tooltip com texto curto e triângulo apontando para o elemento abaixo dele. Ligue avatar, ícone ou texto descritivo conforme a necessidade.",
+    "knobs": [
+      {
+        "name": "avatar",
+        "label": "Avatar",
+        "type": "toggle",
+        "default": false
+      },
+      {
+        "name": "icon",
+        "label": "Ícone",
+        "type": "toggle",
+        "default": false
+      },
+      {
+        "name": "label",
+        "label": "Texto",
+        "type": "text",
+        "default": "Título tooltip"
+      },
+      {
+        "name": "description",
+        "label": "Texto descritivo",
+        "type": "toggle",
+        "default": false
+      },
+      {
+        "name": "descriptionText",
+        "label": "Texto descritivo",
+        "type": "text",
+        "default": "Subtitulo tooltip",
+        "hideLabel": true
+      }
+    ],
+    "grid": {
+      "title": "Tooltip",
+      "group": "Feedback"
+    }
+  },
+  {
+    "id": "toast-success",
+    "name": "Success",
+    "category": "Toast",
+    "file": "components/toast/success.html",
+    "description": "Toast de sucesso, em verde. Use para confirmar uma ação concluída. O botão de fechar remove o toast.",
+    "knobs": [
+      {
+        "name": "icon",
+        "label": "Ícone",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "title",
+        "label": "Título",
+        "type": "text",
+        "default": "Transação criada com sucesso"
+      },
+      {
+        "name": "showDescription",
+        "label": "Descrição",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "description",
+        "label": "Texto da descrição",
+        "type": "text",
+        "default": "Descrição",
+        "hideLabel": true
+      },
+      {
+        "name": "close",
+        "label": "Botão fechar",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "closeText",
+        "label": "Texto do botão",
+        "type": "text",
+        "default": "Fechar",
+        "hideLabel": true
+      }
+    ],
+    "grid": {
+      "title": "Toast",
+      "group": "Feedback",
+      "options": [
+        {
+          "id": "toast-success",
+          "label": "Success"
+        },
+        {
+          "id": "toast-alert",
+          "label": "Alert"
+        },
+        {
+          "id": "toast-error",
+          "label": "Error"
+        }
+      ]
+    }
+  },
+  {
+    "id": "toast-alert",
+    "name": "Alert",
+    "category": "Toast",
+    "file": "components/toast/alert.html",
+    "description": "Toast de aviso, em laranja. Use para avisos que pedem atenção sem bloquear o usuário. O botão de fechar remove o toast.",
+    "knobs": [
+      {
+        "name": "icon",
+        "label": "Ícone",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "title",
+        "label": "Título",
+        "type": "text",
+        "default": "Ainda existe uma transação não salva"
+      },
+      {
+        "name": "showDescription",
+        "label": "Descrição",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "description",
+        "label": "Texto da descrição",
+        "type": "text",
+        "default": "Descrição",
+        "hideLabel": true
+      },
+      {
+        "name": "close",
+        "label": "Botão fechar",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "closeText",
+        "label": "Texto do botão",
+        "type": "text",
+        "default": "Fechar",
+        "hideLabel": true
+      }
+    ]
+  },
+  {
+    "id": "toast-error",
+    "name": "Error",
+    "category": "Toast",
+    "file": "components/toast/error.html",
+    "description": "Toast de erro, em vermelho. Use quando uma ação falhar. O botão de fechar remove o toast.",
+    "knobs": [
+      {
+        "name": "icon",
+        "label": "Ícone",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "title",
+        "label": "Título",
+        "type": "text",
+        "default": "Transação não criada"
+      },
+      {
+        "name": "showDescription",
+        "label": "Descrição",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "description",
+        "label": "Texto da descrição",
+        "type": "text",
+        "default": "Descrição",
+        "hideLabel": true
+      },
+      {
+        "name": "close",
+        "label": "Botão fechar",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "closeText",
+        "label": "Texto do botão",
+        "type": "text",
+        "default": "Fechar",
+        "hideLabel": true
+      }
+    ]
   }
 ]

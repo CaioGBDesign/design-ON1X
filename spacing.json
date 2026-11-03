@@ -1,0 +1,21 @@
+{
+  "spacing": [
+    { "name": "NN", "value": 0 },
+    { "name": "3xs", "value": 2 },
+    { "name": "2xs", "value": 4 },
+    { "name": "XS", "value": 8 },
+    { "name": "sm", "value": 12 },
+    { "name": "md", "value": 16 },
+    { "name": "lg", "value": 20 },
+    { "name": "xl", "value": 24 },
+    { "name": "2xl", "value": 28 },
+    { "name": "3xl", "value": 32 },
+    { "name": "4xl", "value": 36 },
+    { "name": "5xl", "value": 40 },
+    { "name": "6xl", "value": 44 },
+    { "name": "7xl", "value": 48 },
+    { "name": "8xl", "value": 52 },
+    { "name": "9xl", "value": 56 },
+    { "name": "10xl", "value": 60 }
+  ]
+}

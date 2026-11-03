@@ -96,6 +96,16 @@
       body[data-theme="light"] .colors-nav {
         --hover: rgba(0, 0, 0, 0.06);
       }
+      body[data-theme="light"] .swatch {
+        background: none;
+        color: #000;
+      }
+      body[data-theme="light"] .swatch-info {
+        background: rgba(0, 0, 0, 0.02);
+      }
+      body[data-theme="light"] .swatch .copy {
+        color: var(--ink-light);
+      }
       body[data-theme="light"] .nav-link[aria-current="page"] {
         background: rgba(10, 24, 28, 0.05);
       }
@@ -338,11 +348,13 @@
       .frame[data-theme="dark"] {
         --cell-line: rgba(255, 255, 255, 0.08);
         --cell-hover: rgba(255, 255, 255, 0.04);
+        --surface-container: rgba(255, 255, 255, 0.02);
         color: #fff;
       }
       .frame[data-theme="light"] {
         --cell-line: rgba(0, 0, 0, 0.08);
         --cell-hover: rgba(0, 0, 0, 0.03);
+        --surface-container: rgba(0, 0, 0, 0.02);
         background: rgba(0, 0, 0, 0.03);
         color: #000;
       }
@@ -363,16 +375,18 @@
         align-items: flex-start;
         gap: 26px;
       }
-      /* O menu acompanha a rolagem da tabela */
+      /* O menu acompanha a rolagem e ocupa a altura visível: tela - toolbar - margem de baixo */
       .colors-nav {
         position: sticky;
         top: 0;
         flex: none;
         flex-direction: column;
         width: 265px;
+        height: calc(100vh - 104px);
         padding: 12px;
         justify-content: flex-start;
         align-items: stretch;
+        overflow-y: auto;
       }
       .colors-frame {
         flex: 1;
@@ -393,6 +407,9 @@
         table-layout: fixed;
         font-size: 12px;
         line-height: 16px;
+      }
+      .colors thead {
+        background: rgba(255, 255, 255, 0.02);
       }
       .colors th,
       .colors td {
@@ -438,6 +455,7 @@
       }
       .swatch .copy {
         backdrop-filter: none;
+        color: var(--ink-dark);
         opacity: 0;
         transition: opacity 0.2s;
       }
@@ -467,6 +485,51 @@
         font-size: inherit;
       }
 
+      /* Tabelas de tokens: tipografia e espaçamentos */
+      .token-table {
+        width: 100%;
+        border-collapse: collapse;
+        table-layout: fixed;
+      }
+      .token-table tr {
+        cursor: pointer;
+        transition: background 0.15s;
+      }
+      .token-table tr:hover,
+      .token-table tr:focus-visible {
+        background: var(--surface-container);
+      }
+      .token-table tr:focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: -2px;
+      }
+      .token-table td {
+        padding: 16px 20px;
+        border-bottom: 1px dashed var(--cell-line);
+        color: #717171;
+        font-size: 12px;
+      }
+      .token-table tr:last-child td {
+        border-bottom: none;
+      }
+      .token-table td:nth-child(1) {
+        width: 25%;
+      }
+      .token-table td:nth-child(2) {
+        width: 15%;
+      }
+      .token-table .type-sample {
+        color: inherit;
+        white-space: nowrap;
+      }
+      /* Barra na largura do espaçamento */
+      .space-bar {
+        display: block;
+        height: 16px;
+        border-radius: 2px;
+        background: var(--accent);
+      }
+
       /* Altura do modelo mais alto (Alert dialog Radio): trocar de modelo não mexe na grade */
       .cell {
         display: flex;
@@ -488,26 +551,53 @@
       .cell.highlight {
         background: rgba(43, 100, 96, 0.15);
       }
+      /* Mesmo estilo do componente Tooltip (components/tooltip/default.html) */
       .tooltip {
         position: fixed;
         z-index: 30;
-        padding: 4px 8px;
+        padding: 6px 12px;
         transform: translate(-50%, calc(-100% - 8px));
 
-        border-radius: 6px;
-        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 10px;
         background: #000;
 
         color: #fff;
+        font-family: "Public Sans";
         font-size: 12px;
-        line-height: 16px;
+        font-weight: 400;
+        line-height: normal;
         white-space: nowrap;
         opacity: 0;
         pointer-events: none;
         transition: opacity 0.15s;
       }
+      /* Triângulo de 8x4 apontando para o elemento */
+      .tooltip::after {
+        content: "";
+        position: absolute;
+        top: 100%;
+        left: var(--arrow-x, 50%);
+        width: 8px;
+        height: 4px;
+        transform: translateX(-50%);
+        background: inherit;
+        clip-path: polygon(0 0, 100% 0, 50% 100%);
+      }
+      /* Sem espaço em cima, abre embaixo com o triângulo virado para cima */
+      .tooltip.below {
+        transform: translate(-50%, 8px);
+      }
+      .tooltip.below::after {
+        top: auto;
+        bottom: 100%;
+        clip-path: polygon(50% 0, 0 100%, 100% 100%);
+      }
       .tooltip.show {
         opacity: 1;
+      }
+      body[data-theme="light"] .tooltip {
+        background: #fff;
+        color: #000;
       }
       .cell-head {
         display: flex;
@@ -1125,7 +1215,7 @@
           id="close"
           type="button"
           aria-label="Fechar"
-          title="Fechar"
+          data-tip="Fechar"
         >
           <svg
             width="16"
@@ -1169,7 +1259,7 @@
         </section>
         <section>
           <p class="section-title">Código</p>
-          <div class="code-box" id="code-box" title="Copiar HTML">
+          <div class="code-box" id="code-box" data-tip="Copiar HTML">
             <pre id="code"></pre>
             <button class="copy" type="button" aria-label="Copiar HTML">
               <svg
@@ -1210,6 +1300,7 @@
     </aside>
 
     <div class="tooltip" id="tooltip" role="status">HTML copiado</div>
+    <div class="tooltip" id="hint" aria-hidden="true"></div>
 
     <script>
       const $ = (id) => document.getElementById(id);
@@ -1224,6 +1315,8 @@
         applied: {}, // valores mostrados na grade, por componente
         variant: {}, // modelo escolhido no select de cada célula
         colors: null, // conteúdo do colors.json
+        typography: null, // conteúdo do typography.json
+        spacing: null, // conteúdo do spacing.json
         section: null, // sessão aberta no lugar da grade
         theme: "dark",
       };
@@ -1381,7 +1474,13 @@ body{display:flex;height:100%;margin:0;padding:16px;overflow:auto;box-sizing:bor
         '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>';
 
       const PALETTE_ICON =
-        '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22a1 1 0 0 1 0-20 10 9 0 0 1 10 9 5 5 0 0 1-5 5h-2.25a1.75 1.75 0 0 0-1.4 2.8l.3.4a1.75 1.75 0 0 1-1.4 2.8z"/><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/></svg>';
+        '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M8.00016 14.6667C6.23205 14.6667 4.53636 13.9643 3.28612 12.7141C2.03587 11.4638 1.3335 9.76815 1.3335 8.00004C1.3335 6.23193 2.03587 4.53624 3.28612 3.286C4.53636 2.03575 6.23205 1.33337 8.00016 1.33337C9.76827 1.33337 11.464 1.96551 12.7142 3.09073C13.9644 4.21595 14.6668 5.74207 14.6668 7.33337C14.6668 8.21743 14.3156 9.06527 13.6905 9.6904C13.0654 10.3155 12.2176 10.6667 11.3335 10.6667H9.8335C9.61683 10.6667 9.40445 10.727 9.22014 10.8409C9.03584 10.9549 8.88689 11.1178 8.79 11.3116C8.6931 11.5054 8.65209 11.7224 8.67154 11.9381C8.691 12.1539 8.77016 12.36 8.90016 12.5334L9.10016 12.8C9.23016 12.9734 9.30932 13.1795 9.32878 13.3953C9.34824 13.6111 9.30722 13.828 9.21033 14.0218C9.11343 14.2156 8.96449 14.3786 8.78018 14.4925C8.59588 14.6064 8.38349 14.6667 8.16683 14.6667H8.00016Z" stroke-linecap="round" stroke-linejoin="round" stroke="#717171"/><path d="M8.99984 4.66667C9.18393 4.66667 9.33317 4.51743 9.33317 4.33333C9.33317 4.14924 9.18393 4 8.99984 4C8.81574 4 8.6665 4.14924 8.6665 4.33333C8.6665 4.51743 8.81574 4.66667 8.99984 4.66667Z" fill="#717171" stroke-linecap="round" stroke-linejoin="round" stroke="#717171"/><path d="M11.6668 7.33329C11.8509 7.33329 12.0002 7.18405 12.0002 6.99996C12.0002 6.81586 11.8509 6.66663 11.6668 6.66663C11.4827 6.66663 11.3335 6.81586 11.3335 6.99996C11.3335 7.18405 11.4827 7.33329 11.6668 7.33329Z" fill="#717171" stroke-linecap="round" stroke-linejoin="round" stroke="#717171"/><path d="M4.33333 8.66667C4.51743 8.66667 4.66667 8.51743 4.66667 8.33333C4.66667 8.14924 4.51743 8 4.33333 8C4.14924 8 4 8.14924 4 8.33333C4 8.51743 4.14924 8.66667 4.33333 8.66667Z" fill="#717171" stroke-linecap="round" stroke-linejoin="round" stroke="#717171"/><path d="M5.66683 5.33329C5.85092 5.33329 6.00016 5.18405 6.00016 4.99996C6.00016 4.81586 5.85092 4.66663 5.66683 4.66663C5.48273 4.66663 5.3335 4.81586 5.3335 4.99996C5.3335 5.18405 5.48273 5.33329 5.66683 5.33329Z" fill="#717171" stroke-linecap="round" stroke-linejoin="round" stroke="#717171"/></svg>';
+
+      const SPACE_ICON =
+        '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M7.33333 4.66663H8.66667C9.40305 4.66663 10 5.26358 10 5.99996V9.99996C10 10.7363 9.40305 11.3333 8.66667 11.3333H7.33333C6.59695 11.3333 6 10.7363 6 9.99996V5.99996C6 5.26358 6.59695 4.66663 7.33333 4.66663Z" stroke-linecap="round" stroke-linejoin="round" stroke="#717171"/><path d="M2.66699 14.6667V1.33337" stroke-linecap="round" stroke-linejoin="round" stroke="#717171"/><path d="M13.333 14.6667V1.33337" stroke-linecap="round" stroke-linejoin="round" stroke="#717171"/></svg>';
+
+      const TYPE_ICON =
+        '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M8 2.66663V13.3333" stroke-linecap="round" stroke-linejoin="round" stroke="#717171"/><path d="M2.6665 4.66663V3.33329C2.6665 3.15648 2.73674 2.98691 2.86177 2.86189C2.98679 2.73686 3.15636 2.66663 3.33317 2.66663H12.6665C12.8433 2.66663 13.0129 2.73686 13.1379 2.86189C13.2629 2.98691 13.3332 3.15648 13.3332 3.33329V4.66663" stroke-linecap="round" stroke-linejoin="round" stroke="#717171"/><path d="M6 13.3334H10" stroke-linecap="round" stroke-linejoin="round" stroke="#717171"/></svg>';
 
       const MOON_ICON =
         '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>';
@@ -1417,6 +1516,18 @@ body{display:flex;height:100%;margin:0;padding:16px;overflow:auto;box-sizing:bor
           label: "Cores",
           icon: PALETTE_ICON,
           render: renderColors,
+        },
+        {
+          id: "tipografia",
+          label: "Tipografia",
+          icon: TYPE_ICON,
+          render: renderTypography,
+        },
+        {
+          id: "espacamentos",
+          label: "Espaçamentos",
+          icon: SPACE_ICON,
+          render: renderSpacing,
         },
       ];
 
@@ -1470,7 +1581,7 @@ body{display:flex;height:100%;margin:0;padding:16px;overflow:auto;box-sizing:bor
           cell.className = "cell";
           cell.id = `cell-${c.id}`;
           cell.dataset.cell = c.id;
-          cell.innerHTML = `<header class="cell-head"><span class="cell-title">${esc(c.grid.title)}</span>${cellSelect(c, shown)}<button class="icon-btn" type="button" data-edit="${esc(shown.id)}" aria-label="Editar ${esc(c.grid.title)}" title="Editar">${EDIT_ICON}</button></header><div class="cell-body">${render(cache[shown.file], state.applied[shown.id])}</div><button class="copy" type="button" aria-label="Copiar HTML de ${esc(c.grid.title)}" title="Copiar HTML">${COPY_ICON}</button>`;
+          cell.innerHTML = `<header class="cell-head"><span class="cell-title">${esc(c.grid.title)}</span>${cellSelect(c, shown)}<button class="icon-btn" type="button" data-edit="${esc(shown.id)}" aria-label="Editar ${esc(c.grid.title)}" data-tip="Editar">${EDIT_ICON}</button></header><div class="cell-body">${render(cache[shown.file], state.applied[shown.id])}</div><button class="copy" type="button" aria-label="Copiar HTML de ${esc(c.grid.title)}" data-tip="Copiar HTML">${COPY_ICON}</button>`;
           cell.querySelector("[data-edit]").onclick = (e) =>
             openDrawer(c, shown, e.currentTarget);
           cell.querySelector(".copy").onclick = (e) => copyCell(shown, e);
@@ -1518,7 +1629,7 @@ body{display:flex;height:100%;margin:0;padding:16px;overflow:auto;box-sizing:bor
               const search = plain(`${navLabel(c)} ${c.grid.title} ${group}`);
               // Sem "options", o componente tem só um modelo.
               const count = optionsOf(c).length || 1;
-              return `<a class="nav-link" href="#cell-${esc(c.id)}" data-search="${esc(search)}" title="${count} ${count > 1 ? "variações" : "variação"}"><span>${esc(navLabel(c))}</span><span>${count}</span></a>`;
+              return `<a class="nav-link" href="#cell-${esc(c.id)}" data-search="${esc(search)}" data-tip="${count} ${count > 1 ? "variações" : "variação"}"><span>${esc(navLabel(c))}</span><span>${count}</span></a>`;
             })
             .join("");
           return links
@@ -1529,11 +1640,11 @@ body{display:flex;height:100%;margin:0;padding:16px;overflow:auto;box-sizing:bor
           `<div class="nav-section"><p class="nav-group">Fundamentos</p>${foundations}</div>${sections}<p class="empty" id="nav-empty" hidden>Nada encontrado.</p>`;
       }
 
-      // Cor do ícone sobre a amostra, já misturada com o fundo escuro do card.
-      function inkOn(hex, opacity) {
+      // Cor do ícone sobre a amostra, já misturada com o fundo do site em cada tema.
+      function inkOn(hex, opacity, surface) {
         const [r, g, b] = [1, 3, 5].map((i) => {
           const channel = parseInt(hex.slice(i, i + 2), 16);
-          return (channel * opacity + 0x13 * (100 - opacity)) / 100;
+          return (channel * opacity + surface * (100 - opacity)) / 100;
         });
         return 0.299 * r + 0.587 * g + 0.114 * b > 128 ? "#0A181C" : "#FFFFFF";
       }
@@ -1547,7 +1658,7 @@ body{display:flex;height:100%;margin:0;padding:16px;overflow:auto;box-sizing:bor
         const alpha = Math.round(opacity * 2.55)
           .toString(16)
           .padStart(2, "0");
-        return `<div class="swatch ${mode}" data-hex="${esc(hex)}"><div class="swatch-color" style="background:${esc(hex + alpha)}"><button class="copy" type="button" style="color:${inkOn(hex, opacity)}" aria-label="Copiar ${esc(hex)}" title="Copiar hexadecimal">${COPY_ICON}</button></div><div class="swatch-info"><span>${esc(name)}<small>${primitive ? esc(tone.color) : "Sem primitiva"}</small></span><span>${esc(hex.slice(1))}${opacity < 100 ? `<small>${opacity}%</small>` : ""}</span></div></div>`;
+        return `<div class="swatch ${mode}" data-copy="${esc(hex)}"><div class="swatch-color" style="background:${esc(hex + alpha)}"><button class="copy" type="button" style="--ink-dark:${inkOn(hex, opacity, 0x13)};--ink-light:${inkOn(hex, opacity, 0xf3)}" aria-label="Copiar ${esc(hex)}" data-tip="Copiar hexadecimal">${COPY_ICON}</button></div><div class="swatch-info"><span>${esc(name)}<small>${primitive ? esc(tone.color) : "Sem primitiva"}</small></span><span>${esc(hex.slice(1))}${opacity < 100 ? `<small>${opacity}%</small>` : ""}</span></div></div>`;
       }
 
       const groupId = (group) =>
@@ -1572,6 +1683,27 @@ body{display:flex;height:100%;margin:0;padding:16px;overflow:auto;box-sizing:bor
           })
           .join("");
         return `<nav class="frame colors-nav" data-theme="${state.theme}" aria-label="Grupos de cores">${links}</nav><div class="frame colors-frame" data-theme="${state.theme}"><table class="colors"><thead><tr><th scope="col"><span class="colors-mode">${MOON_ICON}Dark mode</span></th><th scope="col"><span class="colors-mode">${SUN_ICON}Light mode</span></th><th scope="col">Explicação</th></tr></thead>${groups}</table></div>`;
+      }
+
+      function renderTypography() {
+        const { sample, styles } = state.typography;
+        const rows = styles
+          .map(
+            (s) =>
+              `<tr tabindex="0" data-copy="font-size: ${s.size}px;"><td>${esc(s.name)}</td><td>${s.size}px</td><td class="type-sample" style="font-size:${s.size}px">${esc(sample)}</td></tr>`,
+          )
+          .join("");
+        return `<div class="frame" data-theme="${state.theme}"><table class="token-table">${rows}</table></div>`;
+      }
+
+      function renderSpacing() {
+        const rows = state.spacing.spacing
+          .map(
+            (s) =>
+              `<tr tabindex="0" data-copy="${s.value}px"><td>${esc(s.name)}</td><td>${s.value}px</td><td><span class="space-bar" style="width:${s.value}px"></span></td></tr>`,
+          )
+          .join("");
+        return `<div class="frame" data-theme="${state.theme}"><table class="token-table">${rows}</table></div>`;
       }
 
       // O endereço decide a tela: "#cores" e "#cores-grupo" abrem a sessão; o resto mostra a grade.
@@ -1814,16 +1946,43 @@ body{display:flex;height:100%;margin:0;padding:16px;overflow:auto;box-sizing:bor
       }
 
       let tooltipTimer;
-      // Mostra o tooltip acima do ponto, sem passar da borda direita da tela.
-      function showTooltip(x, y, text) {
-        const tip = $("tooltip");
+      // Posiciona o tooltip acima do alvo sem sair da tela; o triângulo segue apontando para ele.
+      // Sem espaço em cima, abre embaixo do alvo.
+      function placeTooltip(tip, x, top, bottom, text) {
         tip.textContent = text;
-        const maxX = innerWidth - tip.offsetWidth / 2 - 8;
-        tip.style.left = `${Math.min(x, maxX)}px`;
-        tip.style.top = `${y}px`;
+        const half = tip.offsetWidth / 2;
+        const left = Math.min(Math.max(x, half + 8), innerWidth - half - 8);
+        const below = top - tip.offsetHeight - 16 < 0;
+        tip.classList.toggle("below", below);
+        tip.style.left = `${left}px`;
+        tip.style.top = `${below ? bottom : top}px`;
+        tip.style.setProperty("--arrow-x", `${half + x - left}px`);
         tip.classList.add("show");
+      }
+
+      function showTooltip(x, y, text) {
+        hideHint();
+        placeTooltip($("tooltip"), x, y, y, text);
         clearTimeout(tooltipTimer);
-        tooltipTimer = setTimeout(() => tip.classList.remove("show"), 1200);
+        tooltipTimer = setTimeout(
+          () => $("tooltip").classList.remove("show"),
+          1200,
+        );
+      }
+
+      // Dicas de hover no lugar do title do navegador, que não aceita estilo.
+      let hintTimer;
+      function showHint(el) {
+        clearTimeout(hintTimer);
+        hintTimer = setTimeout(() => {
+          const r = el.getBoundingClientRect();
+          const x = r.left + r.width / 2;
+          placeTooltip($("hint"), x, r.top, r.bottom, el.dataset.tip);
+        }, 400);
+      }
+      function hideHint() {
+        clearTimeout(hintTimer);
+        $("hint").classList.remove("show");
       }
 
       // Pelo teclado o clique não tem posição: usa o botão como referência.
@@ -1833,11 +1992,12 @@ body{display:flex;height:100%;margin:0;padding:16px;overflow:auto;box-sizing:bor
         showTooltip(btn.left + btn.width / 2, btn.top, text);
       }
 
-      async function copySwatch(e) {
-        const box = e.target.closest(".swatch");
+      // Amostras de cor e linhas da tipografia guardam em data-copy o que vão copiar.
+      async function copyValue(e) {
+        const box = e.target.closest("[data-copy]");
         if (!box || String(getSelection())) return;
-        await writeClipboard(box.dataset.hex);
-        showCopied(e, `${box.dataset.hex} copiado`);
+        await writeClipboard(box.dataset.copy);
+        showCopied(e, `${box.dataset.copy} copiado`);
       }
 
       async function copyCell(c, e) {
@@ -1863,6 +2023,10 @@ body{display:flex;height:100%;margin:0;padding:16px;overflow:auto;box-sizing:bor
         try {
           state.list = await fetch("components.json").then((r) => r.json());
           state.colors = await fetch("colors.json").then((r) => r.json());
+          state.typography = await fetch("typography.json").then((r) =>
+            r.json(),
+          );
+          state.spacing = await fetch("spacing.json").then((r) => r.json());
           const load = async (c, values) => {
             cache[c.file] = await fetch(c.file).then((r) => r.text());
             const defaults = (c.knobs || []).map((k) => [
@@ -1896,6 +2060,13 @@ body{display:flex;height:100%;margin:0;padding:16px;overflow:auto;box-sizing:bor
           ...state.applied[segmented.id],
           name: "theme",
         });
+        // As dicas do seletor também usam o tooltip do site, no lugar do title.
+        $("theme")
+          .querySelectorAll("[title]")
+          .forEach((el) => {
+            el.dataset.tip = el.title;
+            el.removeAttribute("title");
+          });
         $("theme").addEventListener("change", (e) => {
           state.theme = e.target.value;
           document
@@ -1906,7 +2077,10 @@ body{display:flex;height:100%;margin:0;padding:16px;overflow:auto;box-sizing:bor
         $("code-box").onclick = copyFromBox;
         $("section").onclick = (e) => {
           highlightCell(e);
-          copySwatch(e);
+          copyValue(e);
+        };
+        $("section").onkeydown = (e) => {
+          if (e.key === "Enter" && e.target.matches("tr")) copyValue(e);
         };
         $("search").oninput = searchNav;
         $("nav-list").onclick = highlightCell;
@@ -1921,6 +2095,19 @@ body{display:flex;height:100%;margin:0;padding:16px;overflow:auto;box-sizing:bor
             return closeCellSelects();
           if ($("drawer").classList.contains("open")) closeDrawer();
         });
+        document.addEventListener("mouseover", (e) => {
+          const el = e.target.closest("[data-tip]");
+          if (el && !el.contains(e.relatedTarget)) showHint(el);
+        });
+        document.addEventListener("mouseout", (e) => {
+          const el = e.target.closest("[data-tip]");
+          if (el && !el.contains(e.relatedTarget)) hideHint();
+        });
+        document.addEventListener("focusin", (e) => {
+          if (e.target.matches("[data-tip]:focus-visible")) showHint(e.target);
+        });
+        document.addEventListener("focusout", hideHint);
+        document.addEventListener("mousedown", hideHint);
         document.addEventListener("click", (e) =>
           closeCellSelects(e.target.closest(".cell-select")),
         );

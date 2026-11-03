@@ -1,0 +1,20 @@
+{
+  "sample": "DS ON1X",
+  "styles": [
+    { "name": "Display Large", "size": 60 },
+    { "name": "Display Medium", "size": 48 },
+    { "name": "Display Small", "size": 36 },
+    { "name": "Headline Large", "size": 30 },
+    { "name": "Headline Medium", "size": 24 },
+    { "name": "Headline Small", "size": 20 },
+    { "name": "Title Large", "size": 18 },
+    { "name": "Title Medium", "size": 16 },
+    { "name": "Body Large", "size": 16 },
+    { "name": "Title Small", "size": 14 },
+    { "name": "Body Medium", "size": 14 },
+    { "name": "Label Large", "size": 14 },
+    { "name": "Body Small", "size": 12 },
+    { "name": "Label Medium", "size": 12 },
+    { "name": "Label Small", "size": 12 }
+  ]
+}

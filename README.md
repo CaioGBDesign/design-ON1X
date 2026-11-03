@@ -38,4 +38,8 @@ Os componentes aparecem em uma grade. Clique em **editar** em um deles, ajuste o
 
 As cores da sessão Cores ficam em `colors.json`. Em `palette` vai o hex de cada tom; em `groups`, cada cor aponta para um tom da paleta em `dark` e `light`, ou traz o hex direto quando não tem primitiva, com `opacity` opcional, e traz a `description` mostrada na tabela.
 
+Os estilos da sessão Tipografia ficam em `typography.json`: `sample` é o texto de exemplo, e cada item de `styles` traz `name` e `size`, em pixels.
+
+Os espaçamentos da sessão Espaçamentos ficam em `spacing.json`: cada item de `spacing` traz `name` e `value`, em pixels.
+
 O arquivo `tokens.css` guarda cores, fontes, raios e espaçamentos, mas o site não o carrega mais, e nenhum componente usa essas variáveis.
