@@ -1,0 +1,147 @@
+<style>
+  .date-picker-disabled {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    width: 402px;
+    max-width: 100%;
+    box-sizing: border-box;
+
+    color: #fff;
+    font-family: "Public Sans";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 16px;
+  }
+  .date-picker-disabled .top-right,
+  .date-picker-disabled .bottom-right {
+    margin-left: auto;
+  }
+  .date-picker-disabled .bottom-left,
+  .date-picker-disabled .bottom-right {
+    order: 1;
+    color: rgba(255, 255, 255, 0.4);
+  }
+  .date-picker-disabled .field {
+    position: relative;
+    display: flex;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 8px;
+    align-items: center;
+    gap: 8px;
+    align-self: stretch;
+
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: #000;
+    cursor: not-allowed;
+  }
+  .date-picker-disabled .icon {
+    flex: none;
+    color: #717171;
+  }
+  .date-picker-disabled input[type="text"] {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    flex: 1;
+    min-width: 0;
+    padding: 0;
+    border: 0;
+    background: none;
+    outline: none;
+
+    overflow: hidden;
+    color: #fff;
+    text-overflow: ellipsis;
+    font: inherit;
+    cursor: inherit;
+  }
+  .date-picker-disabled input[type="text"]::placeholder {
+    color: #fff;
+    opacity: 1;
+  }
+
+  /* Bloqueado */
+  .date-picker-disabled .top-left,
+  .date-picker-disabled .top-right,
+  .date-picker-disabled .icon,
+  .date-picker-disabled input[type="text"]::placeholder {
+    color: #262626;
+  }
+
+  /* Light mode */
+  [data-theme="light"] .date-picker-disabled {
+    color: #000;
+  }
+  [data-theme="light"] .date-picker-disabled .bottom-left,
+  [data-theme="light"] .date-picker-disabled .bottom-right {
+    color: #717171;
+  }
+  [data-theme="light"] .date-picker-disabled .field {
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    background: #fff;
+  }
+  [data-theme="light"] .date-picker-disabled input[type="text"],
+  [data-theme="light"] .date-picker-disabled input[type="text"]::placeholder {
+    color: #000;
+  }
+  [data-theme="light"] .date-picker-disabled .top-left,
+  [data-theme="light"] .date-picker-disabled .top-right,
+  [data-theme="light"] .date-picker-disabled .icon,
+  [data-theme="light"] .date-picker-disabled input[type="text"]::placeholder {
+    color: #e5e5e5;
+  }
+</style>
+<div class="date-picker-disabled">
+  {{#topLeft}}<span class="top-left">{{topLeftText}}</span>{{/topLeft}}
+  {{#topRight}}<span class="top-right">{{topRightText}}</span>{{/topRight}}
+  {{#bottomLeft}}<span class="bottom-left">{{bottomLeftText}}</span
+  >{{/bottomLeft}} {{#bottomRight}}<span class="bottom-right"
+    >{{bottomRightText}}</span
+  >{{/bottomRight}}
+  <div class="field">
+    <svg
+      class="icon"
+      width="16"
+      height="16"
+      viewBox="0 0 16 16"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
+      <path
+        d="M5.33334 1.33334V3.33334"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke="currentColor"
+      />
+      <path
+        d="M10.6667 1.33334V3.33334"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke="currentColor"
+      />
+      <path
+        d="M3.33333 2H12.6667C13.403 2 14 2.59695 14 3.33333V12.6667C14 13.403 13.403 14 12.6667 14H3.33333C2.59695 14 2 13.403 2 12.6667V3.33333C2 2.59695 2.59695 2 3.33333 2Z"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke="currentColor"
+      />
+      <path
+        d="M2 6H14"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke="currentColor"
+      />
+    </svg>
+    <input
+      type="text"
+      placeholder="{{placeholder}}"
+      aria-label="{{topLeftText}}"
+      disabled
+    />
+  </div>
+</div>

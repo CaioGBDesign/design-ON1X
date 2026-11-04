@@ -39,7 +39,8 @@
     background: rgba(0, 0, 0, 0.06);
   }
 </style>
-<button class="outline-sm">
+<button class="outline-sm"{{^showText}} aria-label="{{label}}"{{/showText}}>
+  {{#icon}}
   <svg
     width="16"
     height="16"
@@ -60,5 +61,6 @@
       stroke="currentColor"
     />
   </svg>
-  {{label}}
+  {{/icon}}
+  {{#showText}}{{label}}{{/showText}}
 </button>

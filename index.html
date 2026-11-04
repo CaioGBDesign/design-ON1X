@@ -119,6 +119,8 @@
       }
       body[data-theme="light"] .stage::-webkit-scrollbar-thumb,
       body[data-theme="light"] .drawer-body::-webkit-scrollbar-thumb,
+      body[data-theme="light"] .cs-options::-webkit-scrollbar-thumb,
+      body[data-theme="light"] .colors-nav::-webkit-scrollbar-thumb,
       body[data-theme="light"] pre::-webkit-scrollbar-thumb {
         background-color: rgba(0, 0, 0, 0.3);
       }
@@ -363,6 +365,8 @@
         /* O 1px a mais esconde a última linha de cada lado: colada na borda do frame, o tracejado borra */
         width: calc(100% + 1px);
         grid-template-columns: repeat(auto-fill, minmax(256px, 1fr));
+        /* Células largas deixam buracos na linha; os próximos componentes preenchem */
+        grid-auto-flow: row dense;
         margin: 0 -1px -1px 0;
       }
       /* Sessão de cores */
@@ -542,6 +546,10 @@
         border-bottom: 1px dashed var(--cell-line);
         cursor: pointer;
         transition: background 0.2s;
+      }
+      /* "wide" no grid: componentes largos ocupam duas colunas */
+      .cell.wide {
+        grid-column: span 2;
       }
       .cell:hover {
         background: var(--cell-hover);
@@ -924,8 +932,160 @@
       .knob.no-label > select {
         grid-column: 1 / 4;
       }
-      .knob-row > input[type="text"] {
+      .knob-row > input[type="text"],
+      .knob-row > .knob-select {
         grid-column: 2;
+      }
+      /* Knobs "select" e "color": mesmo estilo do componente Select (components/select/default.html) */
+      .knob-select {
+        position: relative;
+        grid-column: 2 / 4;
+        font-size: 12px;
+        line-height: 16px;
+      }
+      .knob-select .cs-field {
+        display: flex;
+        width: 100%;
+        padding: 8px;
+        align-items: center;
+        gap: 8px;
+
+        border-radius: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        background: rgba(255, 255, 255, 0.02);
+
+        color: #fff;
+        font: inherit;
+        text-align: left;
+        cursor: pointer;
+      }
+      .knob-select .cs-value {
+        flex: 1;
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .knob-select .cs-arrow {
+        display: flex;
+        flex: none;
+        transition: transform 0.15s;
+      }
+      /* Ao abrir, o campo fica com o visual do Active */
+      .knob-select.open .cs-field {
+        background: #000;
+      }
+      .knob-select.open .cs-arrow {
+        transform: rotate(180deg);
+      }
+      .knob-select .cs-field:focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 2px;
+      }
+      .cs-dot {
+        width: 8px;
+        height: 8px;
+        flex: none;
+        border-radius: 2px;
+      }
+      .knob-select .cs-menu {
+        display: none;
+        position: absolute;
+        top: calc(100% + 8px);
+        left: 0;
+        right: 0;
+        z-index: 10;
+        flex-direction: column;
+
+        border-radius: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        background: #000;
+        box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.15);
+        color: #fff;
+      }
+      .knob-select.open .cs-menu {
+        display: flex;
+      }
+      .knob-select .cs-search {
+        display: flex;
+        padding: 8px;
+        align-items: center;
+        gap: 8px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+      }
+      .knob-select .cs-search input {
+        flex: 1;
+        min-width: 0;
+        padding: 0;
+        border: 0;
+        background: none;
+        color: inherit;
+        font: inherit;
+        outline: none;
+      }
+      .knob-select .cs-search input::placeholder {
+        color: #717171;
+      }
+      .knob-select .cs-options {
+        max-height: 320px;
+        padding: 4px;
+        overflow-y: auto;
+      }
+      /* Hex do tema atual, na cor OnSurfaceVariant */
+      .knob-select .cs-hex {
+        margin-left: auto;
+        color: #717171;
+      }
+      .knob-select .cs-group {
+        margin: 0;
+        padding: 8px 8px 4px;
+        color: #717171;
+      }
+      .knob-select .cs-options button {
+        display: flex;
+        width: 100%;
+        padding: 8px;
+        align-items: center;
+        gap: 8px;
+
+        border: 0;
+        border-radius: 6px;
+        background: none;
+
+        color: inherit;
+        font: inherit;
+        text-align: left;
+        cursor: pointer;
+      }
+      .knob-select .cs-options button:hover,
+      .knob-select .cs-options button:focus-visible,
+      .knob-select .cs-options button[aria-selected="true"] {
+        background: rgba(255, 255, 255, 0.08);
+        outline: none;
+      }
+      body[data-theme="light"] .knob-select .cs-field {
+        border-color: rgba(0, 0, 0, 0.15);
+        background: rgba(0, 0, 0, 0.02);
+        color: #000;
+      }
+      body[data-theme="light"] .knob-select.open .cs-field {
+        background: #fff;
+      }
+      body[data-theme="light"] .knob-select .cs-menu {
+        border-color: rgba(0, 0, 0, 0.15);
+        background: #fff;
+        color: #000;
+      }
+      body[data-theme="light"] .knob-select .cs-search {
+        border-bottom-color: rgba(0, 0, 0, 0.15);
+      }
+      body[data-theme="light"] .knob-select .cs-options button:hover,
+      body[data-theme="light"] .knob-select .cs-options button:focus-visible,
+      body[data-theme="light"]
+        .knob-select
+        .cs-options
+        button[aria-selected="true"] {
+        background: rgba(0, 0, 0, 0.08);
       }
       /* Mesmo estilo do componente Input text (components/inputs/input-text) */
       .knob input,
@@ -1104,21 +1264,34 @@
           background 0.15s,
           border-color 0.15s;
       }
+      /* O menu da esquerda rola sem mostrar a scrollbar */
+      .nav-list {
+        scrollbar-width: none;
+      }
+      .nav-list::-webkit-scrollbar {
+        display: none;
+      }
       /* Scrollbar fina e arredondada, sem trilho, afastada das bordas */
       pre::-webkit-scrollbar,
       .drawer-body::-webkit-scrollbar,
+      .cs-options::-webkit-scrollbar,
+      .colors-nav::-webkit-scrollbar,
       .stage::-webkit-scrollbar {
         width: 14px;
         height: 14px;
       }
       pre::-webkit-scrollbar-track,
       .drawer-body::-webkit-scrollbar-track,
+      .cs-options::-webkit-scrollbar-track,
+      .colors-nav::-webkit-scrollbar-track,
       .stage::-webkit-scrollbar-track {
         background: transparent;
         margin: 8px 0;
       }
       pre::-webkit-scrollbar-thumb,
       .drawer-body::-webkit-scrollbar-thumb,
+      .cs-options::-webkit-scrollbar-thumb,
+      .colors-nav::-webkit-scrollbar-thumb,
       .stage::-webkit-scrollbar-thumb {
         background: rgba(255, 255, 255, 0.6);
         background-clip: padding-box;
@@ -1127,6 +1300,8 @@
       }
       pre::-webkit-scrollbar-thumb:hover,
       .drawer-body::-webkit-scrollbar-thumb:hover,
+      .cs-options::-webkit-scrollbar-thumb:hover,
+      .colors-nav::-webkit-scrollbar-thumb:hover,
       .stage::-webkit-scrollbar-thumb:hover {
         background-color: rgba(255, 255, 255, 0.8);
       }
@@ -1134,6 +1309,8 @@
       @supports (-moz-appearance: none) {
         pre,
         .drawer-body,
+        .cs-options,
+        .colors-nav,
         .stage {
           scrollbar-width: thin;
           scrollbar-color: rgba(255, 255, 255, 0.6) transparent;
@@ -1149,6 +1326,12 @@
       @media (max-width: 1100px) {
         body {
           grid-template-columns: 220px 1fr;
+        }
+      }
+      /* Com uma coluna só, a célula larga não pode criar uma segunda */
+      @media (max-width: 800px) {
+        .cell.wide {
+          grid-column: auto;
         }
       }
     </style>
@@ -1340,7 +1523,7 @@
       function render(raw, values) {
         const CUT = "\u0000";
         const section =
-          /\{\{([#^])\s*(\w+)\s*\}\}([\s\S]*?)\{\{\/\s*\2\s*\}\}/g;
+          /\{\{([#^])\s*([\w|]+)\s*\}\}([\s\S]*?)\{\{\/\s*\2\s*\}\}/g;
         const list =
           /^([ \t]*)\{\{@\s*(\w+)\s*\}\}([\s\S]*?)\{\{\/\s*\2\s*\}\}/gm;
         let out = raw.replace(list, (_, indent, k, inner) => {
@@ -1351,8 +1534,11 @@
         });
         for (let prev; prev !== out; ) {
           prev = out;
+          // {{#a|b}} aparece se qualquer um dos valores estiver ligado
           out = out.replace(section, (_, type, k, inner) =>
-            !!values[k] === (type === "#") ? inner : CUT,
+            k.split("|").some((x) => values[x]) === (type === "#")
+              ? inner
+              : CUT,
           );
         }
         return out
@@ -1373,7 +1559,7 @@
         );
 
       function copyText() {
-        return absoluteSrc(render(state.raw, state.values));
+        return absoluteSrc(renderComponent(state.current, state.values));
       }
 
       const PREVIEW_BG = {
@@ -1504,6 +1690,7 @@ body{display:flex;height:100%;margin:0;padding:16px;overflow:auto;box-sizing:bor
         "Feedback",
         "Ações",
         "Formulários",
+        "Navegação",
         "Exibição",
         "Outros",
       ];
@@ -1578,14 +1765,16 @@ body{display:flex;height:100%;margin:0;padding:16px;overflow:auto;box-sizing:bor
         cells().forEach((c) => {
           const shown = byId(state.variant[c.id] ?? c.id);
           const cell = document.createElement("article");
-          cell.className = "cell";
+          cell.className = c.grid.wide ? "cell wide" : "cell";
           cell.id = `cell-${c.id}`;
           cell.dataset.cell = c.id;
-          cell.innerHTML = `<header class="cell-head"><span class="cell-title">${esc(c.grid.title)}</span>${cellSelect(c, shown)}<button class="icon-btn" type="button" data-edit="${esc(shown.id)}" aria-label="Editar ${esc(c.grid.title)}" data-tip="Editar">${EDIT_ICON}</button></header><div class="cell-body">${render(cache[shown.file], state.applied[shown.id])}</div><button class="copy" type="button" aria-label="Copiar HTML de ${esc(c.grid.title)}" data-tip="Copiar HTML">${COPY_ICON}</button>`;
+          cell.innerHTML = `<header class="cell-head"><span class="cell-title">${esc(c.grid.title)}</span>${cellSelect(c, shown)}<button class="icon-btn" type="button" data-edit="${esc(shown.id)}" aria-label="Editar ${esc(c.grid.title)}" data-tip="Editar">${EDIT_ICON}</button></header><div class="cell-body">${renderComponent(shown, state.applied[shown.id])}</div><button class="copy" type="button" aria-label="Copiar HTML de ${esc(c.grid.title)}" data-tip="Copiar HTML">${COPY_ICON}</button>`;
           cell.querySelector("[data-edit]").onclick = (e) =>
             openDrawer(c, shown, e.currentTarget);
           cell.querySelector(".copy").onclick = (e) => copyCell(shown, e);
           cell.onclick = (e) => {
+            // Links de exemplo (href="#") não mexem no endereço do site.
+            if (e.target.closest('a[href="#"]')) e.preventDefault();
             // Controles do componente e do cabeçalho seguem funcionando sem copiar.
             if (
               e.target.closest(CELL_CONTROLS) ||
@@ -1651,13 +1840,61 @@ body{display:flex;height:100%;margin:0;padding:16px;overflow:auto;box-sizing:bor
 
       // Uma amostra de cor: "tone" aponta para a paleta do colors.json
       // ou traz o hex direto, quando a cor não tem primitiva.
-      function swatch(name, mode, tone) {
+      // Hex, opacidade e valor CSS de um tom: nome da paleta ou hex direto.
+      function resolveTone(tone) {
         const primitive = tone.color in state.colors.palette;
         const hex = primitive ? state.colors.palette[tone.color] : tone.color;
         const opacity = tone.opacity ?? 100;
         const alpha = Math.round(opacity * 2.55)
           .toString(16)
           .padStart(2, "0");
+        const css = opacity < 100 ? hex + alpha : hex;
+        return { primitive, hex, opacity, alpha, css };
+      }
+
+      const findRole = (name) =>
+        state.colors.groups
+          .flatMap((g) => g.roles)
+          .find((r) => r.name === name);
+
+      // Knob "color" guarda o nome de uma cor do colors.json; o template recebe
+      // o valor dela em cada tema, em {{nomeDark}} e {{nomeLight}}.
+      // Knob "select" liga {{#nome_Opcao}} para a opção escolhida, só com
+      // letras sem acento, números e _ ("+1 dias" vira {{#nome_1dias}}).
+      function withColors(c, values) {
+        const out = { ...values };
+        (c.knobs || [])
+          .filter((k) => k.type === "select")
+          .forEach(
+            (k) =>
+              (out[`${k.name}_${String(values[k.name]).replace(/\W/g, "")}`] =
+                true),
+          );
+        // Knob "list": o primeiro item ligado recebe {{#first}}, e
+        // {{#nomeAny}} diz se algum item está ligado.
+        (c.knobs || [])
+          .filter((k) => k.type === "list")
+          .forEach((k) => {
+            const items = values[k.name] || [];
+            const first = items.findIndex((it) => it.show);
+            out[k.name] = items.map((it, i) => ({ ...it, first: i === first }));
+            out[`${k.name}Any`] = first >= 0;
+          });
+        (c.knobs || [])
+          .filter((k) => k.type === "color")
+          .forEach((k) => {
+            const role = findRole(values[k.name]) ?? findRole(k.default);
+            out[`${k.name}Dark`] = resolveTone(role.dark).css;
+            out[`${k.name}Light`] = resolveTone(role.light).css;
+          });
+        return out;
+      }
+
+      const renderComponent = (c, values) =>
+        render(cache[c.file], withColors(c, values));
+
+      function swatch(name, mode, tone) {
+        const { primitive, hex, opacity, alpha } = resolveTone(tone);
         return `<div class="swatch ${mode}" data-copy="${esc(hex)}"><div class="swatch-color" style="background:${esc(hex + alpha)}"><button class="copy" type="button" style="--ink-dark:${inkOn(hex, opacity, 0x13)};--ink-light:${inkOn(hex, opacity, 0xf3)}" aria-label="Copiar ${esc(hex)}" data-tip="Copiar hexadecimal">${COPY_ICON}</button></div><div class="swatch-info"><span>${esc(name)}<small>${primitive ? esc(tone.color) : "Sem primitiva"}</small></span><span>${esc(hex.slice(1))}${opacity < 100 ? `<small>${opacity}%</small>` : ""}</span></div></div>`;
       }
 
@@ -1762,15 +1999,134 @@ body{display:flex;height:100%;margin:0;padding:16px;overflow:auto;box-sizing:bor
         return sw;
       }
 
+      // Cores do colors.json por grupo, com o valor do tema atual do site.
+      const SEARCH_ICON =
+        '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>';
+
+      // Select no visual do componente Select, para os knobs "select" e "color".
+      // sections: [{ name, items: [{ value, label, dot, hex }] }]; com search, filtra pelo nome.
+      function makeSelectBox(k, store, sections, search) {
+        const box = document.createElement("div");
+        box.className = "knob-select";
+        const dot = (it) =>
+          it.dot ? `<span class="cs-dot" style="background:${it.dot}"></span>` : "";
+        const items = sections.flatMap((s) => s.items);
+        const options = sections
+          .map(
+            (s) =>
+              `<div class="cs-section">${s.name ? `<p class="cs-group">${esc(s.name)}</p>` : ""}${s.items
+                .map(
+                  (it) =>
+                    `<button type="button" role="option" data-value="${esc(it.value)}" aria-selected="${it.value === store[k.name]}">${dot(it)}${esc(it.label)}${it.hex ? `<span class="cs-hex">${esc(it.hex)}</span>` : ""}</button>`,
+                )
+                .join("")}</div>`,
+          )
+          .join("");
+        const current = items.find((it) => it.value === store[k.name]) ?? items[0];
+        box.innerHTML = `<button class="cs-field" type="button" aria-haspopup="listbox" aria-expanded="false" aria-label="${esc(k.label || k.name)}">${dot(current)}<span class="cs-value">${esc(current.label)}</span><span class="cs-arrow">${ARROW_ICON}</span></button><div class="cs-menu">${search ? `<label class="cs-search">${SEARCH_ICON}<input type="text" placeholder="Buscar" aria-label="Buscar" /></label>` : ""}<div class="cs-options" role="listbox">${options}</div></div>`;
+        const field = box.querySelector(".cs-field");
+        const input = box.querySelector(".cs-search input");
+        const filter = () => {
+          const q = plain(input.value.trim());
+          box.querySelectorAll(".cs-section").forEach((s) => {
+            let any = false;
+            s.querySelectorAll("[data-value]").forEach((b) => {
+              b.hidden = !plain(b.textContent).includes(q);
+              any ||= !b.hidden;
+            });
+            s.hidden = !any;
+          });
+        };
+        const setOpen = (open) => {
+          box.classList.toggle("open", open);
+          field.setAttribute("aria-expanded", open);
+          if (!open) return;
+          // Perto do fim do drawer, a lista abriria fora da tela
+          box.querySelector(".cs-menu").scrollIntoView({ block: "nearest" });
+          const selected = box.querySelector('[aria-selected="true"]');
+          if (input) {
+            input.value = "";
+            filter();
+            input.focus();
+          } else (selected ?? box.querySelector("[data-value]")).focus();
+          selected?.scrollIntoView({ block: "nearest" });
+        };
+        field.onclick = () => setOpen(!box.classList.contains("open"));
+        if (input) input.oninput = filter;
+        box.querySelectorAll("[data-value]").forEach((b) => {
+          b.onclick = () => {
+            const it = items.find((x) => x.value === b.dataset.value);
+            store[k.name] = it.value;
+            field.querySelector(".cs-value").textContent = it.label;
+            const fieldDot = field.querySelector(".cs-dot");
+            if (fieldDot) fieldDot.style.background = it.dot;
+            box
+              .querySelectorAll("[data-value]")
+              .forEach((x) => x.setAttribute("aria-selected", x === b));
+            setOpen(false);
+            field.focus();
+            update();
+          };
+        });
+        // Setas percorrem as opções; o Esc fecha só a lista, sem fechar o drawer.
+        box.onkeydown = (e) => {
+          if (!box.classList.contains("open")) return;
+          if (e.key === "Escape") {
+            e.stopPropagation();
+            setOpen(false);
+            field.focus();
+          } else if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+            e.preventDefault();
+            const list = [...box.querySelectorAll("[data-value]")].filter(
+              (x) => !x.hidden,
+            );
+            const at = list.indexOf(document.activeElement);
+            const next = e.key === "ArrowDown" ? at + 1 : at - 1;
+            list[(next + list.length) % list.length]?.focus();
+          }
+        };
+        return box;
+      }
+
+      // Cor de uma opção do colors.json no tema atual do site.
+      const roleCss = (name) => {
+        const role = findRole(name);
+        return role ? resolveTone(role[state.theme]).css : undefined;
+      };
+
+      // Knob "color": cores do colors.json por grupo, com busca e o hex do tema atual.
+      function makeColorField(k, store) {
+        const sections = state.colors.groups.map((g) => ({
+          name: g.name,
+          items: g.roles.map((r) => {
+            const { hex, opacity } = resolveTone(r[state.theme]);
+            return {
+              value: r.name,
+              label: r.name,
+              dot: roleCss(r.name),
+              hex: hex.slice(1) + (opacity < 100 ? opacity : ""),
+            };
+          }),
+        }));
+        return makeSelectBox(k, store, sections, true);
+      }
+
+      // Knob "select": "dots" opcional liga cada opção a uma cor do colors.json,
+      // mostrada como um quadrado ao lado do nome.
+      function makeOptionsField(k, store) {
+        const items = k.options.map((o) => ({
+          value: o,
+          label: o,
+          dot: k.dots?.[o] && roleCss(k.dots[o]),
+        }));
+        return makeSelectBox(k, store, [{ items }], items.length > 10);
+      }
+
       function makeField(k, store = state.values) {
-        let field;
-        if (k.type === "select") {
-          field = document.createElement("select");
-          k.options.forEach((o) => field.add(new Option(o, o)));
-        } else {
-          field = document.createElement("input");
-          field.type = "text";
-        }
+        if (k.type === "color") return makeColorField(k, store);
+        if (k.type === "select") return makeOptionsField(k, store);
+        const field = document.createElement("input");
+        field.type = "text";
         field.setAttribute("aria-label", k.label || k.name);
         field.value = store[k.name];
         field.oninput = () => {
@@ -1851,7 +2207,9 @@ body{display:flex;height:100%;margin:0;padding:16px;overflow:auto;box-sizing:bor
           const title = `<span>${esc(k.label || k.name)}</span>`;
           // "hideLabel" logo depois de um toggle vai para a mesma linha dele.
           if (k.hideLabel && knobs[i - 1]?.type === "toggle") return;
-          const wrap = document.createElement("label");
+          const wrap = document.createElement(
+            k.type === "color" || k.type === "select" ? "div" : "label",
+          );
           if (k.type === "range") {
             wrap.className = "knob knob-row";
             wrap.innerHTML = title;
@@ -2002,7 +2360,7 @@ body{display:flex;height:100%;margin:0;padding:16px;overflow:auto;box-sizing:bor
 
       async function copyCell(c, e) {
         await writeClipboard(
-          absoluteSrc(render(cache[c.file], state.applied[c.id])),
+          absoluteSrc(renderComponent(c, state.applied[c.id])),
         );
         showCopied(e);
       }
@@ -2108,6 +2466,15 @@ body{display:flex;height:100%;margin:0;padding:16px;overflow:auto;box-sizing:bor
         });
         document.addEventListener("focusout", hideHint);
         document.addEventListener("mousedown", hideHint);
+        // Clique fora fecha o select de cores do drawer.
+        document.addEventListener("click", (e) =>
+          document.querySelectorAll(".knob-select.open").forEach((s) => {
+            if (!s.contains(e.target)) {
+              s.classList.remove("open");
+              s.querySelector(".cs-field").setAttribute("aria-expanded", false);
+            }
+          }),
+        );
         document.addEventListener("click", (e) =>
           closeCellSelects(e.target.closest(".cell-select")),
         );

@@ -47,7 +47,8 @@
     background: rgba(0, 0, 0, 0.06);
   }
 </style>
-<button class="glass-sm">
+<button class="glass-sm"{{^showText}} aria-label="{{label}}"{{/showText}}>
+  {{#icon}}
   <svg
     width="16"
     height="16"
@@ -68,6 +69,7 @@
       stroke="currentColor"
     />
   </svg>
+  {{/icon}}
 
-  {{label}}
+  {{#showText}}{{label}}{{/showText}}
 </button>

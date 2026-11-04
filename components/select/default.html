@@ -46,7 +46,7 @@
   }
   .select-default .icon {
     flex: none;
-    color: #9ade7b;
+    color: {{iconColorDark}};
   }
   .select-default .arrow {
     flex: none;
@@ -139,6 +139,9 @@
   }
 
   /* Light mode */
+  [data-theme="light"] .select-default .icon {
+    color: {{iconColorLight}};
+  }
   [data-theme="light"] .select-default .top-left,
   [data-theme="light"] .select-default .top-right,
   [data-theme="light"] .select-default .value {

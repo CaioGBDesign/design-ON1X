@@ -27,9 +27,13 @@ Os componentes aparecem em uma grade. Clique em **editar** em um deles, ajuste o
 }
 ```
 
-   Para o componente aparecer na grade, acrescente `"grid": { "title": "Alert" }`. O `"values"` opcional muda como ele aparece ali, por exemplo `"values": { "bottomLeft": false }`. O `"options"` opcional cria o select da célula, por exemplo `"options": [{ "id": "glow-small", "label": "Glow" }]`. O `"group"` define o grupo no menu da lateral (Feedback, Ações, Formulários ou Exibição; sem ele, vai para Outros), e o `"navTitle"` opcional troca o nome mostrado ali.
+   Para o componente aparecer na grade, acrescente `"grid": { "title": "Alert" }`. O `"values"` opcional muda como ele aparece ali, por exemplo `"values": { "bottomLeft": false }`. O `"options"` opcional cria o select da célula, por exemplo `"options": [{ "id": "glow-small", "label": "Glow" }]`. O `"group"` define o grupo no menu da lateral (Feedback, Ações, Formulários, Navegação ou Exibição; sem ele, vai para Outros), e o `"navTitle"` opcional troca o nome mostrado ali. Com `"wide": true`, a célula ocupa duas colunas, para componentes largos.
    Para partes opcionais, use um knob `"type": "toggle"` (com `"default": true` ou `false`) e envolva o trecho com `{{#nome}}...{{/nome}}`.
    Ele só aparece, inclusive no "Copiar HTML", com o toggle ligado. `{{^nome}}...{{/nome}}` faz o contrário.
+   `{{#a|b}}...{{/a|b}}` aparece se qualquer um dos toggles estiver ligado, útil para esconder um grupo quando todos os itens dele estão desligados.
+   Para um knob `"type": "select"`, `{{#nome_Opção}}...{{/nome_Opção}}` aparece só com aquela opção escolhida, por exemplo `{{#temperature_Frio}}`. No nome da opção ficam só letras sem acento, números e `_`: a opção `+1 dias` vira `{{#days_1dias}}`.
+   Um knob `"type": "color"` mostra as cores do `colors.json` no tema atual e guarda o nome da cor escolhida; no template, use `{{nomeDark}}` e `{{nomeLight}}` para o valor dela em cada tema.
+   Um knob `"type": "list"` repete o trecho `{{@nome}}...{{/nome}}` para cada item, com `{{text}}` e o toggle `{{#show}}` de cada um. Dentro dele, `{{#first}}` marca o primeiro item ligado, e fora dele `{{#nomeAny}}` diz se algum item está ligado.
    Um knob com `"when": "nome"` só aparece no painel enquanto esse toggle estiver ligado.
    Um campo com `"hideLabel": true` logo depois de um toggle aparece na mesma linha dele.
 3. Faça o commit. O site se atualiza sozinho em cerca de 1 minuto.

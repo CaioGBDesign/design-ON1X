@@ -7,10 +7,23 @@
     "description": "Botão Glow pequeno, preenchido com a cor primária. Ideal para ações em espaços compactos.",
     "knobs": [
       {
-        "name": "label",
+        "name": "icon",
+        "label": "Ícone",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "showText",
         "label": "Texto",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "label",
+        "label": "Texto do botão",
         "type": "text",
-        "default": "Continuar"
+        "default": "Continuar",
+        "hideLabel": true
       }
     ],
     "grid": {
@@ -48,10 +61,23 @@
     "description": "Botão Glass pequeno, com fundo translúcido e desfoque, estilo vidro.",
     "knobs": [
       {
-        "name": "label",
+        "name": "icon",
+        "label": "Ícone",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "showText",
         "label": "Texto",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "label",
+        "label": "Texto do botão",
         "type": "text",
-        "default": "Continuar"
+        "default": "Continuar",
+        "hideLabel": true
       }
     ]
   },
@@ -63,10 +89,23 @@
     "description": "Botão Ember pequeno, em tom quente de brasa, para chamar atenção.",
     "knobs": [
       {
-        "name": "label",
+        "name": "icon",
+        "label": "Ícone",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "showText",
         "label": "Texto",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "label",
+        "label": "Texto do botão",
         "type": "text",
-        "default": "Continuar"
+        "default": "Continuar",
+        "hideLabel": true
       }
     ]
   },
@@ -78,10 +117,23 @@
     "description": "Botão Outline pequeno, só com contorno na cor de destaque. Use para ações secundárias.",
     "knobs": [
       {
-        "name": "label",
+        "name": "icon",
+        "label": "Ícone",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "showText",
         "label": "Texto",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "label",
+        "label": "Texto do botão",
         "type": "text",
-        "default": "Continuar"
+        "default": "Continuar",
+        "hideLabel": true
       }
     ]
   },
@@ -93,10 +145,23 @@
     "description": "Botão Ghost pequeno, sem fundo e sem borda. Use para ações discretas.",
     "knobs": [
       {
-        "name": "label",
+        "name": "icon",
+        "label": "Ícone",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "showText",
         "label": "Texto",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "label",
+        "label": "Texto do botão",
         "type": "text",
-        "default": "Continuar"
+        "default": "Continuar",
+        "hideLabel": true
       }
     ]
   },
@@ -112,6 +177,13 @@
         "label": "Ícone",
         "type": "toggle",
         "default": true
+      },
+      {
+        "name": "iconColor",
+        "label": "Cor do ícone",
+        "type": "color",
+        "default": "Success",
+        "when": "icon"
       },
       {
         "name": "showText",
@@ -225,6 +297,13 @@
         "default": true
       },
       {
+        "name": "iconColor",
+        "label": "Cor do ícone",
+        "type": "color",
+        "default": "Success",
+        "when": "icon"
+      },
+      {
         "name": "showText",
         "label": "Texto no campo",
         "type": "toggle",
@@ -303,6 +382,13 @@
         "label": "Ícone",
         "type": "toggle",
         "default": true
+      },
+      {
+        "name": "iconColor",
+        "label": "Cor do ícone",
+        "type": "color",
+        "default": "Success",
+        "when": "icon"
       },
       {
         "name": "showText",
@@ -1374,6 +1460,374 @@
     ]
   },
   {
+    "id": "date-picker-default",
+    "name": "Default",
+    "category": "Date picker",
+    "file": "components/date-picker/default.html",
+    "description": "Campo de data. Digite a data ou clique no ícone ou no campo para abrir o Calendário; Ok preenche a data escolhida. Ligue ou desligue cada label.",
+    "knobs": [
+      {
+        "name": "placeholder",
+        "label": "Texto",
+        "type": "text",
+        "default": "mm/dd/aaaa"
+      },
+      {
+        "name": "topLeft",
+        "label": "Label topo esquerda",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "topLeftText",
+        "label": "Texto topo esquerda",
+        "type": "text",
+        "default": "Label",
+        "hideLabel": true
+      },
+      {
+        "name": "topRight",
+        "label": "Label topo direita",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "topRightText",
+        "label": "Texto topo direita",
+        "type": "text",
+        "default": "Top Right label",
+        "hideLabel": true
+      },
+      {
+        "name": "bottomLeft",
+        "label": "Label base esquerda",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "bottomLeftText",
+        "label": "Texto base esquerda",
+        "type": "text",
+        "default": "Bottom Left label",
+        "hideLabel": true
+      },
+      {
+        "name": "bottomRight",
+        "label": "Label base direita",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "bottomRightText",
+        "label": "Texto base direita",
+        "type": "text",
+        "default": "Bottom Right label",
+        "hideLabel": true
+      }
+    ],
+    "grid": {
+      "title": "Date picker",
+      "group": "Formulários",
+      "options": [
+        {
+          "id": "date-picker-default",
+          "label": "Default"
+        },
+        {
+          "id": "date-picker-disabled",
+          "label": "Disabled"
+        }
+      ]
+    }
+  },
+  {
+    "id": "date-picker-disabled",
+    "name": "Disabled",
+    "category": "Date picker",
+    "file": "components/date-picker/disabled.html",
+    "description": "Campo de data bloqueado: label do topo, ícone e texto apagados.",
+    "knobs": [
+      {
+        "name": "placeholder",
+        "label": "Texto",
+        "type": "text",
+        "default": "mm/dd/aaaa"
+      },
+      {
+        "name": "topLeft",
+        "label": "Label topo esquerda",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "topLeftText",
+        "label": "Texto topo esquerda",
+        "type": "text",
+        "default": "Label",
+        "hideLabel": true
+      },
+      {
+        "name": "topRight",
+        "label": "Label topo direita",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "topRightText",
+        "label": "Texto topo direita",
+        "type": "text",
+        "default": "Top Right label",
+        "hideLabel": true
+      },
+      {
+        "name": "bottomLeft",
+        "label": "Label base esquerda",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "bottomLeftText",
+        "label": "Texto base esquerda",
+        "type": "text",
+        "default": "Bottom Left label",
+        "hideLabel": true
+      },
+      {
+        "name": "bottomRight",
+        "label": "Label base direita",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "bottomRightText",
+        "label": "Texto base direita",
+        "type": "text",
+        "default": "Bottom Right label",
+        "hideLabel": true
+      }
+    ]
+  },
+  {
+    "id": "calendar-default",
+    "name": "Default",
+    "category": "Calendário",
+    "file": "components/calendar/default.html",
+    "description": "Calendário do mês, com o dia de hoje marcado. Clique em um dia para selecioná-lo; as setas e as listas de mês e ano trocam o período.",
+    "knobs": [
+      {
+        "name": "month",
+        "label": "Mês",
+        "type": "select",
+        "options": [
+          "Jan",
+          "Fev",
+          "Mar",
+          "Abr",
+          "Mai",
+          "Jun",
+          "Jul",
+          "Ago",
+          "Set",
+          "Out",
+          "Nov",
+          "Dez"
+        ],
+        "default": "Out"
+      },
+      {
+        "name": "year",
+        "label": "Ano",
+        "type": "text",
+        "default": "2025"
+      },
+      {
+        "name": "today",
+        "label": "Hoje (dd/mm/aaaa)",
+        "type": "text",
+        "default": "31/10/2025"
+      },
+      {
+        "name": "footer",
+        "label": "Botões",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "cancelText",
+        "label": "Texto do Cancelar",
+        "type": "text",
+        "default": "Cancelar",
+        "when": "footer"
+      },
+      {
+        "name": "okText",
+        "label": "Texto do Ok",
+        "type": "text",
+        "default": "Ok",
+        "when": "footer"
+      }
+    ],
+    "grid": {
+      "title": "Calendário",
+      "wide": true,
+      "group": "Formulários",
+      "options": [
+        {
+          "id": "calendar-default",
+          "label": "Default"
+        },
+        {
+          "id": "calendar-selected",
+          "label": "Selected date"
+        },
+        {
+          "id": "calendar-range",
+          "label": "Range"
+        }
+      ]
+    }
+  },
+  {
+    "id": "calendar-selected",
+    "name": "Selected date",
+    "category": "Calendário",
+    "file": "components/calendar/selected.html",
+    "description": "Calendário com uma data selecionada, em destaque na cor Primary. Clique em outro dia para trocar a seleção.",
+    "knobs": [
+      {
+        "name": "month",
+        "label": "Mês",
+        "type": "select",
+        "options": [
+          "Jan",
+          "Fev",
+          "Mar",
+          "Abr",
+          "Mai",
+          "Jun",
+          "Jul",
+          "Ago",
+          "Set",
+          "Out",
+          "Nov",
+          "Dez"
+        ],
+        "default": "Out"
+      },
+      {
+        "name": "year",
+        "label": "Ano",
+        "type": "text",
+        "default": "2025"
+      },
+      {
+        "name": "today",
+        "label": "Hoje (dd/mm/aaaa)",
+        "type": "text",
+        "default": "31/10/2025"
+      },
+      {
+        "name": "selected",
+        "label": "Data selecionada",
+        "type": "text",
+        "default": "15/10/2025"
+      },
+      {
+        "name": "footer",
+        "label": "Botões",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "cancelText",
+        "label": "Texto do Cancelar",
+        "type": "text",
+        "default": "Cancelar",
+        "when": "footer"
+      },
+      {
+        "name": "okText",
+        "label": "Texto do Ok",
+        "type": "text",
+        "default": "Ok",
+        "when": "footer"
+      }
+    ]
+  },
+  {
+    "id": "calendar-range",
+    "name": "Range",
+    "category": "Calendário",
+    "file": "components/calendar/range.html",
+    "description": "Calendário de período: o primeiro clique marca o início, o segundo o fim, e os dias entre eles ficam destacados.",
+    "knobs": [
+      {
+        "name": "month",
+        "label": "Mês",
+        "type": "select",
+        "options": [
+          "Jan",
+          "Fev",
+          "Mar",
+          "Abr",
+          "Mai",
+          "Jun",
+          "Jul",
+          "Ago",
+          "Set",
+          "Out",
+          "Nov",
+          "Dez"
+        ],
+        "default": "Out"
+      },
+      {
+        "name": "year",
+        "label": "Ano",
+        "type": "text",
+        "default": "2025"
+      },
+      {
+        "name": "today",
+        "label": "Hoje (dd/mm/aaaa)",
+        "type": "text",
+        "default": "31/10/2025"
+      },
+      {
+        "name": "start",
+        "label": "Início",
+        "type": "text",
+        "default": "20/10/2025"
+      },
+      {
+        "name": "end",
+        "label": "Fim",
+        "type": "text",
+        "default": "29/10/2025"
+      },
+      {
+        "name": "footer",
+        "label": "Botões",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "cancelText",
+        "label": "Texto do Cancelar",
+        "type": "text",
+        "default": "Cancelar",
+        "when": "footer"
+      },
+      {
+        "name": "okText",
+        "label": "Texto do Ok",
+        "type": "text",
+        "default": "Ok",
+        "when": "footer"
+      }
+    ]
+  },
+  {
     "id": "radio-default",
     "name": "Default",
     "category": "Radio",
@@ -1936,5 +2390,534 @@
         "hideLabel": true
       }
     ]
+  },
+  {
+    "id": "box-default",
+    "name": "Expandido",
+    "category": "Box",
+    "file": "components/box/default.html",
+    "description": "Card de um lead, em grupos separados por bordas, com todas as informações à mostra. Clicar no chevron recolhe o card, deixando só nome e valor. O botão ⋮ abre o menu de ações, no estilo do Dropdown Mini. Cada informação dos grupos de dados tem seu toggle, e o grupo some quando todas as dele estão desligadas.",
+    "knobs": [
+      {
+        "name": "top",
+        "label": "Topo",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "badge",
+        "label": "Badge",
+        "type": "toggle",
+        "default": true,
+        "when": "top"
+      },
+      {
+        "name": "days",
+        "label": "Dias",
+        "type": "select",
+        "options": [
+          "+1 dias",
+          "+2 dias",
+          "+3 dias",
+          "+4 dias",
+          "+5 dias",
+          "+6 dias",
+          "+7 dias",
+          "+8 dias"
+        ],
+        "default": "+2 dias",
+        "hideLabel": true,
+        "when": "top",
+        "dots": {
+          "+1 dias": "Info",
+          "+2 dias": "Info",
+          "+3 dias": "Success",
+          "+4 dias": "Tertiary",
+          "+5 dias": "Tertiary",
+          "+6 dias": "Error",
+          "+7 dias": "Error",
+          "+8 dias": "Error"
+        }
+      },
+      {
+        "name": "favorite",
+        "label": "Dream Team",
+        "type": "toggle",
+        "default": true,
+        "when": "top"
+      },
+      {
+        "name": "saved",
+        "label": "Favoritos",
+        "type": "toggle",
+        "default": true,
+        "when": "top"
+      },
+      {
+        "name": "collapsed",
+        "label": "Recolhido",
+        "type": "toggle",
+        "default": false,
+        "when": "top"
+      },
+      {
+        "name": "showName",
+        "label": "Nome",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "name",
+        "label": "Nome",
+        "type": "text",
+        "default": "Aarão Benitez Cunha",
+        "hideLabel": true
+      },
+      {
+        "name": "temperature",
+        "label": "Temperatura",
+        "type": "select",
+        "options": [
+          "Quente",
+          "Frio"
+        ],
+        "default": "Quente",
+        "when": "showName",
+        "dots": {
+          "Quente": "Error",
+          "Frio": "Info"
+        }
+      },
+      {
+        "name": "showAmount",
+        "label": "Valor",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "amount",
+        "label": "Valor",
+        "type": "text",
+        "default": "R$ 12.500,00",
+        "hideLabel": true
+      },
+      {
+        "name": "showEmail",
+        "label": "E-mail",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "email",
+        "label": "E-mail",
+        "type": "text",
+        "default": "aarão@gmail.com",
+        "hideLabel": true
+      },
+      {
+        "name": "showPhone",
+        "label": "Telefone",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "phone",
+        "label": "Telefone",
+        "type": "text",
+        "default": "+55 (11) 95451-1231",
+        "hideLabel": true
+      },
+      {
+        "name": "showDate",
+        "label": "Data",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "date",
+        "label": "Data",
+        "type": "text",
+        "default": "15/11/2025",
+        "hideLabel": true
+      },
+      {
+        "name": "showJob",
+        "label": "Profissão",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "job",
+        "label": "Profissão",
+        "type": "text",
+        "default": "Advogado",
+        "hideLabel": true
+      },
+      {
+        "name": "showLeader",
+        "label": "Primeiro líder",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "leader",
+        "label": "Primeiro líder",
+        "type": "text",
+        "default": "Caio Goulart",
+        "hideLabel": true
+      },
+      {
+        "name": "leaderInitials",
+        "label": "Iniciais do líder",
+        "type": "text",
+        "default": "MG",
+        "when": "showLeader"
+      },
+      {
+        "name": "showReferrer",
+        "label": "Indicado por",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "referrer",
+        "label": "Indicado por",
+        "type": "text",
+        "default": "Caio Goulart",
+        "hideLabel": true
+      },
+      {
+        "name": "referrerInitials",
+        "label": "Iniciais de quem indicou",
+        "type": "text",
+        "default": "BP",
+        "when": "showReferrer"
+      },
+      {
+        "name": "showClient",
+        "label": "É cliente?",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "client",
+        "label": "É cliente?",
+        "type": "text",
+        "default": "Sim",
+        "hideLabel": true
+      },
+      {
+        "name": "footer",
+        "label": "Próxima tarefa",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "task",
+        "label": "Tarefa",
+        "type": "text",
+        "default": "Realizar entrevista",
+        "when": "footer"
+      },
+      {
+        "name": "taskDate",
+        "label": "Data da tarefa",
+        "type": "text",
+        "default": "30/07/2026",
+        "when": "footer"
+      }
+    ],
+    "grid": {
+      "title": "Box",
+      "group": "Exibição",
+      "wide": true,
+      "options": [
+        {
+          "id": "box-default",
+          "label": "Expandido"
+        },
+        {
+          "id": "box-collapsed",
+          "label": "Recolhido"
+        }
+      ]
+    }
+  },
+  {
+    "id": "box-collapsed",
+    "name": "Recolhido",
+    "category": "Box",
+    "file": "components/box/default.html",
+    "description": "Card do lead recolhido: mostra só as informações obrigatórias (nome e valor), e o chevron aponta para cima. Clicar no chevron expande e recolhe o card. O botão ⋮ abre o menu de ações, no estilo do Dropdown Mini. Cada informação tem seu toggle, e o grupo some quando todas as dele estão desligadas.",
+    "knobs": [
+      {
+        "name": "top",
+        "label": "Topo",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "badge",
+        "label": "Badge",
+        "type": "toggle",
+        "default": true,
+        "when": "top"
+      },
+      {
+        "name": "days",
+        "label": "Dias",
+        "type": "select",
+        "options": [
+          "+1 dias",
+          "+2 dias",
+          "+3 dias",
+          "+4 dias",
+          "+5 dias",
+          "+6 dias",
+          "+7 dias",
+          "+8 dias"
+        ],
+        "default": "+4 dias",
+        "hideLabel": true,
+        "when": "top",
+        "dots": {
+          "+1 dias": "Info",
+          "+2 dias": "Info",
+          "+3 dias": "Success",
+          "+4 dias": "Tertiary",
+          "+5 dias": "Tertiary",
+          "+6 dias": "Error",
+          "+7 dias": "Error",
+          "+8 dias": "Error"
+        }
+      },
+      {
+        "name": "favorite",
+        "label": "Dream Team",
+        "type": "toggle",
+        "default": false,
+        "when": "top"
+      },
+      {
+        "name": "saved",
+        "label": "Favoritos",
+        "type": "toggle",
+        "default": false,
+        "when": "top"
+      },
+      {
+        "name": "collapsed",
+        "label": "Recolhido",
+        "type": "toggle",
+        "default": true,
+        "when": "top"
+      },
+      {
+        "name": "showName",
+        "label": "Nome",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "name",
+        "label": "Nome",
+        "type": "text",
+        "default": "Rui Viana Pereira",
+        "hideLabel": true
+      },
+      {
+        "name": "temperature",
+        "label": "Temperatura",
+        "type": "select",
+        "options": [
+          "Quente",
+          "Frio"
+        ],
+        "default": "Quente",
+        "when": "showName",
+        "dots": {
+          "Quente": "Error",
+          "Frio": "Info"
+        }
+      },
+      {
+        "name": "showAmount",
+        "label": "Valor",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "amount",
+        "label": "Valor",
+        "type": "text",
+        "default": "R$ 18.300,00",
+        "hideLabel": true
+      },
+      {
+        "name": "showEmail",
+        "label": "E-mail",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "email",
+        "label": "E-mail",
+        "type": "text",
+        "default": "aarão@gmail.com",
+        "hideLabel": true
+      },
+      {
+        "name": "showPhone",
+        "label": "Telefone",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "phone",
+        "label": "Telefone",
+        "type": "text",
+        "default": "+55 (11) 95451-1231",
+        "hideLabel": true
+      },
+      {
+        "name": "showDate",
+        "label": "Data",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "date",
+        "label": "Data",
+        "type": "text",
+        "default": "15/11/2025",
+        "hideLabel": true
+      },
+      {
+        "name": "showJob",
+        "label": "Profissão",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "job",
+        "label": "Profissão",
+        "type": "text",
+        "default": "Advogado",
+        "hideLabel": true
+      },
+      {
+        "name": "showLeader",
+        "label": "Primeiro líder",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "leader",
+        "label": "Primeiro líder",
+        "type": "text",
+        "default": "Caio Goulart",
+        "hideLabel": true
+      },
+      {
+        "name": "leaderInitials",
+        "label": "Iniciais do líder",
+        "type": "text",
+        "default": "MG",
+        "when": "showLeader"
+      },
+      {
+        "name": "showReferrer",
+        "label": "Indicado por",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "referrer",
+        "label": "Indicado por",
+        "type": "text",
+        "default": "Caio Goulart",
+        "hideLabel": true
+      },
+      {
+        "name": "referrerInitials",
+        "label": "Iniciais de quem indicou",
+        "type": "text",
+        "default": "BP",
+        "when": "showReferrer"
+      },
+      {
+        "name": "showClient",
+        "label": "É cliente?",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "client",
+        "label": "É cliente?",
+        "type": "text",
+        "default": "Sim",
+        "hideLabel": true
+      },
+      {
+        "name": "footer",
+        "label": "Próxima tarefa",
+        "type": "toggle",
+        "default": true
+      },
+      {
+        "name": "task",
+        "label": "Tarefa",
+        "type": "text",
+        "default": "Realizar entrevista",
+        "when": "footer"
+      },
+      {
+        "name": "taskDate",
+        "label": "Data da tarefa",
+        "type": "text",
+        "default": "30/07/2026",
+        "when": "footer"
+      }
+    ]
+  },
+  {
+    "id": "breadcrumb-default",
+    "name": "Default",
+    "category": "Breadcrumb",
+    "file": "components/breadcrumb/default.html",
+    "description": "Caminho de navegação até a página atual. O primeiro item sempre leva o ícone de origem da jornada: o primeiro link ligado ou, sem links anteriores, a página atual. Os links anteriores ficam em cinza e a página atual em destaque.",
+    "knobs": [
+      {
+        "name": "links",
+        "label": "Adicionar link",
+        "type": "list",
+        "default": [
+          {
+            "n": 1,
+            "show": true,
+            "text": "Anterior link"
+          },
+          {
+            "n": 2,
+            "show": true,
+            "text": "Anterior link"
+          }
+        ],
+        "start": 1,
+        "itemLabel": "{n}º link",
+        "itemText": "Anterior link"
+      },
+      {
+        "name": "current",
+        "label": "Atual",
+        "type": "text",
+        "default": "Atual"
+      }
+    ],
+    "grid": {
+      "title": "Breadcrumb",
+      "group": "Navegação",
+      "wide": true
+    }
   }
 ]

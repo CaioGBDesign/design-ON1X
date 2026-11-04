@@ -27,7 +27,8 @@
     background: #357a75;
   }
 </style>
-<button class="ember-sm">
+<button class="ember-sm"{{^showText}} aria-label="{{label}}"{{/showText}}>
+  {{#icon}}
   <svg
     width="16"
     height="16"
@@ -48,5 +49,6 @@
       stroke="currentColor"
     />
   </svg>
-  {{label}}
+  {{/icon}}
+  {{#showText}}{{label}}{{/showText}}
 </button>

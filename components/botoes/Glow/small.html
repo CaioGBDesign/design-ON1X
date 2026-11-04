@@ -27,7 +27,8 @@
     cursor: pointer;
   }
 </style>
-<button class="glow-sm">
+<button class="glow-sm"{{^showText}} aria-label="{{label}}"{{/showText}}>
+  {{#icon}}
   <svg
     width="16"
     height="16"
@@ -48,5 +49,6 @@
       stroke="#0A181C"
     />
   </svg>
-  {{label}}
+  {{/icon}}
+  {{#showText}}{{label}}{{/showText}}
 </button>

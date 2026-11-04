@@ -1,0 +1,373 @@
+<style>
+  .calendar-default {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: #000;
+
+    color: #fff;
+    font-family: "Public Sans";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 16px;
+  }
+  /* Topo com mês e ano */
+  .calendar-default .head {
+    display: flex;
+    box-sizing: border-box;
+    padding: 8px;
+    justify-content: space-between;
+    align-items: center;
+    align-self: stretch;
+    border-radius: 8px 8px 0 0;
+    background: rgba(255, 255, 255, 0.02);
+  }
+  .calendar-default .period {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .calendar-default .arrow,
+  .calendar-default .pick {
+    display: inline-flex;
+    padding: 4px;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+
+    border: 0;
+    border-radius: 4px;
+    background: none;
+
+    color: #fff;
+    font: inherit;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .calendar-default .arrow:hover,
+  .calendar-default .pick:hover,
+  .calendar-default .pick[aria-expanded="true"] {
+    background: rgba(255, 255, 255, 0.06);
+  }
+  .calendar-default .arrow:focus-visible,
+  .calendar-default .pick:focus-visible,
+  .calendar-default .day:focus-visible {
+    outline: 2px solid #5fddd3;
+    outline-offset: 1px;
+  }
+  /* Lista de meses e anos: mesmo estilo do Dropdown Mini (components/dropdown/mini.html) */
+  .calendar-default .list {
+    display: none;
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 50%;
+    z-index: 20;
+    width: 96px;
+    max-height: 200px;
+    padding: 4px;
+    overflow-y: auto;
+    flex-direction: column;
+    transform: translateX(-50%);
+
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: #000;
+    scrollbar-width: none;
+  }
+  .calendar-default .list.open {
+    display: flex;
+  }
+  .calendar-default .list button {
+    padding: 8px;
+    border: 0;
+    border-radius: 8px;
+    background: none;
+    color: #fff;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+  }
+  .calendar-default .list button:hover,
+  .calendar-default .list button:focus-visible,
+  .calendar-default .list button[aria-selected="true"] {
+    background: rgba(255, 255, 255, 0.08);
+    outline: none;
+  }
+  /* Grid com os dias */
+  .calendar-default .days {
+    display: inline-grid;
+    padding: 8px;
+    grid-template-rows: repeat(6, fit-content(100%));
+    grid-template-columns: repeat(7, fit-content(100%));
+  }
+  .calendar-default .day {
+    display: flex;
+    width: 32px;
+    height: 32px;
+    box-sizing: border-box;
+    padding: 8px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    border: 1px solid transparent;
+    border-radius: 4px;
+    background: none;
+
+    color: #fff;
+    font: inherit;
+    text-align: center;
+    cursor: pointer;
+  }
+  .calendar-default .day:hover {
+    background: rgba(255, 255, 255, 0.06);
+  }
+  /* Dias do mês anterior e do próximo */
+  .calendar-default .day.outside {
+    color: #262626;
+  }
+  /* Hoje */
+  .calendar-default .day.today {
+    border-color: #5fddd3;
+  }
+  /* Dias dentro do período: faixa contínua, arredondada nas pontas de cada linha */
+  .calendar-default .day.in-range {
+    border-radius: 0;
+    background: rgba(43, 100, 96, 0.15);
+  }
+  .calendar-default .day.in-range.row-start {
+    border-radius: 4px 0 0 4px;
+  }
+  .calendar-default .day.in-range.row-end {
+    border-radius: 0 4px 4px 0;
+  }
+  /* Data selecionada (e início e fim do período) */
+  .calendar-default .day.selected {
+    border-radius: 4px;
+    background: #5fddd3;
+    color: #0a181c;
+  }
+  /* Footer com os botões Ghost Small (components/botoes/Ghost/small.html) */
+  .calendar-default .foot {
+    display: flex;
+    box-sizing: border-box;
+    padding: 8px;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 8px;
+    align-self: stretch;
+  }
+  .calendar-default .ghost-sm {
+    display: inline-flex;
+    padding: 8px;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+
+    color: #fff;
+    font-family: "Public Sans";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 16px;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .calendar-default .ghost-sm:hover {
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  /* Light mode */
+  [data-theme="light"] .calendar-default {
+    border-color: rgba(0, 0, 0, 0.15);
+    background: #fff;
+    color: #000;
+  }
+  [data-theme="light"] .calendar-default .head {
+    background: rgba(0, 0, 0, 0.02);
+  }
+  [data-theme="light"] .calendar-default .arrow,
+  [data-theme="light"] .calendar-default .pick,
+  [data-theme="light"] .calendar-default .day,
+  [data-theme="light"] .calendar-default .ghost-sm,
+  [data-theme="light"] .calendar-default .list button {
+    color: #000;
+  }
+  [data-theme="light"] .calendar-default .arrow:hover,
+  [data-theme="light"] .calendar-default .pick:hover,
+  [data-theme="light"] .calendar-default .pick[aria-expanded="true"],
+  [data-theme="light"] .calendar-default .day:hover,
+  [data-theme="light"] .calendar-default .ghost-sm:hover {
+    background: rgba(0, 0, 0, 0.06);
+  }
+  [data-theme="light"] .calendar-default .list {
+    border-color: rgba(0, 0, 0, 0.15);
+    background: #fff;
+  }
+  [data-theme="light"] .calendar-default .list button:hover,
+  [data-theme="light"] .calendar-default .list button:focus-visible,
+  [data-theme="light"] .calendar-default .list button[aria-selected="true"] {
+    background: rgba(0, 0, 0, 0.08);
+  }
+  [data-theme="light"] .calendar-default .day.outside {
+    color: #e5e5e5;
+  }
+  [data-theme="light"] .calendar-default .day.in-range {
+    background: rgba(10, 24, 28, 0.05);
+  }
+  [data-theme="light"] .calendar-default .day.selected {
+    background: #5fddd3;
+    color: #0a181c;
+  }
+</style>
+<div class="calendar-default" data-mode="single" data-month="{{month}}" data-year="{{year}}" data-today="{{today}}">
+  <div class="head">
+    <div class="period">
+      <button class="arrow" type="button" data-step="-1" aria-label="Mês anterior"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M10 12L6 8L10 4" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" /></svg></button>
+      <button class="pick" type="button" data-list="month" aria-haspopup="listbox" aria-expanded="false"><span class="label"></span><svg class="caret" width="8" height="8" viewBox="0 0 8 8" fill="currentColor" aria-hidden="true"><path d="M2 3h4L4 5.5z" /></svg></button>
+      <button class="arrow" type="button" data-step="1" aria-label="Próximo mês"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M6 12L10 8L6 4" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" /></svg></button>
+      <div class="list" role="listbox" aria-label="Mês"></div>
+    </div>
+    <div class="period">
+      <button class="arrow" type="button" data-step="-12" aria-label="Ano anterior"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M10 12L6 8L10 4" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" /></svg></button>
+      <button class="pick" type="button" data-list="year" aria-haspopup="listbox" aria-expanded="false"><span class="label"></span><svg class="caret" width="8" height="8" viewBox="0 0 8 8" fill="currentColor" aria-hidden="true"><path d="M2 3h4L4 5.5z" /></svg></button>
+      <button class="arrow" type="button" data-step="12" aria-label="Próximo ano"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M6 12L10 8L6 4" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" /></svg></button>
+      <div class="list" role="listbox" aria-label="Ano"></div>
+    </div>
+  </div>
+  <div class="days" role="grid"></div>
+  {{#footer}}
+  <div class="foot">
+    <button class="ghost-sm" type="button" data-action="cancel">{{cancelText}}</button>
+    <button class="ghost-sm" type="button" data-action="ok">{{okText}}</button>
+  </div>
+  {{/footer}}
+</div>
+<script>
+  // Monta os dias do mês e cuida da navegação e da seleção. Datas no formato dd/mm/aaaa.
+  document.querySelectorAll(".calendar-default:not([data-ready])").forEach((root) => {
+    root.dataset.ready = "";
+    const MONTHS = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
+    const parse = (s) => {
+      const [d, m, y] = (s || "").split("/").map(Number);
+      return d && m && y ? new Date(y, m - 1, d) : null;
+    };
+    const same = (a, b) => a && b && a.getTime() === b.getTime();
+    const range = root.dataset.mode === "range";
+    const initial = {
+      selected: parse(root.dataset.selected),
+      start: parse(root.dataset.start),
+      end: parse(root.dataset.end),
+    };
+    let { selected, start, end } = initial;
+    const today = parse(root.dataset.today);
+    const monthIndex = Math.max(0, MONTHS.indexOf(root.dataset.month));
+    let view = new Date(Number(root.dataset.year) || new Date().getFullYear(), monthIndex, 1);
+    const grid = root.querySelector(".days");
+    const [monthPick, yearPick] = root.querySelectorAll(".pick");
+
+    const draw = () => {
+      monthPick.querySelector(".label").textContent = MONTHS[view.getMonth()];
+      yearPick.querySelector(".label").textContent = view.getFullYear();
+      // Semana começa no domingo; sempre 6 linhas
+      const first = new Date(view.getFullYear(), view.getMonth(), 1 - view.getDay());
+      grid.innerHTML = "";
+      for (let i = 0; i < 42; i++) {
+        const date = new Date(first.getFullYear(), first.getMonth(), first.getDate() + i);
+        const b = document.createElement("button");
+        b.type = "button";
+        b.className = "day";
+        b.textContent = date.getDate();
+        b.setAttribute("aria-label", date.toLocaleDateString("pt-BR"));
+        if (date.getMonth() !== view.getMonth()) b.classList.add("outside");
+        if (same(date, today)) b.classList.add("today");
+        const ends = range ? [start, end] : [selected];
+        if (ends.some((x) => same(date, x))) {
+          b.classList.add("selected");
+          b.setAttribute("aria-pressed", "true");
+        }
+        if (range && start && end && date > start && date < end) {
+          b.classList.add("in-range");
+          if (i % 7 === 0) b.classList.add("row-start");
+          if (i % 7 === 6) b.classList.add("row-end");
+        }
+        b.onclick = () => {
+          if (!range) selected = date;
+          else if (!start || end) [start, end] = [date, null];
+          else if (date < start) [start, end] = [date, start];
+          else end = date;
+          if (date.getMonth() !== view.getMonth()) view = new Date(date.getFullYear(), date.getMonth(), 1);
+          draw();
+        };
+        grid.append(b);
+      }
+    };
+
+    // Listas de mês e de ano
+    const closeLists = () =>
+      root.querySelectorAll(".pick").forEach((p) => {
+        p.setAttribute("aria-expanded", "false");
+        p.parentElement.querySelector(".list").classList.remove("open");
+      });
+    root.querySelectorAll(".pick").forEach((pick) => {
+      const list = pick.parentElement.querySelector(".list");
+      pick.onclick = () => {
+        const open = pick.getAttribute("aria-expanded") === "true";
+        closeLists();
+        if (open) return;
+        const year = pick.dataset.list === "year";
+        const items = year
+          ? Array.from({ length: 11 }, (_, i) => view.getFullYear() - 5 + i)
+          : MONTHS.map((m, i) => i);
+        list.innerHTML = "";
+        items.forEach((value) => {
+          const b = document.createElement("button");
+          b.type = "button";
+          b.setAttribute("role", "option");
+          b.textContent = year ? value : MONTHS[value];
+          const current = year ? view.getFullYear() : view.getMonth();
+          b.setAttribute("aria-selected", value === current);
+          b.onclick = () => {
+            view = year ? new Date(value, view.getMonth(), 1) : new Date(view.getFullYear(), value, 1);
+            closeLists();
+            draw();
+            pick.focus();
+          };
+          list.append(b);
+        });
+        list.classList.add("open");
+        pick.setAttribute("aria-expanded", "true");
+        const current = list.querySelector('[aria-selected="true"]');
+        list.scrollTop = current.offsetTop - list.clientHeight / 2;
+        current.focus();
+      };
+    });
+    root.querySelectorAll(".arrow").forEach((a) => {
+      a.onclick = () => {
+        view = new Date(view.getFullYear(), view.getMonth() + Number(a.dataset.step), 1);
+        draw();
+      };
+    });
+    // Cancelar volta à seleção inicial
+    root.querySelector('[data-action="cancel"]')?.addEventListener("click", () => {
+      ({ selected, start, end } = initial);
+      draw();
+    });
+    document.addEventListener("click", (e) => {
+      if (!e.target.closest(".period") || !root.contains(e.target)) closeLists();
+    });
+    root.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") closeLists();
+    });
+    draw();
+  });
+</script>

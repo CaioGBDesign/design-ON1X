@@ -1,0 +1,555 @@
+<style>
+  .date-picker-default {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    width: 402px;
+    max-width: 100%;
+    box-sizing: border-box;
+
+    color: #fff;
+    font-family: "Public Sans";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 16px;
+  }
+  .date-picker-default .top-right,
+  .date-picker-default .bottom-right {
+    margin-left: auto;
+  }
+  .date-picker-default .bottom-left,
+  .date-picker-default .bottom-right {
+    order: 1;
+    color: rgba(255, 255, 255, 0.4);
+  }
+  .date-picker-default .field {
+    position: relative;
+    display: flex;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 8px;
+    align-items: center;
+    gap: 8px;
+    align-self: stretch;
+
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: #000;
+    cursor: text;
+  }
+  .date-picker-default .icon {
+    flex: none;
+    color: #717171;
+  }
+  .date-picker-default .picker {
+    display: flex;
+    flex: none;
+    padding: 0;
+    border: 0;
+    border-radius: 4px;
+    background: none;
+    cursor: pointer;
+  }
+  .date-picker-default .picker:focus-visible {
+    outline: 2px solid #5fddd3;
+    outline-offset: 2px;
+  }
+  .date-picker-default input[type="text"] {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    flex: 1;
+    min-width: 0;
+    padding: 0;
+    border: 0;
+    background: none;
+    outline: none;
+
+    overflow: hidden;
+    color: #fff;
+    text-overflow: ellipsis;
+    font: inherit;
+    cursor: inherit;
+  }
+  .date-picker-default input[type="text"]::placeholder {
+    color: #fff;
+    opacity: 1;
+  }
+
+  /* Light mode */
+  [data-theme="light"] .date-picker-default {
+    color: #000;
+  }
+  [data-theme="light"] .date-picker-default .bottom-left,
+  [data-theme="light"] .date-picker-default .bottom-right {
+    color: #717171;
+  }
+  [data-theme="light"] .date-picker-default .field {
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    background: #fff;
+  }
+  [data-theme="light"] .date-picker-default input[type="text"],
+  [data-theme="light"] .date-picker-default input[type="text"]::placeholder {
+    color: #000;
+  }
+  .date-picker-default .calendar {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: #000;
+
+    color: #fff;
+    font-family: "Public Sans";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 16px;
+  }
+  /* Topo com mês e ano */
+  .date-picker-default .calendar .head {
+    display: flex;
+    box-sizing: border-box;
+    padding: 8px;
+    justify-content: space-between;
+    align-items: center;
+    align-self: stretch;
+    border-radius: 8px 8px 0 0;
+    background: rgba(255, 255, 255, 0.02);
+  }
+  .date-picker-default .calendar .period {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .date-picker-default .calendar .arrow,
+  .date-picker-default .calendar .pick {
+    display: inline-flex;
+    padding: 4px;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+
+    border: 0;
+    border-radius: 4px;
+    background: none;
+
+    color: #fff;
+    font: inherit;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .date-picker-default .calendar .arrow:hover,
+  .date-picker-default .calendar .pick:hover,
+  .date-picker-default .calendar .pick[aria-expanded="true"] {
+    background: rgba(255, 255, 255, 0.06);
+  }
+  .date-picker-default .calendar .arrow:focus-visible,
+  .date-picker-default .calendar .pick:focus-visible,
+  .date-picker-default .calendar .day:focus-visible {
+    outline: 2px solid #5fddd3;
+    outline-offset: 1px;
+  }
+  /* Lista de meses e anos: mesmo estilo do Dropdown Mini (components/dropdown/mini.html) */
+  .date-picker-default .calendar .list {
+    display: none;
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 50%;
+    z-index: 20;
+    width: 96px;
+    max-height: 200px;
+    padding: 4px;
+    overflow-y: auto;
+    flex-direction: column;
+    transform: translateX(-50%);
+
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: #000;
+    scrollbar-width: none;
+  }
+  .date-picker-default .calendar .list.open {
+    display: flex;
+  }
+  .date-picker-default .calendar .list button {
+    padding: 8px;
+    border: 0;
+    border-radius: 8px;
+    background: none;
+    color: #fff;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+  }
+  .date-picker-default .calendar .list button:hover,
+  .date-picker-default .calendar .list button:focus-visible,
+  .date-picker-default .calendar .list button[aria-selected="true"] {
+    background: rgba(255, 255, 255, 0.08);
+    outline: none;
+  }
+  /* Grid com os dias */
+  .date-picker-default .calendar .days {
+    display: inline-grid;
+    padding: 8px;
+    grid-template-rows: repeat(6, fit-content(100%));
+    grid-template-columns: repeat(7, fit-content(100%));
+  }
+  .date-picker-default .calendar .day {
+    display: flex;
+    width: 32px;
+    height: 32px;
+    box-sizing: border-box;
+    padding: 8px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    border: 1px solid transparent;
+    border-radius: 4px;
+    background: none;
+
+    color: #fff;
+    font: inherit;
+    text-align: center;
+    cursor: pointer;
+  }
+  .date-picker-default .calendar .day:hover {
+    background: rgba(255, 255, 255, 0.06);
+  }
+  /* Dias do mês anterior e do próximo */
+  .date-picker-default .calendar .day.outside {
+    color: #262626;
+  }
+  /* Hoje */
+  .date-picker-default .calendar .day.today {
+    border-color: #5fddd3;
+  }
+  /* Dias dentro do período: faixa contínua, arredondada nas pontas de cada linha */
+  .date-picker-default .calendar .day.in-range {
+    border-radius: 0;
+    background: rgba(43, 100, 96, 0.15);
+  }
+  .date-picker-default .calendar .day.in-range.row-start {
+    border-radius: 4px 0 0 4px;
+  }
+  .date-picker-default .calendar .day.in-range.row-end {
+    border-radius: 0 4px 4px 0;
+  }
+  /* Data selecionada (e início e fim do período) */
+  .date-picker-default .calendar .day.selected {
+    border-radius: 4px;
+    background: #5fddd3;
+    color: #0a181c;
+  }
+  /* Footer com os botões Ghost Small (components/botoes/Ghost/small.html) */
+  .date-picker-default .calendar .foot {
+    display: flex;
+    box-sizing: border-box;
+    padding: 8px;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 8px;
+    align-self: stretch;
+  }
+  .date-picker-default .calendar .ghost-sm {
+    display: inline-flex;
+    padding: 8px;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+
+    color: #fff;
+    font-family: "Public Sans";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 16px;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .date-picker-default .calendar .ghost-sm:hover {
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  /* Calendário (components/calendar/default.html) em popover, abaixo do campo */
+  .date-picker-default .calendar {
+    display: none;
+    position: absolute;
+    top: calc(100% + 8px);
+    left: -1px;
+    z-index: 30;
+    box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.25);
+    cursor: default;
+  }
+  .date-picker-default .calendar.open {
+    display: inline-flex;
+  }
+
+  /* Light mode */
+  [data-theme="light"] .date-picker-default .calendar {
+    border-color: rgba(0, 0, 0, 0.15);
+    background: #fff;
+    color: #000;
+  }
+  [data-theme="light"] .date-picker-default .calendar .head {
+    background: rgba(0, 0, 0, 0.02);
+  }
+  [data-theme="light"] .date-picker-default .calendar .arrow,
+  [data-theme="light"] .date-picker-default .calendar .pick,
+  [data-theme="light"] .date-picker-default .calendar .day,
+  [data-theme="light"] .date-picker-default .calendar .ghost-sm,
+  [data-theme="light"] .date-picker-default .calendar .list button {
+    color: #000;
+  }
+  [data-theme="light"] .date-picker-default .calendar .arrow:hover,
+  [data-theme="light"] .date-picker-default .calendar .pick:hover,
+  [data-theme="light"] .date-picker-default .calendar .pick[aria-expanded="true"],
+  [data-theme="light"] .date-picker-default .calendar .day:hover,
+  [data-theme="light"] .date-picker-default .calendar .ghost-sm:hover {
+    background: rgba(0, 0, 0, 0.06);
+  }
+  [data-theme="light"] .date-picker-default .calendar .list {
+    border-color: rgba(0, 0, 0, 0.15);
+    background: #fff;
+  }
+  [data-theme="light"] .date-picker-default .calendar .list button:hover,
+  [data-theme="light"] .date-picker-default .calendar .list button:focus-visible,
+  [data-theme="light"] .date-picker-default .calendar .list button[aria-selected="true"] {
+    background: rgba(0, 0, 0, 0.08);
+  }
+  [data-theme="light"] .date-picker-default .calendar .day.outside {
+    color: #e5e5e5;
+  }
+  [data-theme="light"] .date-picker-default .calendar .day.in-range {
+    background: rgba(10, 24, 28, 0.05);
+  }
+  [data-theme="light"] .date-picker-default .calendar .day.selected {
+    background: #5fddd3;
+    color: #0a181c;
+  }
+</style>
+<div class="date-picker-default">
+  {{#topLeft}}<span class="top-left">{{topLeftText}}</span>{{/topLeft}}
+  {{#topRight}}<span class="top-right">{{topRightText}}</span>{{/topRight}}
+  {{#bottomLeft}}<span class="bottom-left">{{bottomLeftText}}</span
+  >{{/bottomLeft}} {{#bottomRight}}<span class="bottom-right"
+    >{{bottomRightText}}</span
+  >{{/bottomRight}}
+  <div class="field">
+    <button
+      class="picker"
+      type="button"
+      aria-label="Abrir calendário"
+      aria-haspopup="dialog"
+      aria-expanded="false"
+    >
+      <svg
+        class="icon"
+        width="16"
+        height="16"
+        viewBox="0 0 16 16"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+      >
+        <path
+          d="M5.33334 1.33334V3.33334"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke="currentColor"
+        />
+        <path
+          d="M10.6667 1.33334V3.33334"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke="currentColor"
+        />
+        <path
+          d="M3.33333 2H12.6667C13.403 2 14 2.59695 14 3.33333V12.6667C14 13.403 13.403 14 12.6667 14H3.33333C2.59695 14 2 13.403 2 12.6667V3.33333C2 2.59695 2.59695 2 3.33333 2Z"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke="currentColor"
+        />
+        <path
+          d="M2 6H14"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke="currentColor"
+        />
+      </svg>
+    </button>
+    <input
+      type="text"
+      placeholder="{{placeholder}}"
+      inputmode="numeric"
+      aria-label="{{topLeftText}}"
+    />
+    <div class="calendar" role="dialog" aria-label="Calendário">
+      <div class="head">
+        <div class="period">
+          <button class="arrow" type="button" data-step="-1" aria-label="Mês anterior"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M10 12L6 8L10 4" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" /></svg></button>
+          <button class="pick" type="button" data-list="month" aria-haspopup="listbox" aria-expanded="false"><span class="label"></span><svg class="caret" width="8" height="8" viewBox="0 0 8 8" fill="currentColor" aria-hidden="true"><path d="M2 3h4L4 5.5z" /></svg></button>
+          <button class="arrow" type="button" data-step="1" aria-label="Próximo mês"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M6 12L10 8L6 4" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" /></svg></button>
+          <div class="list" role="listbox" aria-label="Mês"></div>
+        </div>
+        <div class="period">
+          <button class="arrow" type="button" data-step="-12" aria-label="Ano anterior"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M10 12L6 8L10 4" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" /></svg></button>
+          <button class="pick" type="button" data-list="year" aria-haspopup="listbox" aria-expanded="false"><span class="label"></span><svg class="caret" width="8" height="8" viewBox="0 0 8 8" fill="currentColor" aria-hidden="true"><path d="M2 3h4L4 5.5z" /></svg></button>
+          <button class="arrow" type="button" data-step="12" aria-label="Próximo ano"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M6 12L10 8L6 4" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" /></svg></button>
+          <div class="list" role="listbox" aria-label="Ano"></div>
+        </div>
+      </div>
+      <div class="days" role="grid"></div>
+      <div class="foot">
+        <button class="ghost-sm" type="button" data-action="cancel">Cancelar</button>
+        <button class="ghost-sm" type="button" data-action="ok">Ok</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  // Abre o Calendário (components/calendar) pelo ícone ou pelo campo; Ok preenche a data em mm/dd/aaaa.
+  document.querySelectorAll(".date-picker-default:not([data-ready])").forEach((root) => {
+    root.dataset.ready = "";
+    const MONTHS = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
+    const input = root.querySelector('input[type="text"]');
+    const trigger = root.querySelector(".picker");
+    const cal = root.querySelector(".calendar");
+    const grid = cal.querySelector(".days");
+    const [monthPick, yearPick] = cal.querySelectorAll(".pick");
+    const pad = (n) => String(n).padStart(2, "0");
+    const format = (d) => `${pad(d.getMonth() + 1)}/${pad(d.getDate())}/${d.getFullYear()}`;
+    const parse = (s) => {
+      const [m, d, y] = (s || "").split("/").map(Number);
+      const date = new Date(y, m - 1, d);
+      return y > 999 && date.getMonth() === m - 1 && date.getDate() === d ? date : null;
+    };
+    const same = (a, b) => a && b && a.getTime() === b.getTime();
+    const now = new Date();
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    let selected = null;
+    let view = new Date(today.getFullYear(), today.getMonth(), 1);
+
+    const draw = () => {
+      monthPick.querySelector(".label").textContent = MONTHS[view.getMonth()];
+      yearPick.querySelector(".label").textContent = view.getFullYear();
+      // Semana começa no domingo; sempre 6 linhas
+      const first = new Date(view.getFullYear(), view.getMonth(), 1 - view.getDay());
+      grid.innerHTML = "";
+      for (let i = 0; i < 42; i++) {
+        const date = new Date(first.getFullYear(), first.getMonth(), first.getDate() + i);
+        const b = document.createElement("button");
+        b.type = "button";
+        b.className = "day";
+        b.textContent = date.getDate();
+        b.setAttribute("aria-label", date.toLocaleDateString("pt-BR"));
+        if (date.getMonth() !== view.getMonth()) b.classList.add("outside");
+        if (same(date, today)) b.classList.add("today");
+        if (same(date, selected)) {
+          b.classList.add("selected");
+          b.setAttribute("aria-pressed", "true");
+        }
+        b.onclick = () => {
+          selected = date;
+          if (date.getMonth() !== view.getMonth()) view = new Date(date.getFullYear(), date.getMonth(), 1);
+          draw();
+        };
+        grid.append(b);
+      }
+    };
+
+    const closeLists = () =>
+      cal.querySelectorAll(".pick").forEach((p) => {
+        p.setAttribute("aria-expanded", "false");
+        p.parentElement.querySelector(".list").classList.remove("open");
+      });
+    const setOpen = (open) => {
+      closeLists();
+      cal.classList.toggle("open", open);
+      trigger.setAttribute("aria-expanded", open);
+      if (!open) return;
+      // Abre na data digitada, se for válida; senão, no mês de hoje
+      selected = parse(input.value);
+      const base = selected || today;
+      view = new Date(base.getFullYear(), base.getMonth(), 1);
+      draw();
+    };
+
+    trigger.addEventListener("click", () => setOpen(!cal.classList.contains("open")));
+    input.addEventListener("click", () => {
+      if (!cal.classList.contains("open")) setOpen(true);
+    });
+    cal.querySelectorAll(".pick").forEach((pick) => {
+      const list = pick.parentElement.querySelector(".list");
+      pick.onclick = () => {
+        const open = pick.getAttribute("aria-expanded") === "true";
+        closeLists();
+        if (open) return;
+        const year = pick.dataset.list === "year";
+        const items = year
+          ? Array.from({ length: 11 }, (_, i) => view.getFullYear() - 5 + i)
+          : MONTHS.map((m, i) => i);
+        list.innerHTML = "";
+        items.forEach((value) => {
+          const b = document.createElement("button");
+          b.type = "button";
+          b.setAttribute("role", "option");
+          b.textContent = year ? value : MONTHS[value];
+          b.setAttribute("aria-selected", value === (year ? view.getFullYear() : view.getMonth()));
+          b.onclick = () => {
+            view = year ? new Date(value, view.getMonth(), 1) : new Date(view.getFullYear(), value, 1);
+            closeLists();
+            draw();
+            pick.focus();
+          };
+          list.append(b);
+        });
+        list.classList.add("open");
+        pick.setAttribute("aria-expanded", "true");
+        const current = list.querySelector('[aria-selected="true"]');
+        list.scrollTop = current.offsetTop - list.clientHeight / 2;
+        current.focus();
+      };
+    });
+    cal.querySelectorAll(".arrow").forEach((a) => {
+      a.onclick = () => {
+        view = new Date(view.getFullYear(), view.getMonth() + Number(a.dataset.step), 1);
+        draw();
+      };
+    });
+    cal.querySelector('[data-action="cancel"]').addEventListener("click", () => {
+      setOpen(false);
+      trigger.focus();
+    });
+    cal.querySelector('[data-action="ok"]').addEventListener("click", () => {
+      if (selected) {
+        input.value = format(selected);
+        input.dispatchEvent(new Event("change", { bubbles: true }));
+      }
+      setOpen(false);
+      input.focus();
+    });
+    // composedPath: o dia clicado já saiu da página quando o calendário é redesenhado
+    document.addEventListener("click", (e) => {
+      if (!e.composedPath().includes(root)) setOpen(false);
+      else if (!e.target.closest(".period")) closeLists();
+    });
+    root.addEventListener("keydown", (e) => {
+      if (e.key !== "Escape" || !cal.classList.contains("open")) return;
+      if (cal.querySelector(".list.open")) closeLists();
+      else {
+        setOpen(false);
+        trigger.focus();
+      }
+    });
+  });
+</script>

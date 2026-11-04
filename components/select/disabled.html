@@ -49,7 +49,7 @@
     flex: none;
   }
   .select-disabled .icon {
-    color: #9ade7b;
+    color: {{iconColorDark}};
   }
 
   /* Sem texto: o campo encolhe para o ícone e a seta */
@@ -58,6 +58,9 @@
   }
 
   /* Light mode */
+  [data-theme="light"] .select-disabled .icon {
+    color: {{iconColorLight}};
+  }
   [data-theme="light"] .select-disabled .top-left,
   [data-theme="light"] .select-disabled .top-right {
     color: #000000;

@@ -46,7 +46,7 @@
   }
   .select-error .icon {
     flex: none;
-    color: #9ade7b;
+    color: {{iconColorDark}};
   }
   .select-error .arrow {
     flex: none;
@@ -148,6 +148,9 @@
   }
 
   /* Light mode */
+  [data-theme="light"] .select-error .icon {
+    color: {{iconColorLight}};
+  }
   [data-theme="light"] .select-error .top-left,
   [data-theme="light"] .select-error .top-right,
   [data-theme="light"] .select-error .value {
